@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +16,6 @@ import com.example.wallety.databinding.FragmentLinkCardBinding;
 
 public class LinkCardFragment extends Fragment {
     FragmentLinkCardBinding binding;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,6 +31,10 @@ public class LinkCardFragment extends Fragment {
                 .cardholderName(CardForm.FIELD_REQUIRED)
                 .actionLabel("Purchase")
                 .setup(getActivity());
+
+        binding.linkCardBtn.setOnClickListener(view1 -> {
+            Navigation.findNavController(view1).popBackStack();
+        });
 
         return view;
     }

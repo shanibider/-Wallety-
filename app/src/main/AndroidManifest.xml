@@ -20,15 +20,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".RegisterationActivity"
-            android:exported="false"
-            android:label="@string/title_activity_registeration"
-            android:theme="@style/Theme.Wallety.NoActionBar">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".LauncherActivity"
             android:exported="true">
             <intent-filter>

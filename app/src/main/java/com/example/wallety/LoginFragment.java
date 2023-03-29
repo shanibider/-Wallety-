@@ -9,8 +9,10 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.wallety.databinding.FragmentLoginBinding;
+import com.example.wallety.model.Model;
 
 public class LoginFragment extends Fragment {
     FragmentLoginBinding binding;
@@ -28,8 +30,36 @@ public class LoginFragment extends Fragment {
 
         Intent intent = new Intent(getActivity(), MainActivity.class);
         binding.loginBtn.setOnClickListener(view1 -> {
-            startActivity(intent);
-            getActivity().finish();
+            String email = binding.emailEt.getText().toString();
+            String password = binding.passwordEt.getText().toString();
+
+            if (email.length() > 0 && password.length() > 0) {
+                startActivity(intent);
+                getActivity().finish();
+
+//                Model.instance().loginUser(email, password,
+//                        (success) -> {
+////                            startActivity(intent);
+////                            getActivity().finish();
+//                        },
+//                        (error) -> {
+//                            Toast.makeText(getActivity(), "Invalid details",
+//                                    Toast.LENGTH_SHORT).show();
+//                        }
+//                );
+            } else {
+                if (email.length() == 0) {
+                    binding.emailEt.setError("Required");
+                }
+                if (password.length() == 0) {
+//                    binding.passwordEt.setError("Required");
+                }
+
+            }
+
+
+//            startActivity(intent);
+//            getActivity().finish();
         });
 
         return view;
