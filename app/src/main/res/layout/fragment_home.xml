@@ -7,52 +7,142 @@
     tools:context=".HomeFragment">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/linkCardCv"
-        android:layout_width="91dp"
-        android:layout_height="91dp"
+        android:id="@+id/transferMoneyCv"
+        android:layout_width="107dp"
+        android:layout_height="107dp"
         android:layout_marginTop="352dp"
         app:cardCornerRadius="6dp"
         app:cardElevation="11dp"
-        app:layout_constraintEnd_toStartOf="@+id/materialCardView"
+        app:layout_constraintEnd_toStartOf="@+id/savingMoneyCv"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="?colorSecondary"
         app:strokeWidth="1dp">
 
-        <TextView
-            android:id="@+id/linkTv"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="LINK Credit card" />
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <ImageView
+                android:id="@+id/transferMoneyImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                app:srcCompat="@drawable/transfer_money" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TRANSFER"
+                android:textFontWeight="600"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-5dp"
+                android:text="Money"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?android:attr/textColorSecondary" />
+
+        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView3"
-        android:layout_width="91dp"
-        android:layout_height="91dp"
+        android:id="@+id/savingMoneyCv"
+        android:layout_width="107dp"
+        android:layout_height="107dp"
+        android:layout_marginTop="352dp"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="11dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/linkCardCv"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/transferMoneyCv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="?colorSecondary"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/savingMoneyImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                app:srcCompat="@drawable/saving_money" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SAVING"
+                android:textFontWeight="600"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-5dp"
+                android:text="Money"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?android:attr/textColorSecondary" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/linkCardCv"
+        android:layout_width="107dp"
+        android:layout_height="107dp"
         android:layout_marginTop="352dp"
         app:cardCornerRadius="6dp"
         app:cardElevation="11dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/materialCardView"
+        app:layout_constraintStart_toEndOf="@+id/savingMoneyCv"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="?colorSecondary"
-        app:strokeWidth="1dp" />
+        app:strokeWidth="1dp">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView"
-        android:layout_width="91dp"
-        android:layout_height="91dp"
-        android:layout_marginTop="352dp"
-        app:cardCornerRadius="6dp"
-        app:cardElevation="11dp"
-        app:layout_constraintEnd_toStartOf="@+id/materialCardView3"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/linkCardCv"
-        app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="?colorSecondary"
-        app:strokeWidth="1dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/linkCardImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                app:srcCompat="@drawable/ic_outline_add_card_24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LINK"
+                android:textFontWeight="600"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-4dp"
+                android:text="Card"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?android:attr/textColorSecondary" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

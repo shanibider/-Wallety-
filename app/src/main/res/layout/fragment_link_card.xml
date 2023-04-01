@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/link_card" />
+        app:srcCompat="@drawable/link_card_header" />
 
     <TextView
         android:id="@+id/titleTv"
@@ -27,7 +27,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linkCardImg" />
 
     <LinearLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="20dp"
@@ -37,7 +37,6 @@
 
         <com.braintreepayments.cardform.view.CardForm
             android:id="@+id/card_form"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
