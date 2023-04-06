@@ -6,6 +6,53 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
 
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <ImageView
+            android:id="@+id/userImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:paddingTop="8dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/male"
+            android:padding="3dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/hiName"
+            android:text="Hi, NAME"
+            android:textSize="23sp"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="2dp"
+            android:layout_toEndOf="@id/userImage"/>
+
+        <TextView
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/welcomeBack"
+            android:text="Welcome back"
+            android:textSize="12sp"
+            android:layout_toEndOf="@id/userImage"
+            android:layout_below="@id/hiName"
+            android:layout_marginStart="2dp"
+            android:maxLines="1"
+            />
+    </RelativeLayout>
+
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/transferMoneyCv"
         android:layout_width="107dp"

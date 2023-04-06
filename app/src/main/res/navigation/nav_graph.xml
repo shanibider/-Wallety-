@@ -13,10 +13,20 @@
         <action
             android:id="@+id/action_homeFragment_to_linkCardFragment"
             app:destination="@id/linkCardFragment" />
+
+        <action
+            android:id="@+id/action_homeFragment_to_savingMoneyFragment"
+            app:destination="@id/savingMoneyFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/linkCardFragment"
         android:name="com.example.wallety.LinkCardFragment"
         android:label="Link Card"
         tools:layout="@layout/fragment_link_card" />
+    <fragment
+        android:id="@+id/savingMoneyFragment"
+        android:name="com.example.wallety.SavingMoneyFragment"
+        android:label="fragment_saving_money"
+        tools:layout="@layout/fragment_saving_money" />
 </navigation>

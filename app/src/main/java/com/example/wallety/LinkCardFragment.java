@@ -6,9 +6,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.braintreepayments.cardform.view.CardForm;
 import com.example.wallety.databinding.FragmentLinkCardBinding;
@@ -24,6 +26,8 @@ public class LinkCardFragment extends Fragment {
         binding = FragmentLinkCardBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        TextView t1, t2, t3, t4, t5;
+
         CardForm cardForm = binding.cardForm;
         cardForm.cardRequired(true)
                 .expirationRequired(true)
@@ -32,9 +36,46 @@ public class LinkCardFragment extends Fragment {
                 .actionLabel("Purchase")
                 .setup(getActivity());
 
+
+        t1= view.findViewById(R.id.code);
+        t2= view.findViewById(R.id.holder);
+        t3= view.findViewById(R.id.month1);
+        t4= view.findViewById(R.id.year1);
+        t5= view.findViewById(R.id.cvv);
+
+
         binding.linkCardBtn.setOnClickListener(view1 -> {
-            Navigation.findNavController(view1).popBackStack();
+
+            //display card detail on card template
+            String cvv, name, month, year, code;
+            code= cardForm.getCardNumber();
+            t1.setText(code);
+
+            name= cardForm.getCardholderName();
+            t2.setText(name);
+
+            month= cardForm.getExpirationMonth();
+            t3.setText(month);
+
+            year= cardForm.getExpirationYear();
+            t4.setText(year);
+
+            cvv = cardForm.getCvv();
+            t5.setText(cvv);
+
+            Bundle bundle = getArguments();
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Navigation.findNavController(view1).popBackStack();
+                }
+            }, 7000);
+
+
         });
+
+
 
         return view;
     }
