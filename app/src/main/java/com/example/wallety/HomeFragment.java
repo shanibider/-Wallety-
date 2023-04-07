@@ -1,6 +1,9 @@
 package com.example.wallety;
 
+import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -30,9 +33,10 @@ public class HomeFragment extends Fragment {
             Navigation.findNavController(view1).navigate(R.id.action_homeFragment_to_linkCardFragment);
         });
 
-        binding.savingMoneyCv.setOnClickListener(view2 -> {
-            Navigation.findNavController(view2).navigate(R.id.action_homeFragment_to_savingMoneyFragment);
+        binding.savingMoneyCv.setOnClickListener(view1 -> {
+            Navigation.findNavController(view1).navigate(R.id.action_homeFragment_to_savingMoneyFragment);
         });
+
         return view;
     }
 }

@@ -10,10 +10,10 @@
         android:name="com.example.wallety.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home">
+
         <action
             android:id="@+id/action_homeFragment_to_linkCardFragment"
             app:destination="@id/linkCardFragment" />
-
         <action
             android:id="@+id/action_homeFragment_to_savingMoneyFragment"
             app:destination="@id/savingMoneyFragment" />
@@ -27,6 +27,6 @@
     <fragment
         android:id="@+id/savingMoneyFragment"
         android:name="com.example.wallety.SavingMoneyFragment"
-        android:label="fragment_saving_money"
+        android:label="saving"
         tools:layout="@layout/fragment_saving_money" />
 </navigation>
