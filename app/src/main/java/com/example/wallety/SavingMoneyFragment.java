@@ -25,10 +25,10 @@ public class SavingMoneyFragment extends Fragment {
         binding = FragmentSavingMoneyBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        TextView tv1, tv2;
+        TextView myGoalTv, tv2;
         EditText et3, et2;
 
-        tv1 = view.findViewById(R.id.tv1);
+        myGoalTv = view.findViewById(R.id.myGoalTv);
         et3 =  view.findViewById(R.id.et3);
         tv2 = view.findViewById(R.id.tv2);
         et2 =  view.findViewById(R.id.et2);
@@ -37,7 +37,7 @@ public class SavingMoneyFragment extends Fragment {
 
             String goal;
             goal= et3.getText().toString();
-            tv1.setText(goal);
+            myGoalTv.setText(goal);
 
 
         });

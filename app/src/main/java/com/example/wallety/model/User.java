@@ -8,25 +8,28 @@ import java.util.Map;
 
 public class User {
     private String id = "";
-    private String username;
+    private String name;
+    private String phone;
     private String email;
     private String password;
     public Long lastUpdated;
 
-    public User(String username, String email, String password) {
-        this.username = username;
+    public User(String name, String phone, String email, String password) {
+        this.name = name;
+        this.phone = phone;
         this.email = email;
         this.password = password;
     }
 
-    public User(String id, String username, String email, String password) {
-        this(username, email, password);
+    public User(String id, String name, String phone, String email, String password) {
+        this(name, email, password, phone);
         this.id = id;
     }
 
     static final String COLLECTION = "users";
     static final String ID = "id";
-    static final String USERNAME = "username";
+    static final String USER = "name";
+    static final String PHONE = "phone";
     static final String EMAIL = "email";
     static final String PASSWORD = "password";
     static final String LAST_UPDATED = "lastUpdated";
@@ -35,8 +38,12 @@ public class User {
         return id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
+    }
+
+    public String getPhone() {
+        return phone;
     }
 
     public String getEmail() {
@@ -47,13 +54,16 @@ public class User {
         return password;
     }
 
-
     public void setId(String id) {
         this.id = id;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public void setLastUpdated(Long lastUpdated) {
@@ -62,10 +72,11 @@ public class User {
 
     public static User fromJson(Map<String, Object> json) {
         String id = (String) json.get(ID);
-        String username = (String) json.get(USERNAME);
+        String name = (String) json.get(USER);
+        String phone = (String) json.get(PHONE);
         String email = (String) json.get(EMAIL);
         String password = (String) json.get(PASSWORD);
-        User user = new User(id, username, email, password);
+        User user = new User(id, name, phone, email, password);
         try {
             Timestamp time = (Timestamp) json.get(LAST_UPDATED);
             user.setLastUpdated(time.getSeconds());
@@ -79,9 +90,8 @@ public class User {
     public Map<String, Object> toJson() {
         Map<String, Object> json = new HashMap<>();
         json.put(ID, getId());
-        json.put(USERNAME, getUsername());
-        json.put(EMAIL, getEmail());
-        json.put(PASSWORD, getPassword());
+        json.put(USER, getName());
+        json.put(PHONE, getPhone());
         json.put(LAST_UPDATED, FieldValue.serverTimestamp());
         return json;
     }

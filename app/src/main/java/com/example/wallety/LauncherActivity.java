@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.example.wallety.model.Model;
+
 import java.util.Objects;
 
 public class LauncherActivity extends AppCompatActivity {
@@ -16,11 +18,17 @@ public class LauncherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_launcher);
 
         Objects.requireNonNull(getSupportActionBar()).hide();
+        Intent registrationIntent = new Intent(this, RegistrationActivity.class);
+        Intent mainScreenIntent = new Intent(this, MainActivity.class);
         Handler handler = new Handler();
-        handler.postDelayed(() -> {
-            Intent intent = new Intent(this, RegistrationActivity.class);
-            startActivity(intent);
-            finish();
-        }, 2000);
+        handler.postDelayed(() -> Model.instance().fetchLoggedUser(
+                onSuccess -> {
+                    startActivity(mainScreenIntent);
+                    finish();
+                },
+                ocFailure -> {
+                    startActivity(registrationIntent);
+                    finish();
+                }), 2000);
     }
 }
