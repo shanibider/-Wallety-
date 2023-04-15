@@ -28,5 +28,18 @@
         android:id="@+id/savingMoneyFragment"
         android:name="com.example.wallety.SavingMoneyFragment"
         android:label="saving"
-        tools:layout="@layout/fragment_saving_money" />
+        tools:layout="@layout/fragment_saving_money" >
+        <action
+            android:id="@+id/action_savingMoneyFragment_to_addGoalFragment"
+            app:destination="@id/addGoalFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addGoalFragment"
+        android:name="com.example.wallety.AddGoalFragment"
+        android:label="your goal"
+        tools:layout="@layout/fragment_add_goal" >
+        <action
+            android:id="@+id/action_addGoalFragment_to_savingMoneyFragment"
+            app:destination="@id/savingMoneyFragment" />
+    </fragment>
 </navigation>

@@ -8,7 +8,6 @@ public class Transactions {
     private String sum;
 
 
-
     public Transactions(int image, String source, String date, String sum) {
         this.image = image;
         this.source = source;
