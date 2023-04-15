@@ -32,34 +32,23 @@ public class LoginFragment extends Fragment {
         binding.loginBtn.setOnClickListener(view1 -> {
             String email = binding.emailEt.getText().toString();
             String password = binding.passwordEt.getText().toString();
+            binding.emailTv.setErrorIconDrawable(null);
+            binding.emailTv.setError(email.length() == 0 ? "Required" : null);
+            binding.passwordTv.setErrorIconDrawable(null);
+            binding.passwordTv.setError(password.length() == 0 ? "Required" : null);
 
             if (email.length() > 0 && password.length() > 0) {
-                startActivity(intent);
-                getActivity().finish();
-
-//                Model.instance().loginUser(email, password,
-//                        (success) -> {
-////                            startActivity(intent);
-////                            getActivity().finish();
-//                        },
-//                        (error) -> {
-//                            Toast.makeText(getActivity(), "Invalid details",
-//                                    Toast.LENGTH_SHORT).show();
-//                        }
-//                );
-            } else {
-                if (email.length() == 0) {
-                    binding.emailEt.setError("Required");
-                }
-                if (password.length() == 0) {
-//                    binding.passwordEt.setError("Required");
-                }
-
+                Model.instance().loginUser(email, password,
+                        (success) -> {
+                            startActivity(intent);
+                            getActivity().finish();
+                        },
+                        (error) -> {
+                            Toast.makeText(getActivity(), "Invalid details",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                );
             }
-
-
-//            startActivity(intent);
-//            getActivity().finish();
         });
 
         return view;

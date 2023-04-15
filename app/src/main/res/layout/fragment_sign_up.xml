@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SignUpFragment">
 
     <ImageView
         android:id="@+id/walletyLogo"
         android:layout_width="156dp"
         android:layout_height="66dp"
-        android:layout_marginEnd="52dp"
         android:layout_marginTop="15dp"
+        android:layout_marginEnd="52dp"
         app:layout_constraintEnd_toEndOf="@+id/titleTv"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/wallety_logo" />
@@ -74,10 +74,10 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/phoneEt"
-            android:inputType="phone"
-            android:digits="0123456789+"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:digits="0123456789+"
+            android:inputType="phone" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -105,6 +105,7 @@
         android:layout_marginTop="12dp"
         android:hint="Password"
         app:endIconMode="password_toggle"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailTv"

@@ -38,11 +38,13 @@ public class Model {
         void onComplete(T data);
     }
 
-    public void fetchLoggedUser(Listener<Void> listener) {
+    public void fetchLoggedUser(Listener<Void> osSuccess, Listener<Void> onFailure) {
         firebaseModel.fetchLoggedInUser(user -> {
             setCurrentUser(user);
             if (user != null) {
-                listener.onComplete(null);
+                osSuccess.onComplete(null);
+            } else {
+                onFailure.onComplete(null);
             }
         });
     }
@@ -55,12 +57,14 @@ public class Model {
         loggedUser = user;
     }
 
-    public void createUser(User user, Listener<Void> listener) {
-        firebaseModel.createUser(user, (Void) -> {
-            usersByIds.put(user.getId(), user);
-            setCurrentUser(user);
-            listener.onComplete(null);
-        });
+    public void createUser(User user, Listener<Void> listener, Listener<String> onFailure) {
+        firebaseModel.handleUserCreation(user,
+                (Void) -> {
+                    usersByIds.put(user.getId(), user);
+                    setCurrentUser(user);
+                    listener.onComplete(null);
+                },
+                onFailure);
     }
 
     public void updateUser(User user, Listener<Void> listener) {
@@ -88,19 +92,19 @@ public class Model {
         firebaseModel.getUsers(callback);
     }
 
-    public String getUsernameById(String id) {
-        return Objects.requireNonNull(usersByIds.get(id)).getUsername();
+    public String getNameById(String id) {
+        return Objects.requireNonNull(usersByIds.get(id)).getName();
     }
 
-    public Boolean isUsernameNotExist(String username) {
+    public Boolean isNameNotExist(String name) {
         return usersByIds.values()
-                .stream().noneMatch(user -> username.equals(user.getUsername()));
+                .stream().noneMatch(user -> name.equals(user.getName()));
     }
 
-    public String areUsernameOrEmailNotExist(String username, String email) {
+    public String areNameOrEmailNotExist(String name, String email) {
         AtomicReference<String> existingDetail = new AtomicReference<>("");
         usersByIds.values().forEach(user -> {
-                    if (username.equals(user.getUsername())) {
+                    if (name.equals(user.getName())) {
                         existingDetail.set("Username");
                     }
                     if (email.equals(user.getEmail())) {
