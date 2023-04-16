@@ -18,13 +18,18 @@ public class LauncherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_launcher);
 
         Objects.requireNonNull(getSupportActionBar()).hide();
-          Handler handler = new Handler();
 
-          //here i change to make it work
-        handler.postDelayed(() -> {
-            Intent intent = new Intent(this, RegistrationActivity.class);
-            startActivity(intent);
-            finish();
-        }, 2000);
+        Intent registrationIntent = new Intent(this, RegistrationActivity.class);
+        Intent mainScreenIntent = new Intent(this, MainActivity.class);
+        Handler handler = new Handler();
+        handler.postDelayed(() -> Model.instance().fetchLoggedUser(
+                onSuccess -> {
+                    startActivity(mainScreenIntent);
+                    finish();
+                },
+                ocFailure -> {
+                    startActivity(registrationIntent);
+                    finish();
+                }), 2000);
     }
 }

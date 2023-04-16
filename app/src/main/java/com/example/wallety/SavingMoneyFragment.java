@@ -66,6 +66,7 @@ public class SavingMoneyFragment extends Fragment {
         recyclerView.setAdapter(savingAdapter);
         savingAdapter.notifyDataSetChanged();
 
+
         binding.btn1.setOnClickListener(view1 -> {
             Navigation.findNavController(view1).navigate(R.id.action_savingMoneyFragment_to_addGoalFragment);
 
