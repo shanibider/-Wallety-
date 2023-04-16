@@ -30,6 +30,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class AddGoalFragment extends Fragment {
     FragmentAddGoalBinding binding;
 
@@ -67,7 +70,11 @@ public class AddGoalFragment extends Fragment {
        String amount = et3.getText().toString();
        String progressBar = "50";
 
-        String curUser = FirebaseAuth.getInstance().getUid();
+       FirebaseFirestore db = FirebaseFirestore.getInstance();
+       String uid = FirebaseAuth.getInstance().getUid();
+       DocumentReference userRef = db.collection("users").document(uid);
+       String curUser = userRef.getId();
+
         Saving saving = new Saving(curUser, goal, detail, amount, progressBar);
 
         // Save Goal data to Firebase Realtime Database

@@ -50,6 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:hint="Email"
+        app:errorEnabled="true"
         app:layout_constraintTop_toBottomOf="@+id/loginTitleTv">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -68,6 +69,7 @@
         android:layout_marginRight="30dp"
         android:hint="Password"
         app:endIconMode="password_toggle"
+        app:errorEnabled="true"
         app:layout_constraintTop_toBottomOf="@+id/emailTv"
         app:startIconDrawable="@drawable/ic_baseline_key_24"
         tools:layout_editor_absoluteX="30dp">
@@ -83,13 +85,13 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/loginBtn"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="222dp"
         android:layout_height="50dp"
         android:layout_marginTop="84dp"
         android:text="Login"
-        style="@style/Widget.MaterialComponents.Button"
-        app:cornerRadius="6sp"
         android:textAllCaps="false"
+        app:cornerRadius="6sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

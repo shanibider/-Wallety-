@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.braintreepayments.cardform.view.CardForm;
 import com.example.wallety.adapters.HomeAdapter;
 import com.example.wallety.databinding.FragmentHomeBinding;
+import com.example.wallety.model.Model;
 import com.example.wallety.model.Transactions;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -46,6 +47,8 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        String nameHeader = "Hello " + Model.instance().getCurrentUser().getName();
+        binding.nameHeaderTv.setText(nameHeader);
 
         binding.linkCardCv.setOnClickListener(view1 -> {
             Navigation.findNavController(view1).navigate(R.id.action_homeFragment_to_linkCardFragment);
