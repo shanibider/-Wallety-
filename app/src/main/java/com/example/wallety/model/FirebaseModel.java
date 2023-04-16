@@ -61,6 +61,8 @@ public class FirebaseModel {
                             callback.onComplete(user);
                         }
                     });
+        } else {
+            callback.onComplete(null);
         }
     }
 
