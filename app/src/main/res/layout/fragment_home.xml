@@ -13,9 +13,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:scrollbars="vertical"
         >
 
     <LinearLayout
+        android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -27,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="10dp"
         >
 
         <ImageView
@@ -75,32 +77,38 @@
         <RelativeLayout
         android:id="@+id/rl1"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         >
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="8dp"
                 android:text="Let's Action"
-                android:textSize="17sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="20dp"
                  />
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView9"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/transferMoneyCv"
         android:layout_width="80dp"
         android:layout_height="80dp"
         app:cardCornerRadius="6dp"
-        app:cardElevation="11dp"
+        app:cardElevation="8dp"
         app:layout_constraintEnd_toStartOf="@+id/savingMoneyCv"
         android:layout_below="@+id/textView9"
-        android:layout_marginStart="70dp"
         app:strokeColor="?colorSecondary"
         app:strokeWidth="1dp">
 
@@ -142,7 +150,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         app:cardCornerRadius="6dp"
-        app:cardElevation="11dp"
+        app:cardElevation="8dp"
         android:layout_toRightOf="@+id/transferMoneyCv"
         app:strokeColor="?colorSecondary"
         android:layout_marginStart="22dp"
@@ -188,7 +196,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         app:cardCornerRadius="6dp"
-        app:cardElevation="11dp"
+        app:cardElevation="8dp"
         android:layout_toRightOf="@+id/savingMoneyCv"
         app:strokeColor="?colorSecondary"
         android:layout_marginStart="22dp"
@@ -225,9 +233,10 @@
                 android:textColor="?android:attr/textColorSecondary"
                 android:textSize="11sp" />
         </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+      </com.google.android.material.card.MaterialCardView>
 
-    </RelativeLayout>
+        </LinearLayout>
+     </RelativeLayout>
 
 
 
@@ -236,27 +245,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="30dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tv3"
             android:text="Transactions"
-            android:textSize="17sp"
+            android:textSize="16sp"
             android:textStyle="bold"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="20dp"
             />
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/transactions_recList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/tv3"
             android:layout_marginTop="6dp"
             android:layout_marginStart="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="40dp"
             android:layout_marginEnd="10dp"
             tools:listitem="@layout/transaction_row"
             />
@@ -264,35 +273,5 @@
 
     </LinearLayout>
  </androidx.core.widget.NestedScrollView>
-
-
-
-        <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:gravity="bottom"
-        app:fabCradleMargin="8dp"
-        app:fabCradleRoundedCornerRadius="16dp"
-        app:fabCradleVerticalOffset="6dp"
-        android:layout_gravity="bottom"
-        >
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/empty_background"
-                android:layout_marginEnd="15dp"
-                app:menu="@menu/bottom_nav"
-                />
-     </com.google.android.material.bottomappbar.BottomAppBar>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        style="@style/Floating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:fabCustomSize="72dp"
-        app:layout_anchor="@id/app_bar"
-        app:maxImageSize="34dp"
-        tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

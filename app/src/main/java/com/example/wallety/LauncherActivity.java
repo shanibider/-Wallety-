@@ -18,6 +18,7 @@ public class LauncherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_launcher);
 
         Objects.requireNonNull(getSupportActionBar()).hide();
+
         Intent registrationIntent = new Intent(this, RegistrationActivity.class);
         Intent mainScreenIntent = new Intent(this, MainActivity.class);
         Handler handler = new Handler();

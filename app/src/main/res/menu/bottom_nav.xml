@@ -4,7 +4,7 @@
     <item
         android:id="@+id/menuTransfer"
         android:title="Transfer"
-        android:icon="@drawable/transfer"/>
+        android:icon="@drawable/transaction"/>
     <item
         android:id="@+id/menuTasks"
         android:title="Tasks"
@@ -17,7 +17,7 @@
     <item
         android:id="@+id/menuSaving"
         android:title="saving"
-        android:icon="@drawable/saving"/>
+        android:icon="@drawable/colored_saving"/>
     <item
         android:id="@+id/menuProfile"
         android:title="Profile"

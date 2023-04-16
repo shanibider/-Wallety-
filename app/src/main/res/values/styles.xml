@@ -11,4 +11,15 @@
         </item>
     </style>
 
+    <style name="FloatingPlus" parent="Widget.Design.FloatingActionButton">
+        <item name="android:foreground">@drawable/floating_plus
+        </item>
+
+    </style>
+
+    <style name="roundedImageViewRounded">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10%</item>
+    </style>
+
 </resources>

@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wallety.R;
+import com.example.wallety.model.Saving;
 import com.example.wallety.model.Transactions;
 
 import java.util.List;
@@ -44,16 +45,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                 //?
             }
         });
-
-
     }
 
     @Override
     public int getItemCount() {
         return  list.size();
     }
-
-
 
 
 
@@ -69,8 +66,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             source = itemView.findViewById(R.id.textView11);
             date = itemView.findViewById(R.id.textView12);
             sum = itemView.findViewById(R.id.textView13);
-
-
 
         }
     }
