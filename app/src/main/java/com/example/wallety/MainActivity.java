@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
@@ -30,44 +31,63 @@ public class MainActivity extends AppCompatActivity {
         navController = navHostFragment.getNavController();
         NavigationUI.setupActionBarWithNavController(this, navController);
 
-
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
 
         //BottomNavigationView handler
         bottomNavigationView.setOnItemSelectedListener(item -> {
+            int destinationId = 0;
+
             switch (item.getItemId()) {
                 case R.id.menuTransfer:
                     // Handle Profile menu item click
                     return true;
                 case R.id.menuTasks:
-                    // Handle Profile menu item click
+                    destinationId = R.id.tasksFragment;
                     break;
                 case R.id.menuSaving:
-                    replaceFragment(new SavingMoneyFragment());
+                    destinationId = R.id.savingMoneyFragment;
                     break;
                 case R.id.menuProfile:
                     // Handle Settings menu item click
                     break;
             }
-            return true;
+
+            if (destinationId != 0) {
+                navigateToDestination(destinationId);
+                return true;
+            } else {
+                return false;
+            }
+
         });
 
+        //Home button
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                replaceFragment(new HomeFragment());
+                int destinationId = 0;
+                destinationId = R.id.homeFragment;
+                if (destinationId != 0) {
+                    navigateToDestination(destinationId);
+                }
             }
         });
     }
 
-    //Outside onCreate
-    private  void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_navhost, fragment);
-        fragmentTransaction.commit();
-    }
+        //Outside onCreate
+        private void navigateToDestination(int destinationId) {
+            NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.main_navhost);
+            navHostFragment.getNavController().navigate(destinationId);
+        }
+
+
+//    private  void replaceFragment(Fragment fragment) {
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.main_navhost, fragment);
+//        fragmentTransaction.commit();
+//    }
 
 
     @Override

@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.braintreepayments.cardform.view.CardForm;
 import com.example.wallety.databinding.FragmentLinkCardBinding;
 
-
 public class LinkCardFragment extends Fragment {
     FragmentLinkCardBinding binding;
 
@@ -36,13 +35,11 @@ public class LinkCardFragment extends Fragment {
                 .actionLabel("Purchase")
                 .setup(getActivity());
 
-
         t1= view.findViewById(R.id.code);
         t2= view.findViewById(R.id.holder);
         t3= view.findViewById(R.id.month1);
         t4= view.findViewById(R.id.year1);
-        t5= view.findViewById(R.id.cvv);
-
+        //t5= view.findViewById(R.id.cvv);
 
         binding.linkCardBtn.setOnClickListener(view1 -> {
 
@@ -60,22 +57,16 @@ public class LinkCardFragment extends Fragment {
             year= cardForm.getExpirationYear();
             t4.setText(year);
 
-            cvv = cardForm.getCvv();
-            t5.setText(cvv);
-
-            Bundle bundle = getArguments();
+//            cvv = cardForm.getCvv();
+//            t5.setText(cvv);
 
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     Navigation.findNavController(view1).popBackStack();
                 }
-            }, 7000);
-
-
+            }, 5000);
         });
-
-
 
         return view;
     }

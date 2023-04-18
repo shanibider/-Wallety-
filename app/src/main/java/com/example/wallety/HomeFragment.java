@@ -2,7 +2,6 @@ package com.example.wallety;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
@@ -15,13 +14,11 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.braintreepayments.cardform.view.CardForm;
 import com.example.wallety.adapters.HomeAdapter;
 import com.example.wallety.databinding.FragmentHomeBinding;
@@ -33,13 +30,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class HomeFragment extends Fragment {
     FragmentHomeBinding binding;
     RecyclerView recyclerView;
     List<Transactions> transactionsList;
     HomeAdapter homeAdapter;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

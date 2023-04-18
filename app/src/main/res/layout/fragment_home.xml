@@ -70,9 +70,7 @@
             />
     </RelativeLayout>
 
-
 <include layout="@layout/partial_main_activity" />
-
 
         <RelativeLayout
         android:id="@+id/rl1"
