@@ -22,6 +22,7 @@
             android:id="@+id/action_homeFragment_to_tasksFragment"
             app:destination="@id/tasksFragment" />
 
+        <action
             android:id="@+id/action_homeFragment_to_transferMoneyFragment"
             app:destination="@id/transferMoneyFragment" />
 
@@ -61,9 +62,6 @@
         <action
             android:id="@+id/action_tasksFragment_to_createTaskFragment"
             app:destination="@id/createTaskFragment" />
-        <action
-            android:id="@+id/action_tasksFragment_to_dataInsertActivity"
-            app:destination="@id/dataInsertActivity" />
     </fragment>
     <fragment
         android:id="@+id/createTaskFragment"
@@ -74,13 +72,8 @@
             android:id="@+id/action_createTaskFragment_to_tasksFragment"
             app:destination="@id/tasksFragment" />
     </fragment>
-    <activity
-        android:id="@+id/dataInsertActivity"
-        android:name="com.example.wallety.TODOROOM.DataInsertActivity"
-        android:label="data insert"
-        tools:layout="@layout/activity_data_insert" />
 
-
+    <fragment
         android:id="@+id/transferMoneyFragment"
         android:name="com.example.wallety.TransferMoneyFragment"
         android:label="Transfer Money"

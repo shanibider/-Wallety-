@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="10dp"
+    android:id="@+id/partial"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-
-<!--    t1= view.findViewById(R.id.code);-->
-<!--    t2= view.findViewById(R.id.holder);-->
-<!--    t3= view.findViewById(R.id.month1);-->
-<!--    t4= view.findViewById(R.id.year1);-->
-<!--    t5= view.findViewById(R.id.cvv);-->
-<!--    -->
 
     <androidx.constraintlayout.widget.Guideline
         android:layout_width="wrap_content"
@@ -45,7 +39,7 @@
     app:layout_constraintDimensionRatio="4:2"
     app:layout_constraintEnd_toStartOf="@id/guideline2"
     app:layout_constraintStart_toStartOf="@id/guideline"
-    />
+    tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textView3"

@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.menuTransfer:
-                    // Handle Profile menu item click
-                    return true;
+                    destinationId = R.id.transferMoneyFragment;
+                    break;
                 case R.id.menuTasks:
                     destinationId = R.id.tasksFragment;
                     break;

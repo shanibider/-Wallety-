@@ -14,6 +14,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 import com.braintreepayments.cardform.view.CardForm;
 import com.example.wallety.adapters.HomeAdapter;
 import com.example.wallety.databinding.FragmentHomeBinding;
+import com.example.wallety.databinding.FragmentLinkCardBinding;
 import com.example.wallety.model.Model;
 import com.example.wallety.model.Transactions;
 import com.google.android.material.bottomappbar.BottomAppBar;
@@ -36,6 +39,8 @@ public class HomeFragment extends Fragment {
     List<Transactions> transactionsList;
     HomeAdapter homeAdapter;
 
+    private View partialView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,6 +49,8 @@ public class HomeFragment extends Fragment {
         View view = binding.getRoot();
         String nameHeader = "Hello " + Model.instance().getCurrentUser().getName();
         binding.nameHeaderTv.setText(nameHeader);
+
+        partialView = view.findViewById(R.id.partial);
 
         binding.linkCardCv.setOnClickListener(view1 -> {
             Navigation.findNavController(view1).navigate(R.id.action_homeFragment_to_linkCardFragment);
@@ -70,6 +77,25 @@ public class HomeFragment extends Fragment {
         homeAdapter = new HomeAdapter(getContext(), transactionsList);
         recyclerView.setAdapter(homeAdapter);
         homeAdapter.notifyDataSetChanged();
+
+
+        // Retrieve the data from the Bundle
+//        Bundle bundle = getArguments();
+//        if (bundle != null) {
+//            String code = bundle.getString("code1");
+//            String name = bundle.getString("name1");
+//            String month = bundle.getString("month1");
+//            String year = bundle.getString("year1");
+//
+//            TextView t1 = partialView.findViewById(R.id.code);
+//            t1.setText(code);
+//            TextView t2 = partialView.findViewById(R.id.holder);
+//            t2.setText(name);
+//            TextView t3 = partialView.findViewById(R.id.month1);
+//            t3.setText(month);
+//            TextView t4 = partialView.findViewById(R.id.year1);
+//            t4.setText(year);
+//        }
 
         return view;
     }

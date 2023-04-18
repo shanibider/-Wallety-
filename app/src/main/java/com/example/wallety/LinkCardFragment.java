@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,12 +61,19 @@ public class LinkCardFragment extends Fragment {
 //            cvv = cardForm.getCvv();
 //            t5.setText(cvv);
 
+            Bundle bundle = new Bundle();
+            bundle.putString("code1", code);
+            bundle.putString("name1", name);
+            bundle.putString("month1", month);
+            bundle.putString("year1", year);
+
+
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     Navigation.findNavController(view1).popBackStack();
                 }
-            }, 5000);
+            }, 4000);
         });
 
         return view;
