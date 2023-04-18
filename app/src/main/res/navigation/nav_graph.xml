@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_homeFragment_to_savingMoneyFragment"
             app:destination="@id/savingMoneyFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_tasksFragment"
+            app:destination="@id/tasksFragment" />
 
     </fragment>
     <fragment
@@ -27,7 +30,7 @@
     <fragment
         android:id="@+id/savingMoneyFragment"
         android:name="com.example.wallety.SavingMoneyFragment"
-        android:label="saving"
+        android:label="Saving"
         tools:layout="@layout/fragment_saving_money" >
         <action
             android:id="@+id/action_savingMoneyFragment_to_addGoalFragment"
@@ -36,10 +39,37 @@
     <fragment
         android:id="@+id/addGoalFragment"
         android:name="com.example.wallety.AddGoalFragment"
-        android:label="your goal"
+        android:label="Your goal"
         tools:layout="@layout/fragment_add_goal" >
         <action
             android:id="@+id/action_addGoalFragment_to_savingMoneyFragment"
             app:destination="@id/savingMoneyFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/tasksFragment"
+        android:name="com.example.wallety.TasksFragment"
+        android:label="Tasks"
+        tools:layout="@layout/fragment_tasks" >
+        <action
+            android:id="@+id/action_tasksFragment_to_createTaskFragment"
+            app:destination="@id/createTaskFragment" />
+        <action
+            android:id="@+id/action_tasksFragment_to_dataInsertActivity"
+            app:destination="@id/dataInsertActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/createTaskFragment"
+        android:name="com.example.wallety.CreateTaskFragment"
+        android:label="Create task"
+        tools:layout="@layout/fragment_create_task" >
+        <action
+            android:id="@+id/action_createTaskFragment_to_tasksFragment"
+            app:destination="@id/tasksFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/dataInsertActivity"
+        android:name="com.example.wallety.TODOROOM.DataInsertActivity"
+        android:label="data insert"
+        tools:layout="@layout/activity_data_insert" />
+
 </navigation>

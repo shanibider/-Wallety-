@@ -33,7 +33,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:id="@+id/tv1"
                 android:text="Your goals"
-                android:textSize="14sp"
+                android:textSize="18sp"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="30dp"
                 />
@@ -47,6 +47,7 @@
                 tools:listitem="@layout/saving_row"
                 />
 
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn1"
                 android:layout_width="wrap_content"
@@ -54,7 +55,11 @@
                 android:layout_below="@+id/saving_recList"
                 android:layout_marginTop="25dp"
                 android:layout_centerHorizontal="true"
-                android:text="+ Add Goal" />
+                android:text="Add Goal"
+                android:drawableLeft="@drawable/ic_baseline_add_24"
+                android:gravity="bottom"
+                app:iconGravity="textStart"
+                />
 
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
