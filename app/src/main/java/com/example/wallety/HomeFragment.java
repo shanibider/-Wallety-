@@ -3,6 +3,7 @@ package com.example.wallety;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -47,8 +48,10 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
         String nameHeader = "Hello " + Model.instance().getCurrentUser().getName();
         binding.nameHeaderTv.setText(nameHeader);
+
 
         partialView = view.findViewById(R.id.partial);
 

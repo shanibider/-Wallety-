@@ -1,48 +1,71 @@
 package com.example.wallety.model;
 
-import java.io.Serializable;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
-@Entity (tableName = "my_tasks" )
 public class Task {
-    private String taskTitle;
-    private String taskDetail;
+    private String id;
+    private String name;
+    private String desc;
+    private String date;
+    private String time;
+    private String amount;
 
-    @PrimaryKey(autoGenerate = true)
-    private int taskId;
 
     public Task() {
     }
 
-    public Task(String taskTitle, String taskDetail) {
-        this.taskTitle = taskTitle;
-        this.taskDetail = taskDetail;
+    public Task(String id, String name, String desc, String date, String time, String amount) {
+        this.id = id;
+        this.name = name;
+        this.desc = desc;
+        this.date = date;
+        this.time = time;
+        this.amount = amount;
     }
 
-    public int getTaskId() {
-        return taskId;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setTaskId(int taskId) {
-        this.taskId = taskId;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
-    public String getTaskDetail() {
-        return taskDetail;
+    public String getId() {
+        return id;
     }
 
-    public void setTaskDetail(String taskDetail) {
-        this.taskDetail = taskDetail;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getTaskTitle() {
-            return taskTitle;
-        }
+    public String getName() {
+        return name;
+    }
 
-    public void setTaskTitle(String taskTitle) {
-            this.taskTitle = taskTitle;
-        }
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
 }

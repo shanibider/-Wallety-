@@ -1,9 +1,6 @@
 package com.example.wallety;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,34 +8,34 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.annotation.Nullable;
 import androidx.navigation.Navigation;
-
 import com.example.wallety.databinding.FragmentAddGoalBinding;
-import com.example.wallety.databinding.FragmentSavingMoneyBinding;
 import com.example.wallety.model.Saving;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import java.util.HashMap;
+import java.util.Map;
 
-public class AddGoalFragment extends Fragment {
+public class AddGoalFragment extends BottomSheetDialogFragment {
     FragmentAddGoalBinding binding;
 
-    Button btn;
-    EditText et1, et2, et3;
+    Button saveBtn;
+    EditText savingGoal, savingDetail, savingAmount;
     ProgressBar progressBar;
+
+    DocumentReference db;
+    FirebaseUser user;
+    private FirebaseAuth mAuth;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setStyle(STYLE_NORMAL, R.style.DialogStyle);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,76 +44,57 @@ public class AddGoalFragment extends Fragment {
         binding = FragmentAddGoalBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        btn = view.findViewById(R.id.btn1_add_goal);
-        et1 = view.findViewById(R.id.et1);
-        et2 = view.findViewById(R.id.et2);
-        et3 = view.findViewById(R.id.et3);
-        progressBar = view.findViewById(R.id.progressBar);
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
 
-        //Save data button
-        btn.setOnClickListener(new View.OnClickListener() {
+        saveBtn = view.findViewById(R.id.goal_input_save);
+        savingGoal = view.findViewById(R.id.goal_input_name);
+        savingDetail = view.findViewById(R.id.goal_input_det);
+        savingAmount = view.findViewById(R.id.goal_input_amount);
+        progressBar =  view.findViewById(R.id.progressBar);
+
+
+        // Save the new goal to DataBase
+        saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveData();
+                String goal = savingGoal.getText().toString().trim();
+                String detail = savingDetail.getText().toString().trim();
+                String amount = savingAmount.getText().toString().trim();
+                String currentAmount = "0";
+
+                if(goal.equals("") || detail.equals("") || amount.equals(""))
+                {
+                    Toast.makeText(getContext(), "No field can be empty!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //add To DB
+                db = FirebaseFirestore.getInstance().collection("users").document(user.getUid());
+                String id = db.collection("saving").document().getId();
+
+                Map<String, Object> saving = new HashMap<>();
+                saving.put("id", id);
+                saving.put("goal", goal);
+                saving.put("detail", detail);
+                saving.put("amount", amount);
+                saving.put("currentAmount", currentAmount);
+
+                db.collection("saving") // name of the collection
+                        .document(id)
+                        .set(saving);
+
+                Saving s = new Saving(id, goal, detail, amount, currentAmount);
+                SavingFragment.savingList.add(s);
+                SavingFragment.savingAdapter.notifyDataSetChanged();
+
+
+
                 Navigation.findNavController(view).navigate(R.id.action_addGoalFragment_to_savingMoneyFragment);
             }
         });
+
+
+
         return view;
-    }
-
-    public void saveData() {
-       String goal = et1.getText().toString();
-       String detail = et2.getText().toString();
-       String amount = et3.getText().toString();
-       String progressBar = "50";
-
-       FirebaseFirestore db = FirebaseFirestore.getInstance();
-       String uid = FirebaseAuth.getInstance().getUid();
-       DocumentReference userRef = db.collection("users").document(uid);
-       String curUser = userRef.getId();
-
-        Saving saving = new Saving(curUser, goal, detail, amount, progressBar);
-
-        // Save Goal data to Firebase Realtime Database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("goals");
-
-        //Set values to database
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                boolean flag = false;
-                if (snapshot.exists()) {
-                    for (DataSnapshot childSnapshot : snapshot.getChildren()) {
-                        if (childSnapshot.getKey().equals(saving.getGoal())) {
-                            flag = true;
-                            break;
-                        }
-                    }
-                }
-                if (!flag) {
-                    if (goal.equals(""))
-                        Toast.makeText(getContext(), "Please set a goal", Toast.LENGTH_SHORT).show();
-                    else if (detail.equals(""))
-                        Toast.makeText(getContext(), "Please set goal's deails", Toast.LENGTH_SHORT).show();
-                    else if (amount.equals(""))
-                        Toast.makeText(getContext(), "Please set goal's total amount", Toast.LENGTH_SHORT).show();
-                    else {
-                        //If goal doesn't exists, add it to database
-                        DatabaseReference childRef = myRef.child(saving.getGoal());
-                        childRef.setValue(saving);
-                        Toast.makeText(getContext(), "Your goal uploaded successfully", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(getContext(), "Goal name is already taken", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                System.out.println(error);
-            }
-        });
-
     }
 }

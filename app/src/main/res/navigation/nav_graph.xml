@@ -35,10 +35,10 @@
         tools:layout="@layout/fragment_link_card" />
     <fragment
         android:id="@+id/savingMoneyFragment"
-        android:name="com.example.wallety.SavingMoneyFragment"
+        android:name="com.example.wallety.SavingFragment"
         android:label="Saving"
 
-        tools:layout="@layout/fragment_saving_money">
+        tools:layout="@layout/fragment_saving">
 
         <action
             android:id="@+id/action_savingMoneyFragment_to_addGoalFragment"

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment"
     >
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -107,7 +108,7 @@
         app:cardElevation="8dp"
         app:layout_constraintEnd_toStartOf="@+id/savingMoneyCv"
         android:layout_below="@+id/textView9"
-        app:strokeColor="?colorSecondary"
+        app:strokeColor="?colorPrimary"
         app:strokeWidth="1dp">
 
         <LinearLayout
@@ -150,7 +151,7 @@
         app:cardCornerRadius="6dp"
         app:cardElevation="8dp"
         android:layout_toRightOf="@+id/transferMoneyCv"
-        app:strokeColor="?colorSecondary"
+        app:strokeColor="?colorPrimary"
         android:layout_marginStart="22dp"
         android:layout_below="@+id/textView9"
         app:strokeWidth="1dp">
@@ -196,7 +197,7 @@
         app:cardCornerRadius="6dp"
         app:cardElevation="8dp"
         android:layout_toRightOf="@+id/savingMoneyCv"
-        app:strokeColor="?colorSecondary"
+        app:strokeColor="?colorPrimary"
         android:layout_marginStart="22dp"
         android:layout_below="@+id/textView9"
         app:strokeWidth="1dp">

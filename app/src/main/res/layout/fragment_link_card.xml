@@ -169,18 +169,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="20dp"/>
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/linkCardBtn"
         style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="222dp"
-        android:layout_height="50dp"
+        android:layout_width="350dp"
+        android:layout_height="55dp"
         android:layout_marginBottom="120dp"
         android:text="Link Card"
         android:textAllCaps="false"
-        app:cornerRadius="6sp"
+        app:cornerRadius="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

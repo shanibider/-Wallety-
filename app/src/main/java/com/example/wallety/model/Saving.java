@@ -4,23 +4,29 @@ import android.widget.ProgressBar;
 
 public class Saving {
 
-    String user;
+    private String id;
     private String goal;
     private String detail;
-    private String sum;
-    private String progressBar;
+    private String amount;
+    private String currentAmount;
 
-    public Saving(String user, String goal, String detail, String sum, String progressBar) {
-        this.user = user;
+    public Saving(String id, String goal, String detail, String amount, String currentAmount) {
+        this.id = id;
         this.goal = goal;
         this.detail = detail;
-        this.sum = sum;
-        this.progressBar = progressBar;
+        this.amount = amount;
+        this.currentAmount = currentAmount;
     }
 
- public String getUser() {
-        return user;
+
+    public String getId() {
+        return id;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
 
     public String getGoal() {
         return goal;
@@ -38,19 +44,19 @@ public class Saving {
         this.detail = detail;
     }
 
-    public String getSum() {
-        return sum;
+    public String getAmount() {
+        return amount;
     }
 
-    public void setSum(String sum) {
-        this.sum = sum;
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 
-    public String getProgressBar() {
-        return progressBar;
+    public String getCurrentAmount() {
+        return currentAmount;
     }
 
-    public void setProgressBar(String progressBar) {
-        this.progressBar = progressBar;
+    public void setCurrentAmount(String progressBar) {
+        this.currentAmount = currentAmount;
     }
 }
