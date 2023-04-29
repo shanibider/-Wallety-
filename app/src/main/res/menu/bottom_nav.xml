@@ -8,7 +8,7 @@
     <item
         android:id="@+id/menuTasks"
         android:title="Tasks"
-        android:icon="@drawable/target"/>
+        android:icon="@drawable/todo"/>
 
     <item
         android:id="@+id/placeholder"

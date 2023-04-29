@@ -1,37 +1,50 @@
 package com.example.wallety;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.TextView;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.wallety.adapters.TaskAdapter;
 import com.example.wallety.databinding.FragmentTasksBinding;
 import com.example.wallety.model.Task;
-import com.example.wallety.TODOROOM.TaskViewModel;
-
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-//The "Main" in youtube
 public class TasksFragment extends Fragment {
     FragmentTasksBinding binding;
 
     RecyclerView recyclerView;
-    List<Task> taskList;
-    TaskAdapter taskAdapter;
-    private TaskViewModel taskViewModel;
+    public static List<Task> taskList;
+    public static TaskAdapter taskAdapter;
+    AppCompatButton addNewTaskBtn;
+    public static TextView taskCount_tv;
+
+    private static DocumentReference db;
+    static FirebaseUser user;
+    private FirebaseAuth mAuth;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,52 +53,88 @@ public class TasksFragment extends Fragment {
         binding = FragmentTasksBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+
+        // hide actionBar
+        ActionBar actionBar = null;
+        try {
+            actionBar = Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar());
+        } catch (NullPointerException e) {}
+
+        if (actionBar != null) {
+            actionBar.hide();
+        }
+
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+        db = FirebaseFirestore.getInstance().collection("users").document(user.getUid());
+
         //Adding new task
-        binding.addTask.setOnClickListener(view1 -> {
-            Navigation.findNavController(view1).navigate(R.id.action_tasksFragment_to_createTaskFragment);
+        binding.addTaskBtn.setOnClickListener(view1 -> {
+
+            // navigation with BottomSheetDialogFragment
+            Window window = getActivity().getWindow();
+            // clear FLAG_TRANSLUCENT_STATUS flag:
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            // finally change the color
+            window.setStatusBarColor(ContextCompat.getColor(getContext(), R.color.teal_100));
+
+            // Show the AddNewTask BottomSheetDialogFragment
+            CreateTaskFragment createTaskFragment = new CreateTaskFragment();
+            createTaskFragment.show(getChildFragmentManager(), CreateTaskFragment.TAG);
+
+            // navigation without BottomSheetDialogFragment
+            //Navigation.findNavController(view1).navigate(R.id.action_tasksFragment_to_createTaskFragment);
         });
 
-//        taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
-//
-//        //navigate from TasksFragment to CreateTaskFragment(dataInsertActivity) and retrieve the result data in TasksFragment
-//        binding.addTask.setOnClickListener(view1 -> {
-//            Navigation.findNavController(view1).navigate(R.id.action_tasksFragment_to_dataInsertActivity);
-//        });
-
-        //Result to retrieve from DataInsertActivity (/CreateTaskFragment)
-        final ActivityResultLauncher<Intent> getDataForResult = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        Intent data = result.getData();
-                        String title = data.getStringExtra("title");
-                        String description = data.getStringExtra("description");
-                        Task task = new Task(title, description);
-                        taskViewModel.insert(task);
-                        Toast.makeText(getContext(), "Task added", Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
-
-
-
-
-        recyclerView = view.findViewById(R.id.taskRecycler);
+        // RecyclerView initialization
+        recyclerView = view.findViewById(R.id.task_recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         taskList = new ArrayList<>();
 
-        taskList.add(new Task("Clean the kitchen", "Sweep and wipe"));
-        taskList.add(new Task("Fold laundry", "Fold and put in the closet"));
+        taskList = addTasks();
+
+        taskCount_tv = view.findViewById(R.id.taskCount_tv);
+        taskCount_tv.setText(String.valueOf(taskList.size()));
 
         taskAdapter = new TaskAdapter(getContext(), taskList);
         recyclerView.setAdapter(taskAdapter);
         taskAdapter.notifyDataSetChanged();
 
-
-
         return view;
     }
 
 
+    // Add the tasks to the List, to be shown in RecyclerView
+    // By fetching the tasks from DataBase
+    public static List<Task> addTasks() {
+        if(taskList!=null)
+            taskList.clear();
+        db.collection("tasks")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            // task.getResult() returns a list of documents
+                            // belonging to the collection = "tasks"
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String id = (String) document .get("id");
+                                String name = (String) document .get("name");
+                                String desc = (String) document .get("desc");
+                                String date = (String) document .get("date");
+                                String time = (String) document .get("time");
+                                String amount = (String) document .get("amount");
 
+
+                                Task t = new Task(id, name, desc, date, time, amount);
+                                taskList.add(t);
+                                taskAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                });
+        return taskList;
+    }
 }
