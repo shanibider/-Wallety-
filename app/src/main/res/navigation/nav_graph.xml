@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_homeFragment_to_transferMoneyFragment"
             app:destination="@id/transferMoneyFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_transferMoneyFragment2"
+            app:destination="@id/transferMoneyFragment2" />
 
 
     </fragment>
@@ -78,5 +81,12 @@
         android:name="com.example.wallety.TransferMoneyFragment"
         android:label="Transfer Money"
         tools:layout="@layout/fragment_transfer_money" />
+
+    <fragment
+        android:id="@+id/transferMoneyFragment2"
+        android:name="com.example.wallety.TransferMoney2Fragment"
+        android:label="TransferMoneyFragment2"
+        tools:layout="@layout/fragment_transfer_money2"
+        />
 
 </navigation>

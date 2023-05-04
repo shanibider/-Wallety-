@@ -13,7 +13,7 @@
     <color name="teal_200">#12BCBC</color>
     <color name="teal_500">#66BFBF</color>
 
-
+    <color name="lightGrey">#D8D8D8</color>
     <color name="grey">#474747</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
