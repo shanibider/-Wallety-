@@ -64,7 +64,7 @@ public class HomeFragment extends Fragment {
         });
 
         binding.transferMoneyCv.setOnClickListener(view1 -> {
-            Navigation.findNavController(view1).navigate(R.id.action_homeFragment_to_transferMoneyFragment);
+            Navigation.findNavController(view1).navigate(R.id.action_homeFragment_to_transferMoneyFragment2);
         });
 
         recyclerView = view.findViewById(R.id.transactions_recList);

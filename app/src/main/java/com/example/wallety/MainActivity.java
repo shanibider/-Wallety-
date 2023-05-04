@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.menuTransfer:
-                    destinationId = R.id.transferMoneyFragment;
+                    destinationId = R.id.transferMoneyFragment2;
                     break;
                 case R.id.menuTasks:
                     destinationId = R.id.tasksFragment;
