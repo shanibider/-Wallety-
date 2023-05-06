@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.wallety.activities.MainActivity;
 import com.example.wallety.databinding.FragmentSignUpBinding;
 import com.example.wallety.model.Model;
 import com.example.wallety.model.User;

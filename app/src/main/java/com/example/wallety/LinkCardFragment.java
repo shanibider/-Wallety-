@@ -79,3 +79,5 @@ public class LinkCardFragment extends Fragment {
         return view;
     }
 }
+
+

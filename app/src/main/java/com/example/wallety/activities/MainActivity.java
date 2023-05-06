@@ -1,4 +1,4 @@
-package com.example.wallety;
+package com.example.wallety.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.wallety.R;
 import com.example.wallety.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                     destinationId = R.id.savingMoneyFragment;
                     break;
                 case R.id.menuProfile:
-                    // Handle Settings menu item click
+                    destinationId = R.id.stripeActivity;
                     break;
             }
 
