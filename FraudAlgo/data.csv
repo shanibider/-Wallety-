@@ -1,0 +1,15 @@
+User ID,Time,Amount,Store Name,Location,Category,Currency
+1,2023-04-13T14:30:00Z,355,KSP,Online,Technology,ILS
+2,2023-04-15T17:11:00Z,18,Castro,Tel Aviv,Clothes,ILS
+1,2023-04-15T17:42:00Z,56,Sephora,Online,Pharmacy,USD
+1,2023-04-18T10:30:00Z,16,KFC,London,Food,GBP
+2,2023-05-06T09:19:00Z,45,Mcdonalds,Haifa,Food,ILS
+3,2023-05-08T23:22:00Z,150,Super Pharm,Eilat,Pharmacy,ILS
+1,2023-05-09T11:30:00Z,300,Zara,Tel Aviv,Clothes,ILS
+2,2023-05-09T13:25:00Z,235,Bug,Herzliya,Technology,ILS
+3,2023-05-09T14:10:00Z,60,American Eagle,Kfar Sava,Clothes,ILS
+1,2023-05-13T09:46:00Z,20,Amazon,Online,Technology,USD
+1,2023-05-13T09:53:00Z,25,Amazon,Online,Technology,USD
+1,2023-05-13T10:03:00Z,30,Amazon,Online,Technology,USD
+1,2023-05-13T10:28:00Z,80,Amazon,Online,Technology,USD
+1,2023-05-13T14:00:00Z,55,Amazon,Online,Technology,USD
