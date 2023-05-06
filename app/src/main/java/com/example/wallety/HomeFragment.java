@@ -52,7 +52,6 @@ public class HomeFragment extends Fragment {
         String nameHeader = "Hello " + Model.instance().getCurrentUser().getName();
         binding.nameHeaderTv.setText(nameHeader);
 
-
         partialView = view.findViewById(R.id.partial);
 
         binding.linkCardCv.setOnClickListener(view1 -> {
@@ -71,34 +70,59 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         transactionsList = new ArrayList<>();
 
-        transactionsList.add(new Transactions(R.drawable.shopping_cart, "Super market", "08/04/2023", " - ₪159"));
-        transactionsList.add(new Transactions(R.drawable.shopping_bag, "KSP", "08/04/2023", " - ₪299"));
-        transactionsList.add(new Transactions(R.drawable.shopping_cart, "AM PM", "07/04/2023", " - ₪79"));
-        transactionsList.add(new Transactions(R.drawable.shopping_bag, "Shopping", "03/04/2023", " - ₪250"));
-        transactionsList.add(new Transactions(R.drawable.parents_transfer, "Mom transfer", "01/04/2023", " + ₪200"));
+        transactionsList.add(new Transactions(R.drawable.shopping_cart, "Super market", "08/04/2023", "159"));
+        transactionsList.add(new Transactions(R.drawable.shopping_bag, "KSP", "08/04/2023", "299"));
+        transactionsList.add(new Transactions(R.drawable.shopping_bag, "Shopping", "03/04/2023", "10000"));
+        transactionsList.add(new Transactions(R.drawable.shopping_cart, "KSP", "07/04/2023", "3500"));
+        transactionsList.add(new Transactions(R.drawable.parents_transfer, "Mom transfer", "01/04/2023", "200"));
+        transactionsList.add(new Transactions(R.drawable.shopping_cart, "AM PM", "07/04/2023", "79"));
+        transactionsList.add(new Transactions(R.drawable.shopping_cart, "Super-Pharm", "07/04/2023", "120"));
+
 
         homeAdapter = new HomeAdapter(getContext(), transactionsList);
         recyclerView.setAdapter(homeAdapter);
         homeAdapter.notifyDataSetChanged();
 
 
-        // Retrieve the data from the Bundle
-//        Bundle bundle = getArguments();
-//        if (bundle != null) {
-//            String code = bundle.getString("code1");
-//            String name = bundle.getString("name1");
-//            String month = bundle.getString("month1");
-//            String year = bundle.getString("year1");
-//
-//            TextView t1 = partialView.findViewById(R.id.code);
-//            t1.setText(code);
-//            TextView t2 = partialView.findViewById(R.id.holder);
-//            t2.setText(name);
-//            TextView t3 = partialView.findViewById(R.id.month1);
-//            t3.setText(month);
-//            TextView t4 = partialView.findViewById(R.id.year1);
-//            t4.setText(year);
-//        }
+        // z-score algorithm
+
+        // Calculate the mean and standard deviation of the expenses
+        double mean = 0.0;
+        double stdDev = 0.0;
+        for (Transactions transaction : transactionsList) {
+            double expense = Double.parseDouble(transaction.getSum().replaceAll("[^\\d.-]", ""));
+            mean += expense;
+        }
+        mean /= transactionsList.size();
+        Log.d("result", String.valueOf(mean));
+
+        for (Transactions transaction : transactionsList) {
+            double expense = Double.parseDouble(transaction.getSum().replaceAll("[^\\d.-]", ""));
+            stdDev += Math.pow(expense - mean, 2);
+        }
+        stdDev = Math.sqrt(stdDev / (transactionsList.size() - 1));
+        Log.d("result", String.valueOf(stdDev));
+
+
+        // Set the Z-score threshold
+        double zScoreThreshold = 1.0;
+
+        // Calculate the Z-score for each expense and mark irregular expenses
+        for (Transactions transaction : transactionsList) {
+            double expense = Double.parseDouble(transaction.getSum().replaceAll("[^\\d.-]", ""));
+            double zScore = (expense - mean) / stdDev;
+            transaction.setZScore(zScore);
+            Log.d("result", String.valueOf(transaction.getZScore()));
+
+            if (Math.abs(zScore) > zScoreThreshold) {
+                // This expense is irregular
+                     // need to pop notification
+                Log.d("Irregular Expense", transaction.getSum());
+            } else {
+                // This expense is not irregular
+                Log.d("Normal Expense", transaction.getSum());
+            }
+        }
 
         return view;
     }

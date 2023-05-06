@@ -35,6 +35,10 @@ android {
 
 dependencies {
 
+    implementation 'com.stripe:stripe-java:20.77.0'
+    implementation 'com.stripe:stripe-android:17.2.0'
+    implementation 'com.android.volley:volley:1.2.1'
+
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
@@ -60,4 +64,9 @@ dependencies {
     def room_version = "2.4.3"
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
+
+
+
+
+
 }

@@ -1,134 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/teal70background"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AddGoalFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/save_money2_color"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
         <TextView
-            android:padding="14dp"
-            android:gravity="center"
-            android:clipToOutline="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Let's create your goal"
             android:layout_gravity="center"
-            android:textColor="@color/grey"
-            android:textSize="20sp"
+            android:layout_marginTop="16dp"
+            android:clipToOutline="true"
             android:fontFamily="sans-serif"
-            >
-        </TextView>
+            android:gravity="center"
+            android:padding="14dp"
+            android:text="Lets Create Your Goal!"
+            android:textColor="@color/grey"
+            android:textFontWeight="500"
+            android:textSize="26sp"></TextView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical"
             android:paddingStart="16dp"
-            android:paddingEnd="16dp"
             android:paddingTop="16dp"
-            android:orientation="vertical">
+            android:paddingEnd="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/tv1"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:id="@+id/tv2"
-                android:text="Add goal"
-                android:textFontWeight="400"
-                android:textSize="14sp"
-                />
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                app:startIconDrawable="@drawable/name"
                 android:layout_height="match_parent"
-                android:layout_marginTop="6dp"
-                >
+                app:startIconDrawable="@drawable/name">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/goal_input_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/white"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:inputType="textPersonName"
-                    android:textColorHint="@android:color/darker_gray"
                     android:hint="Your Goal"
-                    />
+                    android:inputType="textPersonName"
+                    android:textColor="@color/black"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/tv3"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:id="@+id/tv4"
-                android:text="Add Goal's Details"
-                android:textFontWeight="400"
-                android:textSize="14sp"
-                android:layout_marginTop="20dp"
-                />
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                app:startIconDrawable="@drawable/desc"
                 android:layout_height="match_parent"
-                android:layout_marginTop="6dp"
-
-                >
+                android:layout_marginTop="16dp"
+                app:startIconDrawable="@drawable/desc">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/goal_input_det"
                     android:layout_width="match_parent"
-                    android:maxLines="2"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/white"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:hint="Your goal's detail"
                     android:inputType="textPersonName"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
                     android:textColorHint="@android:color/darker_gray"
-                    android:hint="Your goal's detail" />
+                    android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/tv5"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:id="@+id/tv6"
-                android:text="Add Total Goal Amount"
-                android:textFontWeight="400"
-                android:textSize="14sp"
-                android:layout_marginTop="20dp"
-                />
-
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:startIconDrawable="@drawable/date"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="6dp"
-                >
+                android:layout_marginTop="16dp"
+                app:startIconDrawable="@drawable/money">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/goal_input_amount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
                     android:hint="Goal amount"
-                    android:textColor="@color/black"
                     android:inputType="number"
-                    android:textSize="16sp"
+                    android:textColor="@color/black"
                     android:textColorHint="@android:color/darker_gray"
-                    android:backgroundTint="@color/white"/>
+                    android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatButton
@@ -136,12 +107,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:text="Create a goal"
-                android:background="@drawable/button_bg"
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginVertical="66dp"
-                android:textColor="@color/white">
-            </androidx.appcompat.widget.AppCompatButton>
+                android:background="@drawable/button_bg"
+                android:text="Create a goal"
+                android:textColor="@color/white"></androidx.appcompat.widget.AppCompatButton>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

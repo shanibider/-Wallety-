@@ -3,7 +3,7 @@
         >
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/teal_90</item>
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
 
     <style name="Floating" parent="Widget.Design.FloatingActionButton">

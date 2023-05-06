@@ -6,6 +6,8 @@ public class Transactions {
     private String source;
     private String date;
     private String sum;
+    private double zScore;
+
 
 
     public Transactions(int image, String source, String date, String sum) {
@@ -13,6 +15,8 @@ public class Transactions {
         this.source = source;
         this.date = date;
         this.sum = sum;
+        this.zScore = 0.0;
+
     }
 
     public int getImage() {
@@ -45,5 +49,13 @@ public class Transactions {
 
     public void setSum(String sum) {
         this.sum = sum;
+    }
+
+    public double getZScore() {
+        return zScore;
+    }
+
+    public void setZScore(double zScore) {
+        this.zScore = zScore;
     }
 }
