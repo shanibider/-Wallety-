@@ -1,0 +1,19 @@
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar"
+        >
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/teal_90</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="Floating" parent="Widget.Design.FloatingActionButton">
+        <item name="android:foreground">@drawable/floating_background
+        </item>
+    </style>
+
+   <style name="roundedImageViewRounded">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10%</item>
+    </style>
+
+</resources>

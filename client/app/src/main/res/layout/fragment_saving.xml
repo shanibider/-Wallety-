@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SavingFragment"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/teal_80"
+        android:layout_height="match_parent"
+       >
+
+        <LinearLayout
+            android:id="@+id/home_heading"
+            android:layout_width="match_parent"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Your goals"
+                    android:textColor="@color/grey"
+                    android:textSize="20sp"
+                    android:fontFamily="sans-serif"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/goalCount_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="8"
+                        android:textColor="@color/grey"
+                        android:textSize="14sp"
+                        android:alpha="0.6"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif-light"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="goals"
+                        android:textColor="@color/grey"
+                        android:textSize="14sp"
+                        android:paddingStart="8dp"
+                        android:alpha="0.6"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif-light"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+            </View>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/addGoalBtn"
+                android:layout_gravity="bottom"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:background="@drawable/button_bg_teal500"
+                android:textFontWeight="400"
+                android:text="Add Goal">
+            </androidx.appcompat.widget.AppCompatButton>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/fragment_bg"
+            android:paddingStart="14dp"
+            android:paddingTop="22dp"
+            android:paddingEnd="14dp"
+            android:layout_marginTop="30dp"
+            android:layout_below="@id/home_heading"
+            >
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/saving_recList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="true"
+                tools:listitem="@layout/saving_row"
+            />
+        </androidx.core.widget.NestedScrollView>
+
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>
