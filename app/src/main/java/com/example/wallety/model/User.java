@@ -2,16 +2,28 @@ package com.example.wallety.model;
 
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FieldValue;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class User {
+    @SerializedName("id")
     private String id = "";
+
+    @SerializedName("name")
     private String name;
+
+    @SerializedName("phone")
     private String phone;
+
+    @SerializedName("email")
     private String email;
+
+    @SerializedName("password")
     private String password;
+
+    @SerializedName("lastUpdated")
     public Long lastUpdated;
 
     public User(String name, String phone, String email, String password) {

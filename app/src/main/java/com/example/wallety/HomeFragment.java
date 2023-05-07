@@ -28,11 +28,14 @@ import com.example.wallety.databinding.FragmentHomeBinding;
 import com.example.wallety.databinding.FragmentLinkCardBinding;
 import com.example.wallety.model.Model;
 import com.example.wallety.model.Transactions;
+import com.example.wallety.model.User;
+import com.example.wallety.model.server.UserFetcherCon;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class HomeFragment extends Fragment {
     FragmentHomeBinding binding;

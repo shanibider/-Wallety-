@@ -15,6 +15,12 @@ import android.widget.Toast;
 import com.example.wallety.databinding.FragmentSignUpBinding;
 import com.example.wallety.model.Model;
 import com.example.wallety.model.User;
+import com.example.wallety.model.server.UserFetcherCon;
+import com.example.wallety.model.server.UserSignUpResponse;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SignUpFragment extends Fragment {
     FragmentSignUpBinding binding;
@@ -42,15 +48,44 @@ public class SignUpFragment extends Fragment {
                     password.length() > 5 && password.equals(confirmedPassword)
             ) {
                 User user = new User(name, phone, email, password);
-                Model.instance().createUser(user,
-                        (onSuccess) -> {
-                            startActivity(intent);
-                            getActivity().finish();
-                        },
-                        (existingDetail) -> {
-                            Toast.makeText(getContext(), existingDetail + " already exists",
+
+                UserFetcherCon.signUpUser(user, new Callback<UserSignUpResponse>() {
+                    @Override
+                    public void onResponse(Call<UserSignUpResponse> call, Response<UserSignUpResponse> response) {
+                        if (response.isSuccessful()) {
+                            User user = response.body().getUser();
+                            if (user != null) {
+                                Model.instance().setCurrentUser(user);
+                                startActivity(intent);
+                                getActivity().finish();
+                            } else {
+                                Toast.makeText(getContext(), response.body().getExistingDetail() + " already exists",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(getActivity(), "Error occurred",
                                     Toast.LENGTH_SHORT).show();
-                        });
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserSignUpResponse> call, Throwable t) {
+                        System.out.println("error " + t.getMessage());
+                        Toast.makeText(getActivity(), "Error occurred",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+//                Model.instance().createUser(user,
+//                        (onSuccess) -> {
+//                            startActivity(intent);
+//                            getActivity().finish();
+//                        },
+//                        (existingDetail) -> {
+//                            Toast.makeText(getContext(), existingDetail + " already exists",
+//                                    Toast.LENGTH_SHORT).show();
+//                        });
             } else {
                 if (name.length() == 0) {
                     binding.nameEt.setError("Required");
