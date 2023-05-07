@@ -23,11 +23,14 @@
             app:destination="@id/tasksFragment" />
 
         <action
-            android:id="@+id/action_homeFragment_to_transferMoneyFragment"
-            app:destination="@id/transferMoneyFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_transferMoneyFragment2"
             app:destination="@id/transferMoneyFragment2" />
+        <action
+            android:id="@+id/action_homeFragment_to_stripeActivity"
+            app:destination="@id/stripeActivity" />
+        <action
+            android:id="@+id/action_homeFragment_to_stripeActivity2"
+            app:destination="@id/stripeActivity" />
 
 
     </fragment>
@@ -76,17 +79,27 @@
             app:destination="@id/tasksFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/transferMoneyFragment"
-        android:name="com.example.wallety.TransferMoneyFragment"
-        android:label="Transfer Money"
-        tools:layout="@layout/fragment_transfer_money" />
+
 
     <fragment
         android:id="@+id/transferMoneyFragment2"
         android:name="com.example.wallety.TransferMoney2Fragment"
         android:label="TransferMoneyFragment2"
         tools:layout="@layout/fragment_transfer_money2"
-        />
+        >
+        <action
+            android:id="@+id/action_transferMoneyFragment2_to_moneySentFragment"
+            app:destination="@id/moneySentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/moneySentFragment"
+        android:name="com.example.wallety.MoneySentFragment"
+        android:label="fragment_money_sent"
+        tools:layout="@layout/fragment_money_sent" />
+    <activity
+        android:id="@+id/stripeActivity"
+        android:name="com.example.wallety.activities.StripeActivity"
+        android:label="activity_stripe"
+        tools:layout="@layout/activity_stripe" />
 
 </navigation>

@@ -16,7 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wallety.adapters.SavingAdapter;
 import com.example.wallety.databinding.FragmentSavingBinding;
+import com.example.wallety.model.Model;
 import com.example.wallety.model.Saving;
+import com.example.wallety.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,8 +40,7 @@ public class SavingFragment extends Fragment {
     public static TextView goalCount_tv;
 
     private static DocumentReference db;
-    static FirebaseUser user;
-    private FirebaseAuth mAuth;
+    static User user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,9 +59,8 @@ public class SavingFragment extends Fragment {
             actionBar.hide();
         }
 
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
-        db = FirebaseFirestore.getInstance().collection("users").document(user.getUid());
+        user = Model.instance().getCurrentUser();
+        db = FirebaseFirestore.getInstance().collection("users").document(user.getId());
 
         // adding new goal
         binding.addGoalBtn.setOnClickListener(view1 -> {

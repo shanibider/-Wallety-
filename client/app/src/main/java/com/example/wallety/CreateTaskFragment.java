@@ -20,7 +20,9 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.wallety.databinding.FragmentCreateTaskBinding;
+import com.example.wallety.model.Model;
 import com.example.wallety.model.Task;
+import com.example.wallety.model.User;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -50,8 +52,7 @@ public class CreateTaskFragment extends BottomSheetDialogFragment {
     private TextInputEditText taskName, taskDesc, taskDate, taskTime, taskAmount;
     private AppCompatButton saveBtn;
     DocumentReference db;
-    FirebaseUser user;
-    private FirebaseAuth mAuth;
+    User user;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -75,8 +76,7 @@ public class CreateTaskFragment extends BottomSheetDialogFragment {
         binding = FragmentCreateTaskBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
+        user = Model.instance().getCurrentUser();
 
         saveBtn = view.findViewById(R.id.task_input_save);
         taskName = view.findViewById(R.id.task_input_name);
@@ -193,7 +193,7 @@ public class CreateTaskFragment extends BottomSheetDialogFragment {
                     return;
                 }
                 //add To DB
-                db = FirebaseFirestore.getInstance().collection("users").document(user.getUid());
+                db = FirebaseFirestore.getInstance().collection("users").document(user.getId());
                 String id = db.collection("tasks").document().getId();
 
                 Map<String, Object> task = new HashMap<>();

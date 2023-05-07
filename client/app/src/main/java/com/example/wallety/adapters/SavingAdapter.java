@@ -20,8 +20,10 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.wallety.R;
+import com.example.wallety.model.Model;
 import com.example.wallety.model.Saving;
 import com.example.wallety.model.Task;
+import com.example.wallety.model.User;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputEditText;
@@ -41,8 +43,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
 
     Context context;
     List<Saving> savingList;
-    FirebaseUser user;
-    private FirebaseAuth mAuth;
+    User user;
     DocumentReference db;
 
     public SavingAdapter(Context context, List<Saving> savingList) {
@@ -58,8 +59,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
+        user = Model.instance().getCurrentUser();
 
         ImageButton savingDelete = holder.savingDelete;
         ImageButton savingEdit = holder.savingEdit;
@@ -101,7 +101,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
 
                 String id = saving.getId();
                 // delete Item From DB
-                db = FirebaseFirestore.getInstance().collection("users").document(user.getUid());
+                db = FirebaseFirestore.getInstance().collection("users").document(user.getId());
                 db.collection("saving")
                         .document(id)
                         .delete();
@@ -163,7 +163,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
                     savingList.get(position).setAmount(am);
 
                     //update DB with the new values
-                    db = FirebaseFirestore.getInstance().collection("users").document(user.getUid());
+                    db = FirebaseFirestore.getInstance().collection("users").document(user.getId());
                     Map<String, Object> saving = new HashMap<>();
                     saving.put("id", id);
                     saving.put("goal", n);

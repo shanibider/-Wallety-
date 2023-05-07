@@ -20,7 +20,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.wallety.adapters.TaskAdapter;
 import com.example.wallety.databinding.FragmentTasksBinding;
+import com.example.wallety.model.Model;
 import com.example.wallety.model.Task;
+import com.example.wallety.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -42,8 +44,7 @@ public class TasksFragment extends Fragment {
     public static TextView taskCount_tv;
 
     private static DocumentReference db;
-    static FirebaseUser user;
-    private FirebaseAuth mAuth;
+    static User user;
 
 
     @Override
@@ -64,9 +65,8 @@ public class TasksFragment extends Fragment {
             actionBar.hide();
         }
 
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
-        db = FirebaseFirestore.getInstance().collection("users").document(user.getUid());
+        user = Model.instance().getCurrentUser();
+        db = FirebaseFirestore.getInstance().collection("users").document(user.getId());
 
         //Adding new task
         binding.addTaskBtn.setOnClickListener(view1 -> {

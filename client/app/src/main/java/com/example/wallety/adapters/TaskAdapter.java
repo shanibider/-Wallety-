@@ -21,7 +21,9 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.wallety.R;
 import com.example.wallety.TasksFragment;
+import com.example.wallety.model.Model;
 import com.example.wallety.model.Task;
+import com.example.wallety.model.User;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputEditText;
@@ -40,8 +42,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     Context context;
     List<Task> taskList;
-    FirebaseUser user;
-    private FirebaseAuth mAuth;
+    User user;
     DocumentReference db;
     private TasksFragment tasksFragment;
 
@@ -59,8 +60,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull TaskAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
+        user = Model.instance().getCurrentUser();
         CheckBox taskCheckBox = holder.taskCheckBox;
 
         ImageButton taskDelete = holder.taskDelete;
@@ -103,7 +103,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
                 String id = taskModel.getId();
                 // delete Item From DB
-                db = FirebaseFirestore.getInstance().collection("users").document(user.getUid());
+                db = FirebaseFirestore.getInstance().collection("users").document(user.getId());
                 db.collection("tasks")
                         .document(id)
                         .delete();
@@ -223,7 +223,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                     taskList.get(position).setAmount(am);
 
                     //update DB
-                    db = FirebaseFirestore.getInstance().collection("users").document(user.getUid());
+                    db = FirebaseFirestore.getInstance().collection("users").document(user.getId());
                     Map<String, Object> task = new HashMap<>();
                     task.put("id", id);
                     task.put("name", n);

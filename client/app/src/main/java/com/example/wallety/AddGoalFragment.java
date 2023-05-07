@@ -11,7 +11,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.navigation.Navigation;
 import com.example.wallety.databinding.FragmentAddGoalBinding;
+import com.example.wallety.model.Model;
 import com.example.wallety.model.Saving;
+import com.example.wallety.model.User;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,8 +30,7 @@ public class AddGoalFragment extends BottomSheetDialogFragment {
     ProgressBar progressBar;
 
     DocumentReference db;
-    FirebaseUser user;
-    private FirebaseAuth mAuth;
+    User user;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,8 +45,7 @@ public class AddGoalFragment extends BottomSheetDialogFragment {
         binding = FragmentAddGoalBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
+        user = Model.instance().getCurrentUser();
 
         saveBtn = view.findViewById(R.id.goal_input_save);
         savingGoal = view.findViewById(R.id.goal_input_name);
@@ -69,7 +69,7 @@ public class AddGoalFragment extends BottomSheetDialogFragment {
                     return;
                 }
                 //add To DB
-                db = FirebaseFirestore.getInstance().collection("users").document(user.getUid());
+                db = FirebaseFirestore.getInstance().collection("users").document(user.getId());
                 String id = db.collection("saving").document().getId();
 
                 Map<String, Object> saving = new HashMap<>();
