@@ -13,18 +13,18 @@ const {Collections, config} = require("../config/config");
 
 const getLoggedInUser = async (req, res) => {
     const {auth, db} = config;
-    let user = null;
+    let loggedInUser = null;
     if (auth.currentUser) {
         const {uid, email} = auth.currentUser;
         const docRef = doc(db, Collections.USERS, uid);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-            user = docSnap.data();
-            formatUser(user, email, '');
+            loggedInUser = docSnap.data();
+            formatUser(loggedInUser, email, '');
             console.log(email + " logged in")
         }
     }
-    res.status(StatusCodes.OK).send(user);
+    res.status(StatusCodes.OK).send({loggedInUser});
 };
 
 const loginUser = async (req, res) => {

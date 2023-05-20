@@ -13,5 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
-.env
+env
 .idea/vcs.xml

@@ -14,13 +14,6 @@ import android.widget.Toast;
 import com.example.wallety.activities.MainActivity;
 import com.example.wallety.databinding.FragmentLoginBinding;
 import com.example.wallety.model.Model;
-import com.example.wallety.model.User;
-import com.example.wallety.model.server.UserFetcherCon;
-import com.example.wallety.model.server.UserLoginRequest;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LoginFragment extends Fragment {
     FragmentLoginBinding binding;
@@ -46,40 +39,16 @@ public class LoginFragment extends Fragment {
             binding.passwordTv.setError(password.length() == 0 ? "Required" : null);
 
             if (email.length() > 0 && password.length() > 0) {
-                UserLoginRequest userLoginRequest = new UserLoginRequest(email, password);
-                UserFetcherCon.loginUser(userLoginRequest, new Callback<User>() {
-                    @Override
-                    public void onResponse(Call<User> call, Response<User> response) {
-                        if (response.isSuccessful()) {
-                            User loggedInUser = response.body();
-                            Model.instance().setCurrentUser(loggedInUser);
+                Model.instance().loginUser(email, password,
+                        (success) -> {
                             startActivity(intent);
                             getActivity().finish();
-                        } else {
+                        },
+                        (error) -> {
                             Toast.makeText(getActivity(), "Invalid details",
                                     Toast.LENGTH_SHORT).show();
                         }
-                    }
-
-                    @Override
-                    public void onFailure(Call<User> call, Throwable t) {
-                        System.out.println("error " + t.getMessage());
-                        Toast.makeText(getActivity(), "Invalid details",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-
-//                Model.instance().loginUser(email, password,
-//                        (success) -> {
-//                            startActivity(intent);
-//                            getActivity().finish();
-//                        },
-//                        (error) -> {
-//                            Toast.makeText(getActivity(), "Invalid details",
-//                                    Toast.LENGTH_SHORT).show();
-//                        }
-//                );
+                );
             }
         });
 

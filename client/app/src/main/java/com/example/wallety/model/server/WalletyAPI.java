@@ -9,7 +9,7 @@ import retrofit2.http.POST;
 
 public interface WalletyAPI {
     @GET("loggedInUser")
-    Call<User> getLoggedInUser();
+    Call<LoggedInUserResponse> getLoggedInUser();
 
     @POST("loginUser")
     Call<User> loginUser(@Body UserLoginRequest userLoginRequest);

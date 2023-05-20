@@ -1,21 +1,19 @@
 package com.example.wallety.model;
 
-import android.graphics.Bitmap;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
-import androidx.core.os.HandlerCompat;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import com.example.wallety.model.server.LoggedInUserResponse;
+import com.example.wallety.model.server.UserFetcherCon;
+import com.example.wallety.model.server.UserLoginRequest;
+import com.example.wallety.model.server.UserSignUpResponse;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Model {
     private static final Model _instance = new Model();
@@ -24,10 +22,7 @@ public class Model {
         return _instance;
     }
 
-    private Executor executor = Executors.newSingleThreadExecutor();
-    private Handler mainHandler = HandlerCompat.createAsync(Looper.getMainLooper());
     private FirebaseModel firebaseModel = new FirebaseModel();
-
     private User loggedUser = null;
     private HashMap<String, User> usersByIds = new HashMap<>();
 
@@ -39,11 +34,21 @@ public class Model {
     }
 
     public void fetchLoggedUser(Listener<Void> osSuccess, Listener<Void> onFailure) {
-        firebaseModel.fetchLoggedInUser(user -> {
-            setCurrentUser(user);
-            if (user != null) {
-                osSuccess.onComplete(null);
-            } else {
+        UserFetcherCon.getLoggedInUser(new Callback<LoggedInUserResponse>() {
+            @Override
+            public void onResponse(Call<LoggedInUserResponse> call, Response<LoggedInUserResponse> response) {
+                if (response.isSuccessful() && response.body().getLoggedInUser() != null) {
+                    User loggedInUser = response.body().getLoggedInUser();
+                    setCurrentUser(loggedInUser);
+                    osSuccess.onComplete(null);
+                } else {
+                    onFailure.onComplete(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoggedInUserResponse> call, Throwable t) {
+                Log.d("ERROR", t.getMessage());
                 onFailure.onComplete(null);
             }
         });
@@ -57,14 +62,29 @@ public class Model {
         loggedUser = user;
     }
 
-    public void createUser(User user, Listener<Void> listener, Listener<String> onFailure) {
-        firebaseModel.handleUserCreation(user,
-                (Void) -> {
-                    usersByIds.put(user.getId(), user);
-                    setCurrentUser(user);
-                    listener.onComplete(null);
-                },
-                onFailure);
+    public void createUser(User user, Listener<Void> onSuccess, Listener<String> onFailure) {
+        UserFetcherCon.signUpUser(user, new Callback<UserSignUpResponse>() {
+            @Override
+            public void onResponse(Call<UserSignUpResponse> call, Response<UserSignUpResponse> response) {
+                if (response.isSuccessful()) {
+                    User user = response.body().getUser();
+                    if (user != null) {
+                        setCurrentUser(user);
+                        onSuccess.onComplete(null);
+                    } else {
+                        onFailure.onComplete(response.body().getExistingDetail());
+                    }
+                } else {
+                    onFailure.onComplete("");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserSignUpResponse> call, Throwable t) {
+                Log.d("ERROR", t.getMessage());
+                onFailure.onComplete("");
+            }
+        });
     }
 
     public void updateUser(User user, Listener<Void> listener) {
@@ -75,13 +95,34 @@ public class Model {
     }
 
     public void loginUser(String email, String password, Listener<Void> onSuccess, Listener<Void> onError) {
-        firebaseModel.loginUser(email, password,
-                (Void) -> {
+        UserLoginRequest userLoginRequest = new UserLoginRequest(email, password);
+        UserFetcherCon.loginUser(userLoginRequest, new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    User loggedInUser = response.body();
+                    setCurrentUser(loggedInUser);
                     onSuccess.onComplete(null);
-                },
-                (Void) -> {
+                } else {
                     onError.onComplete(null);
-                });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.d("ERROR", t.getMessage());
+                onError.onComplete(null);
+            }
+        });
+
+
+//        firebaseModel.loginUser(email, password,
+//                (Void) -> {
+//                    onSuccess.onComplete(null);
+//                },
+//                (Void) -> {
+//                    onError.onComplete(null);
+//                });
     }
 
     public void setUsersByIds(HashMap<String, User> hashMap) {

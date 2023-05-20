@@ -2,21 +2,23 @@ package com.example.wallety.model.server;
 
 import com.example.wallety.model.User;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UserFetcherCon {
-    private static final String BASE_URL = "http://192.168.1.21:3000/users/";
+    private static final Dotenv dotenv = Dotenv.configure().directory("./assets").filename("env").load();
+    private static final String BASE_URL = String.format("%s/users/", dotenv.get("SERVER_URL"));
     private static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build();
     private static final WalletyAPI api = retrofit.create(WalletyAPI.class);
 
-    public static void getLoggedInUser(Callback<User> callback) {
-        Call<User> call = api.getLoggedInUser();
+    public static void getLoggedInUser(Callback<LoggedInUserResponse> callback) {
+        Call<LoggedInUserResponse> call = api.getLoggedInUser();
         call.enqueue(callback);
     }
 
