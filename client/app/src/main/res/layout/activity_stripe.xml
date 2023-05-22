@@ -12,11 +12,7 @@
         android:layout_height="55dp"
         android:layout_gravity="center"
         android:background="@drawable/button_bg"
-<<<<<<< HEAD
-        android:text="Transfer money"
-=======
         android:text="Payment using Stripe"
->>>>>>> stripe-payment
         android:textColor="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

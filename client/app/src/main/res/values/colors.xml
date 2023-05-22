@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<<<<<<< HEAD
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-
-=======
->>>>>>> stripe-payment
     <!-- in use-->
     <color name="teal_70">#F0F4F4</color>
     <color name="teal_80">#D1E6E6</color>
@@ -16,19 +9,13 @@
     <color name="teal_200">#12BCBC</color>
     <color name="teal_500">#66BFBF</color>
 
-<<<<<<< HEAD
-=======
     <!--Basic-->
->>>>>>> stripe-payment
     <color name="lightGrey">#D8D8D8</color>
     <color name="grey">#474747</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-<<<<<<< HEAD
-=======
     <!-- Credit Card colors-->
->>>>>>> stripe-payment
     <color name="blue1">#01497c</color>
     <color name="blue2">#014f86</color>
 
@@ -36,12 +23,7 @@
     <!-- Not in use-->
     <color name="teal_550">#4C9191</color>
     <color name="teal_700">#FF018786</color>
-<<<<<<< HEAD
-
-
-=======
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
->>>>>>> stripe-payment
 </resources>
