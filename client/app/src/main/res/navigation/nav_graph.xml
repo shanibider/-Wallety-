@@ -29,8 +29,8 @@
             android:id="@+id/action_homeFragment_to_stripeActivity"
             app:destination="@id/stripeActivity" />
         <action
-            android:id="@+id/action_homeFragment_to_stripeActivity2"
-            app:destination="@id/stripeActivity" />
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
 
 
     </fragment>
@@ -101,5 +101,10 @@
         android:name="com.example.wallety.activities.StripeActivity"
         android:label="activity_stripe"
         tools:layout="@layout/activity_stripe" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.wallety.ProfileFragment"
+        android:label="activity_profile"
+        tools:layout="@layout/activity_profile" />
 
 </navigation>
