@@ -29,11 +29,8 @@
             android:id="@+id/action_homeFragment_to_stripeActivity"
             app:destination="@id/stripeActivity" />
         <action
-            android:id="@+id/action_homeFragment_to_stripeActivity2"
-            app:destination="@id/stripeActivity" />
-        <action
-            android:id="@+id/action_homeFragment_to_unusualExpensesFragment"
-            app:destination="@id/unusualExpensesFragment" />
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
 
 
     </fragment>
@@ -105,9 +102,9 @@
         android:label="activity_stripe"
         tools:layout="@layout/activity_stripe" />
     <fragment
-        android:id="@+id/unusualExpensesFragment"
-        android:name="com.example.wallety.UnusualExpensesFragment"
-        android:label="Unusual Expenses"
-        tools:layout="@layout/fragment_unusual_expenses" />
+        android:id="@+id/profileFragment"
+        android:name="com.example.wallety.ProfileFragment"
+        android:label="activity_profile"
+        tools:layout="@layout/activity_profile" />
 
 </navigation>

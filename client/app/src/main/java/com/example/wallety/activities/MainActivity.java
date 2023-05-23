@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                     destinationId = R.id.savingMoneyFragment;
                     break;
                 case R.id.menuProfile:
-                    destinationId = R.id.stripeActivity;
+                    destinationId = R.id.profileFragment;
                     break;
             }
 

@@ -52,8 +52,8 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        String nameHeader = "Hello " + Model.instance().getCurrentUser().getName();
-        binding.nameHeaderTv.setText(nameHeader);
+//        String nameHeader = "Hello " + Model.instance().getCurrentUser().getName();
+//        binding.nameHeaderTv.setText(nameHeader);
 
         partialView = view.findViewById(R.id.partial);
 
@@ -66,7 +66,7 @@ public class HomeFragment extends Fragment {
         });
 
         binding.transferMoneyCv.setOnClickListener(view1 -> {
-            Navigation.findNavController(view1).navigate(R.id.action_homeFragment_to_transferMoneyFragment2);
+            Navigation.findNavController(view1).navigate(R.id.action_homeFragment_to_stripeActivity);
         });
 
         binding.unusualExpensesCv.setOnClickListener(view1 -> {
