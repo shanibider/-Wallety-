@@ -30,11 +30,11 @@ public class SignUpFragment extends Fragment {
 
         Intent intent = new Intent(getActivity(), MainActivity.class);
         binding.signUpBtn.setOnClickListener(view1 -> {
-            String name = binding.nameEt.getText().toString();
-            String phone = binding.phoneEt.getText().toString();
-            String email = binding.emailEt.getText().toString();
-            String password = binding.passwordEt.getText().toString();
-            String confirmedPassword = binding.confirmPasswordEt.getText().toString();
+            String name = binding.nameEt.getText().toString().trim();
+            String phone = binding.phoneEt.getText().toString().trim();
+            String email = binding.emailEt.getText().toString().trim();
+            String password = binding.passwordEt.getText().toString().trim();
+            String confirmedPassword = binding.confirmPasswordEt.getText().toString().trim();
             binding.passwordTv.setErrorIconDrawable(null);
             binding.passwordTv.setError(password.length() < 6 ? "Must have more than 5 characters" : null);
 

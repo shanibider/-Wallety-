@@ -31,8 +31,8 @@ public class LoginFragment extends Fragment {
 
         Intent intent = new Intent(getActivity(), MainActivity.class);
         binding.loginBtn.setOnClickListener(view1 -> {
-            String email = binding.emailEt.getText().toString();
-            String password = binding.passwordEt.getText().toString();
+            String email = binding.emailEt.getText().toString().trim();
+            String password = binding.passwordEt.getText().toString().trim();
             binding.emailTv.setErrorIconDrawable(null);
             binding.emailTv.setError(email.length() == 0 ? "Required" : null);
             binding.passwordTv.setErrorIconDrawable(null);

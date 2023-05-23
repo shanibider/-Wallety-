@@ -69,6 +69,10 @@ public class HomeFragment extends Fragment {
             Navigation.findNavController(view1).navigate(R.id.action_homeFragment_to_transferMoneyFragment2);
         });
 
+        binding.unusualExpensesCv.setOnClickListener(view1 -> {
+            Navigation.findNavController(view1).navigate(R.id.action_homeFragment_to_unusualExpensesFragment);
+        });
+
         recyclerView = view.findViewById(R.id.transactions_recList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         transactionsList = new ArrayList<>();
