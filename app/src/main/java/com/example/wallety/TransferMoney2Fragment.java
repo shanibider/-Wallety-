@@ -26,6 +26,7 @@ public class TransferMoney2Fragment extends Fragment {
     final String SECOND_AMOUNT_OPTION = "100";
     final String THIRD_AMOUNT_OPTION = "150";
     FragmentTransferMoney2Binding binding;
+    String firstAmountOption = FIRST_AMOUNT_OPTION;
 
     EditText t1;
 
@@ -61,10 +62,8 @@ public class TransferMoney2Fragment extends Fragment {
 //           MoneySentFragment fragment = new MoneySentFragment();
 //           fragment.setArguments(bundle);
 
-
            return view;
     }
-
 
 
     private void handleAmountOptionClick(MaterialCardView amountOptionCv, String amount) {
