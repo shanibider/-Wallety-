@@ -44,7 +44,8 @@ public class SignUpFragment extends Fragment {
             if (name.length() > 0 && email.length() > 0 && isValidPhone && isValidEmail &&
                     password.length() > 5 && password.equals(confirmedPassword)
             ) {
-                User user = new User(name, phone, email, password);
+                boolean isParent = binding.parentRb.isChecked();
+                User user = new User(name, phone, email, password, isParent);
                 Model.instance().createUser(user,
                         (onSuccess) -> {
                             startActivity(intent);

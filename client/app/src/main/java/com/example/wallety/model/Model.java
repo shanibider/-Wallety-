@@ -7,7 +7,10 @@ import com.example.wallety.model.server.UserFetcherCon;
 import com.example.wallety.model.server.UserLoginRequest;
 import com.example.wallety.model.server.UserSignUpResponse;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -114,15 +117,6 @@ public class Model {
                 onError.onComplete(null);
             }
         });
-
-
-//        firebaseModel.loginUser(email, password,
-//                (Void) -> {
-//                    onSuccess.onComplete(null);
-//                },
-//                (Void) -> {
-//                    onError.onComplete(null);
-//                });
     }
 
     public void setUsersByIds(HashMap<String, User> hashMap) {
@@ -142,17 +136,12 @@ public class Model {
                 .stream().noneMatch(user -> name.equals(user.getName()));
     }
 
-    public String areNameOrEmailNotExist(String name, String email) {
-        AtomicReference<String> existingDetail = new AtomicReference<>("");
-        usersByIds.values().forEach(user -> {
-                    if (name.equals(user.getName())) {
-                        existingDetail.set("Username");
-                    }
-                    if (email.equals(user.getEmail())) {
-                        existingDetail.set("Email");
-                    }
-                }
-        );
-        return existingDetail.get();
+    public List<Transaction> getParentUnusualExpenses(String parentId) {
+        Transaction transaction1 = new Transaction("12gh", "Supermarket", 300, "21.05.2023", "John");
+        Transaction transaction2 = new Transaction("ffff", "KSP", 350, "20.05.2023", "Adam Cohen");
+        Transaction transaction3 = new Transaction("mmm", "Shopping", 420, "18.05.2023", "Shir Choki");
+        List<Transaction> unusualExpenses = Arrays.asList(transaction1, transaction2, transaction3);
+
+        return unusualExpenses;
     }
 }

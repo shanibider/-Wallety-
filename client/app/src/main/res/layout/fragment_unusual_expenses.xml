@@ -5,10 +5,82 @@
     android:layout_height="match_parent"
     tools:context=".UnusualExpensesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@color/teal_80"
+        tools:context=".HomePage.MainActivity">
+
+        <LinearLayout
+            android:id="@+id/unusualExpensesHeading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="30dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="Children Unusual Expenses"
+                    android:textColor="@color/grey"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/unusualExpensesAmountTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.6"
+                        android:fontFamily="sans-serif-light"
+                        android:text="0"
+                        android:textColor="@color/grey"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.6"
+                        android:fontFamily="sans-serif-light"
+                        android:paddingStart="8dp"
+                        android:text="currently"
+                        android:textColor="@color/grey"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/unusualExpensesHeading"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/fragment_bg"
+            android:paddingStart="14dp"
+            android:paddingTop="22dp"
+            android:paddingEnd="14dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/unusualExpensesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="true"
+                tools:listitem="@layout/unusual_expense_row" />
+        </RelativeLayout>
+
+    </RelativeLayout>
 
 </FrameLayout>
