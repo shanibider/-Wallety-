@@ -69,6 +69,16 @@ public class HomeFragment extends Fragment {
             Navigation.findNavController(view1).navigate(R.id.action_homeFragment_to_stripeActivity);
         });
 
+        User user = Model.instance().getCurrentUser();
+
+        if (user.getIsParent()) {
+            binding.unusualExpensesCv.setOnClickListener(view1 -> {
+                Navigation.findNavController(view1).navigate(R.id.action_homeFragment_to_unusualExpensesFragment);
+            });
+        } else {
+            binding.unusualExpensesCv.setVisibility(View.INVISIBLE);
+        }
+
         recyclerView = view.findViewById(R.id.transactions_recList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         transactionsList = new ArrayList<>();

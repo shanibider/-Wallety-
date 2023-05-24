@@ -49,7 +49,7 @@ const loginUser = async (req, res) => {
 
 const signUpUser = async (req, res) => {
     const {auth, db} = config;
-    const {email, password, phone, name} = req.body;
+    const {email, password, phone, name, isParent} = req.body;
 
     fetchSignInMethodsForEmail(auth, email).then(async (result) => {
         if (result.length > 0) {
@@ -66,7 +66,7 @@ const signUpUser = async (req, res) => {
                     user: null
                 });
             } else {
-                createUser(res, auth, db, name, email, password, phone);
+                createUser(res, auth, db, name, email, password, phone, isParent);
             }
 
         }
@@ -74,7 +74,7 @@ const signUpUser = async (req, res) => {
 
 };
 
-const createUser = (res, auth, db, name, email, password, phone) => {
+const createUser = (res, auth, db, name, email, password, phone, isParent) => {
     createUserWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
             const id = userCredential.user.uid;
@@ -83,9 +83,12 @@ const createUser = (res, auth, db, name, email, password, phone) => {
                 id,
                 name,
                 phone,
+                isParent,
                 lastUpdated: serverTimestamp()
             };
             await setDoc(doc(db, Collections.USERS, id), user);
+
+            // in Android the timestamp is Long type
             user.lastUpdated = currentTimestampInSeconds;
 
             console.log(email + " signed up")
