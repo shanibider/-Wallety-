@@ -107,11 +107,24 @@
         android:id="@+id/profileFragment"
         android:name="com.example.wallety.ProfileFragment"
         android:label="activity_profile"
-        tools:layout="@layout/activity_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/unusualExpensesFragment"
         android:name="com.example.wallety.UnusualExpensesFragment"
         android:label="Unusual Expenses"
         tools:layout="@layout/fragment_unusual_expenses" />
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.wallety.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
 
 </navigation>
