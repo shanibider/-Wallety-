@@ -52,8 +52,8 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-//        String nameHeader = "Hello " + Model.instance().getCurrentUser().getName();
-//        binding.nameHeaderTv.setText(nameHeader);
+        String nameHeader = "Hello " + Model.instance().getCurrentUser().getName();
+        binding.nameHeaderTv.setText(nameHeader);
 
         partialView = view.findViewById(R.id.partial);
 
