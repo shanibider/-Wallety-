@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/userImage"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:padding="3dp"
+                    android:paddingTop="8dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/male" />
+
+                <TextView
+                    android:id="@+id/nameHeaderTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_toEndOf="@id/userImage"
+                    android:text="Hello"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tv2"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/nameHeaderTv"
+                    android:layout_marginStart="2dp"
+                    android:layout_toEndOf="@id/userImage"
+                    android:maxLines="1"
+                    android:text="Welcome back"
+                    android:textSize="11sp" />
+            </RelativeLayout>
+
+
+            <include layout="@layout/partial_main_activity" />
+
+            <RelativeLayout
+                android:id="@+id/rl1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Let's Action"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView9"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/transferMoneyCv"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_below="@+id/textView9"
+                        app:cardCornerRadius="6dp"
+                        app:cardElevation="8dp"
+                        app:layout_constraintEnd_toStartOf="@+id/savingMoneyCv"
+                        app:strokeColor="?colorPrimary"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="7dp">
+
+                            <ImageView
+                                android:id="@+id/transferMoneyImg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                app:srcCompat="@drawable/transfer_money" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="TRANSFER"
+                                android:textFontWeight="600"
+                                android:textSize="11sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="-5dp"
+                                android:text="Money"
+                                android:textAppearance="?attr/textAppearanceBody2"
+                                android:textColor="?android:attr/textColorSecondary"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/savingMoneyCv"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_below="@+id/textView9"
+                        android:layout_marginStart="22dp"
+                        android:layout_toRightOf="@+id/transferMoneyCv"
+                        app:cardCornerRadius="6dp"
+                        app:cardElevation="8dp"
+                        app:strokeColor="?colorPrimary"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="7dp">
+
+                            <ImageView
+                                android:id="@+id/savingMoneyImg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                app:srcCompat="@drawable/saving_money" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="SAVING"
+                                android:textFontWeight="600"
+                                android:textSize="11sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="-5dp"
+                                android:text="Money"
+                                android:textAppearance="?attr/textAppearanceBody2"
+                                android:textColor="?android:attr/textColorSecondary"
+                                android:textSize="11sp" />
+
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/linkCardCv"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_below="@+id/textView9"
+                        android:layout_marginStart="22dp"
+                        android:layout_toRightOf="@+id/savingMoneyCv"
+                        app:cardCornerRadius="6dp"
+                        app:cardElevation="8dp"
+                        app:strokeColor="?colorPrimary"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="7dp">
+
+                            <ImageView
+                                android:id="@+id/linkCardImg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                app:srcCompat="@drawable/ic_outline_add_card_24" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="LINK"
+                                android:textFontWeight="600"
+                                android:textSize="11sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="-4dp"
+                                android:text="Card"
+                                android:textAppearance="?attr/textAppearanceBody2"
+                                android:textColor="?android:attr/textColorSecondary"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/unusualExpensesCv"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_below="@+id/textView9"
+                        android:layout_marginStart="22dp"
+                        android:layout_toRightOf="@+id/linkCardCv"
+                        app:cardCornerRadius="6dp"
+                        app:cardElevation="8dp"
+                        app:strokeColor="?colorPrimary"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="7dp">
+
+                            <ImageView
+                                android:id="@+id/unusualExpensesImg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                app:srcCompat="@drawable/unusual_expenses" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="UNUSUAL"
+                                android:textFontWeight="600"
+                                android:textSize="11sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="-4dp"
+                                android:text="Expenses"
+                                android:textAppearance="?attr/textAppearanceBody2"
+                                android:textColor="?android:attr/textColorSecondary"
+                                android:textSize="11sp" />
+
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rl2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="Transactions"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/transactions_recList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv3"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="40dp"
+                    tools:listitem="@layout/transaction_row" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
