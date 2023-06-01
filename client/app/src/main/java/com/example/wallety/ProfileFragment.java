@@ -1,14 +1,22 @@
 package com.example.wallety;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
 import com.example.wallety.databinding.FragmentProfileBinding;
 import com.example.wallety.databinding.FragmentSavingBinding;
+import com.example.wallety.model.Model;
+
 import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
@@ -31,6 +39,13 @@ public class ProfileFragment extends Fragment {
             actionBar.hide();
         }
 
+        String nameHeader = Model.instance().getCurrentUser().getName();
+        binding.userNameTv.setText(nameHeader);
+
+        // editProfile button
+        binding.editProfile.setOnClickListener(view1 -> {
+            Navigation.findNavController(view1).navigate(R.id.action_profileFragment_to_editProfileFragment);
+        });
 
         return view;
     }

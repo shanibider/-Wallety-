@@ -88,8 +88,9 @@ public class AddGoalFragment extends BottomSheetDialogFragment {
                 SavingFragment.savingAdapter.notifyDataSetChanged();
 
 
-
                 Navigation.findNavController(view).navigate(R.id.action_addGoalFragment_to_savingMoneyFragment);
+
+
             }
         });
 

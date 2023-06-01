@@ -43,10 +43,11 @@
                     app:srcCompat="@drawable/male" />
 
                 <TextView
+                    android:id="@+id/userNameTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
-                    android:text="Profile Name"
+                    android:text="User Name"
                     android:layout_marginTop="16dp"
                     android:textColor="@color/grey"
                     android:textSize="24sp"
@@ -68,7 +69,7 @@
 
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/addGoalBtn"
+                    android:id="@+id/edit_profile"
                     android:layout_width="110dp"
                     android:layout_height="30dp"
                     android:background="@drawable/button_bg_teal500"
