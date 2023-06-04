@@ -7,17 +7,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.wallety.databinding.FragmentTransferMoney2Binding;
-import com.example.wallety.databinding.FragmentTransferMoneyBinding;
+import com.example.wallety.model.Model;
+import com.example.wallety.model.Transaction;
+import com.example.wallety.model.User;
+import com.example.wallety.model.server.TransactionRequest;
 import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
@@ -47,7 +49,19 @@ public class TransferMoney2Fragment extends Fragment {
            }
 
            binding.transferBtn.setOnClickListener(view1 -> {
-               Navigation.findNavController(view1).navigate(R.id.action_transferMoneyFragment2_to_moneySentFragment);
+               String id = FirebaseFirestore.getInstance().collection(User.COLLECTION).document().getId();
+               Transaction transaction = new Transaction(id, "16.04.2023", 500, "AM PM", true);
+               TransactionRequest transactionRequest = new TransactionRequest(transaction);
+
+               Model.instance().makeTransaction(transactionRequest,
+                       (success) -> {
+                           Navigation.findNavController(view1).navigate(R.id.action_transferMoneyFragment2_to_moneySentFragment);
+                       },
+                       (error) -> {
+                           Toast.makeText(getActivity(), "Error occurred",
+                                   Toast.LENGTH_SHORT).show();
+                       }
+               );
            });
 
            handleAmountOptionClick(binding.firstAmountOptionCv, FIRST_AMOUNT_OPTION);

@@ -26,6 +26,9 @@ public class User {
     @SerializedName("isParent")
     private boolean isParent;
 
+    @SerializedName("registrationToken")
+    public String registrationToken;
+
     @SerializedName("lastUpdated")
     public Long lastUpdated;
 
@@ -42,7 +45,7 @@ public class User {
         this.id = id;
     }
 
-    static final String COLLECTION = "users";
+    public static final String COLLECTION = "users";
     static final String ID = "id";
     static final String USER = "name";
     static final String PHONE = "phone";
@@ -75,6 +78,10 @@ public class User {
         return isParent;
     }
 
+    public String getRegistrationToken() {
+        return registrationToken;
+    }
+
     public void setId(String id) {
         this.id = id;
     }
@@ -87,10 +94,15 @@ public class User {
         this.phone = phone;
     }
 
+    public void setRegistrationToken(String registrationToken) {
+        this.registrationToken = registrationToken;
+    }
+
     public void setLastUpdated(Long lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 
+//
     public static User fromJson(Map<String, Object> json) {
         String id = (String) json.get(ID);
         String name = (String) json.get(USER);

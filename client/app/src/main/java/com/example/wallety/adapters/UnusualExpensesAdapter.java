@@ -39,8 +39,8 @@ public class UnusualExpensesAdapter extends RecyclerView.Adapter<UnusualExpenses
         Transaction currentUnusualExpense = unusualExpensesList.get(position);
 
         holder.amount.setText(Integer.toString(currentUnusualExpense.getAmount()));
-        holder.title.setText(currentUnusualExpense.getName());
-        holder.childName.setText(currentUnusualExpense.getChild());
+        holder.title.setText(currentUnusualExpense.getReceiver());
+        holder.childName.setText(currentUnusualExpense.getReceiver());
         holder.date.setText(currentUnusualExpense.getDate());
     }
 

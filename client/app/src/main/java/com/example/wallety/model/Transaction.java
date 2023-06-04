@@ -9,76 +9,59 @@ public class Transaction {
     @SerializedName("id")
     private String id;
 
-    @SerializedName("name")
-    private String name;
+    @SerializedName("date")
+    private String date;
 
     @SerializedName("amount")
     private int amount;
 
-    @SerializedName("date")
-    private String date;
+    @SerializedName("receiver")
+    private String receiver;
 
-//    demo
-    private String child;
-//
+    @SerializedName("isUnusual")
+    private Boolean isUnusual;
 
-    public Transaction(String id, String name, int amount, String date, String child) {
+    public Transaction(String id, String date, int amount, String receiver, Boolean isUnusual) {
         this.id = id;
-        this.name = name;
-        this.amount = amount;
         this.date = date;
-        this.child = child;
+        this.amount = amount;
+        this.receiver = receiver;
+        this.isUnusual = isUnusual;
     }
 
-    static final String COLLECTION = "transactions";
     static final String ID = "id";
-    static final String NAME = "name";
-    static final String AMOUNT = "amount";
     static final String DATE = "date";
+    static final String AMOUNT = "amount";
+    static final String RECEIVER = "receiver";
+    static final String IS_UNUSUAL = "isUnusual";
 
     public String getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getAmount() {
-        return amount;
     }
 
     public String getDate() {
         return date;
     }
 
-    public String getChild() {
-        return child;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getReceiver() {
+        return receiver;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public Boolean getIsUnusual() {
+        return isUnusual;
     }
 
     public static Transaction fromJson(Map<String, Object> json) {
         String id = (String) json.get(ID);
-        String name = (String) json.get(NAME);
-        int amount = Integer.parseInt((String) json.get(AMOUNT));
         String date = (String) json.get(DATE);
-//
-        String child = (String) json.get("");
-//
-        Transaction transaction = new Transaction(id, name, amount, date, child);
-        try {
-//            Timestamp time = (Timestamp) json.get(LAST_UPDATED);
-//            user.setLastUpdated(time.getSeconds());
-        } catch (Exception e) {
-
-        }
+        int amount = Integer.parseInt((String) json.get(AMOUNT));
+        String receiver = (String) json.get(RECEIVER);
+        boolean isUnusual = Boolean.parseBoolean((String) json.get(IS_UNUSUAL));
+        Transaction transaction = new Transaction(id, date, amount, receiver, isUnusual);
 
         return transaction;
     }
@@ -86,10 +69,11 @@ public class Transaction {
     public Map<String, Object> toJson() {
         Map<String, Object> json = new HashMap<>();
         json.put(ID, getId());
-        json.put(NAME, getName());
-        json.put(AMOUNT, getAmount());
         json.put(DATE, getDate());
-//        json.put(LAST_UPDATED, FieldValue.serverTimestamp());
+        json.put(AMOUNT, getAmount());
+        json.put(RECEIVER, getReceiver());
+        json.put(IS_UNUSUAL, getIsUnusual());
+
         return json;
     }
 }
