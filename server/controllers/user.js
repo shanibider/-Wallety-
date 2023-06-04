@@ -5,8 +5,8 @@ const {
     fetchSignInMethodsForEmail
 } = require('firebase/auth');
 const {
-    doc, getDoc, serverTimestamp, setDoc,
-    collection, query, where, getDocs
+    doc, getDoc, updateDoc, setDoc, serverTimestamp,
+    collection, query, where, getDocs, arrayUnion
 } = require("firebase/firestore");
 const {StatusCodes} = require('http-status-codes');
 const {Collections, config} = require("../config/config");
@@ -24,16 +24,39 @@ const getLoggedInUser = async (req, res) => {
             console.log(email + " logged in")
         }
     }
+
+    //-------
+    // Part of parent child subscribe (in children choose - sign up)
+    // const registrationTokens = [
+    //     '<token>',
+    // ];
+
+    // admin.messaging().subscribeToTopic(registrationTokens, '<child-uid>')
+    //     .then((response) => {
+    //         Response is a message ID string.
+    // console.log('Successfully sent message:', response);
+    // })
+    // .catch((error) => {
+    //     console.log('Error sending message:', error);
+    // });
+
+    //-------
+
+
     res.status(StatusCodes.OK).send({loggedInUser});
 };
 
 const loginUser = async (req, res) => {
     const {auth, db} = config;
-    const {email, password} = req.body;
+    const {email, password, registrationToken} = req.body;
     signInWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
             const docRef = doc(db, Collections.USERS, userCredential.user.uid);
+            await updateDoc(docRef, {
+                registrationToken
+            });
             const docSnap = await getDoc(docRef);
+
             if (docSnap.exists()) {
                 const user = docSnap.data();
                 formatUser(user, email, password);
@@ -68,10 +91,8 @@ const signUpUser = async (req, res) => {
             } else {
                 createUser(res, auth, db, name, email, password, phone, isParent);
             }
-
         }
     });
-
 };
 
 const createUser = (res, auth, db, name, email, password, phone, isParent) => {
@@ -98,11 +119,46 @@ const createUser = (res, auth, db, name, email, password, phone, isParent) => {
             console.log(error)
             res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
         });
-}
+};
+
+const makeTransaction = async (req, res) => {
+    const {auth, db, admin} = config;
+    const {transaction} = req.body;
+    const {uid} = auth.currentUser;
+    const docRef = doc(db, Collections.USERS, uid);
+    await updateDoc(docRef, {
+        transactions: arrayUnion(transaction)
+    });
+    console.log('Transaction made successfully');
+
+    // push notification to parent if unusual
+    if (transaction.isUnusual) {
+        // setTimeout IS ONLY FOR CHECK IT PUSHED (DELETE IT!).
+        setTimeout(() => {
+            const message = {
+                notification: {
+                    title: 'Unusual expense detected',
+                    body: 'Your child made unusual expense'
+                },
+                topic: uid
+            };
+            admin.messaging().send(message)
+                .then((response) => {
+                    // Response is a message ID string.
+                    console.log('Successfully pushed notification:', response);
+                })
+                .catch((error) => {
+                    console.log('Error pushing notification:', error);
+                });
+        }, 4000);
+    }
+    res.status(StatusCodes.OK).send("Transaction succeeded");
+};
 
 module.exports = {
     getLoggedInUser,
     loginUser,
-    signUpUser
+    signUpUser,
+    makeTransaction
 };
 

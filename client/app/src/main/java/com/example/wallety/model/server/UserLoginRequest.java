@@ -9,8 +9,12 @@ public class UserLoginRequest {
     @SerializedName("password")
     private String password;
 
-    public UserLoginRequest(String email, String password) {
+    @SerializedName("registrationToken")
+    private String registrationToken;
+
+    public UserLoginRequest(String email, String password, String registrationToken) {
         this.email = email;
         this.password = password;
+        this.registrationToken = registrationToken;
     }
 }
