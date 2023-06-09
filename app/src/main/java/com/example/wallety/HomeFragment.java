@@ -73,6 +73,7 @@ public class HomeFragment extends Fragment {
             Navigation.findNavController(view1).navigate(R.id.action_homeFragment_to_unusualExpensesFragment);
         });
 
+
         User user = Model.instance().getCurrentUser();
 
 //        if (user.getIsParent()) {
