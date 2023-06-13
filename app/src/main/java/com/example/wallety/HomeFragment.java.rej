@@ -1,0 +1,9 @@
+diff a/app/src/main/java/com/example/wallety/HomeFragment.java b/app/src/main/java/com/example/wallety/HomeFragment.java	(rejected hunks)
+@@ -73,6 +73,7 @@
+             Navigation.findNavController(view1).navigate(R.id.action_homeFragment_to_unusualExpensesFragment);
+         });
+ 
++
+         User user = Model.instance().getCurrentUser();
+ 
+ //        if (user.getIsParent()) {
