@@ -26,9 +26,6 @@
             android:id="@+id/action_homeFragment_to_transferMoneyFragment2"
             app:destination="@id/transferMoneyFragment2" />
         <action
-            android:id="@+id/action_homeFragment_to_stripeActivity"
-            app:destination="@id/stripeActivity" />
-        <action
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
         <action
@@ -101,11 +98,6 @@
         android:name="com.example.wallety.MoneySentFragment"
         android:label="fragment_money_sent"
         tools:layout="@layout/fragment_money_sent" />
-    <activity
-        android:id="@+id/stripeActivity"
-        android:name="com.example.wallety.activities.StripeActivity"
-        android:label="activity_stripe"
-        tools:layout="@layout/activity_stripe" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.wallety.ProfileFragment"
@@ -117,6 +109,9 @@
         <action
             android:id="@+id/action_profileFragment_to_myFamilyFragment"
             app:destination="@id/myFamilyFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_knowledgeFragment"
+            app:destination="@id/knowledgeFragment" />
     </fragment>
     <fragment
         android:id="@+id/unusualExpensesFragment"
@@ -142,5 +137,10 @@
         android:name="com.example.wallety.MyFamilyFragment"
         android:label="fragment_my_family"
         tools:layout="@layout/fragment_my_family" />
+    <fragment
+        android:id="@+id/knowledgeFragment"
+        android:name="com.example.wallety.KnowledgeFragment"
+        android:label="fragment_knowledge"
+        tools:layout="@layout/fragment_knowledge" />
 
 </navigation>
