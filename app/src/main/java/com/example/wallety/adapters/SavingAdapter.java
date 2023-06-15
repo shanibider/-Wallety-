@@ -19,7 +19,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.wallety.R;
+import com.example.wallety.SavingFragment;
+import com.example.wallety.TasksFragment;
 import com.example.wallety.model.Model;
 import com.example.wallety.model.Saving;
 import com.example.wallety.model.Task;
@@ -40,11 +43,11 @@ import java.util.Map;
 import java.util.TimeZone;
 
 public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder> {
-
     Context context;
     List<Saving> savingList;
     User user;
     DocumentReference db;
+    private SavingFragment savingFragment;
 
     public SavingAdapter(Context context, List<Saving> savingList) {
         this.context = context;
@@ -54,7 +57,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.saving_row, parent, false ));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.saving_row, parent, false));
     }
 
     @Override
@@ -115,16 +118,15 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
     }
 
 
-
-//   *edit goal Alert dialog*
+    //   *edit goal Alert dialog*
     private void showAlertDialogForEditText(String id, int position) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View customLayout = LayoutInflater.from(context).inflate(R.layout.edit_saving_alert_dialog, null, false);
         builder.setView(customLayout);
 
-        TextInputEditText name,det, amount;
-        AppCompatButton ok,cancel;
+        TextInputEditText name, det, amount;
+        AppCompatButton ok, cancel;
 
         // initialize objects with corresponding elements
         name = customLayout.findViewById(R.id.saving_edit_name);
@@ -151,13 +153,12 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
                 String d = det.getText().toString().trim();
                 String am = amount.getText().toString().trim();
 
-                if(name.equals("") || det.equals("") || amount.equals(""))
-                {
+                if (name.equals("") || det.equals("") || amount.equals("")) {
                     Toast.makeText(context, "No field can be empty!", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 // values are used to update the corresponding object in savingList
-                else{
+                else {
                     savingList.get(position).setGoal(n);
                     savingList.get(position).setDetail(d);
                     savingList.get(position).setAmount(am);
@@ -194,17 +195,16 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
 //    //// *end of edit Alertdialog*
 
 
-
-
-
     @Override
     public int getItemCount() {
-        return  savingList.size();
+        int size = savingList.size();
+        SavingFragment.goalCountTv.setText((String.valueOf(size)));
+        return size;
+
     }
 
 
-
-public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView goal, detail, amount, currentAmount, progressText2;
         ProgressBar progressBar;
         ImageButton savingDelete, savingEdit;

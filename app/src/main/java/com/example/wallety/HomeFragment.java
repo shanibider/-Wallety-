@@ -1,38 +1,20 @@
 package com.example.wallety;
 
-import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import com.braintreepayments.cardform.view.CardForm;
 import com.example.wallety.adapters.HomeAdapter;
 import com.example.wallety.databinding.FragmentHomeBinding;
-import com.example.wallety.databinding.FragmentLinkCardBinding;
 import com.example.wallety.model.Model;
-import com.example.wallety.model.Transactions;
+import com.example.wallety.model.Transaction;
 import com.example.wallety.model.User;
-import com.example.wallety.model.server.UserFetcherCon;
-import com.google.android.material.bottomappbar.BottomAppBar;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
+import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +22,7 @@ import java.util.List;
 public class HomeFragment extends Fragment {
     FragmentHomeBinding binding;
     RecyclerView recyclerView;
-    List<Transactions> transactionsList;
+    List<Transaction> transactionsList;
     HomeAdapter homeAdapter;
 
     private View partialView;
@@ -66,7 +48,7 @@ public class HomeFragment extends Fragment {
         });
 
         binding.transferMoneyCv.setOnClickListener(view1 -> {
-            Navigation.findNavController(view1).navigate(R.id.action_homeFragment_to_stripeActivity);
+            Navigation.findNavController(view1).navigate(R.id.action_homeFragment_to_transferMoneyFragment2);
         });
 
         binding.unusualExpensesCv.setOnClickListener(view1 -> {
@@ -87,60 +69,77 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         transactionsList = new ArrayList<>();
 
-        transactionsList.add(new Transactions(R.drawable.shopping_cart, "Super market", "08/04/2023", "159"));
-        transactionsList.add(new Transactions(R.drawable.shopping_bag, "KSP", "08/04/2023", "299"));
-        transactionsList.add(new Transactions(R.drawable.shopping_bag, "Shopping", "03/04/2023", "10000"));
-        transactionsList.add(new Transactions(R.drawable.shopping_cart, "KSP", "07/04/2023", "3500"));
-        transactionsList.add(new Transactions(R.drawable.parents_transfer, "Mom transfer", "01/04/2023", "200"));
-        transactionsList.add(new Transactions(R.drawable.shopping_cart, "AM PM", "07/04/2023", "79"));
-        transactionsList.add(new Transactions(R.drawable.shopping_cart, "Super-Pharm", "07/04/2023", "120"));
 
+        String id = FirebaseFirestore.getInstance().collection(User.COLLECTION).document().getId();
+        transactionsList.add(new Transaction(id, "19.05.2023", 199, "Super-Pharm",true , 1));
+        transactionsList.add(new Transaction(id, "01.06.2023", 129, "AM PM", true, 1));
+        transactionsList.add(new Transaction(id, "06.06.2023", 550, "KSP", true, 1));
+        transactionsList.add(new Transaction(id, "06.06.2023", 1999, "KSP", true, 1));
 
         homeAdapter = new HomeAdapter(getContext(), transactionsList);
         recyclerView.setAdapter(homeAdapter);
         homeAdapter.notifyDataSetChanged();
 
+        calculateZScoresList(transactionsList);
 
-        // z-score algorithm
+        return view;
+    }
+
+
+    // Z-score algorithm for Irregular Expense (on transactions List)
+    public void calculateZScoresList(List<Transaction> transactionsList) {
 
         // Calculate the mean and standard deviation of the expenses
         double mean = 0.0;
         double stdDev = 0.0;
-        for (Transactions transaction : transactionsList) {
-            double expense = Double.parseDouble(transaction.getSum().replaceAll("[^\\d.-]", ""));
-            mean += expense;
+        for (Transaction transaction : transactionsList) {
+            mean += transaction.getAmount();
         }
         mean /= transactionsList.size();
-        Log.d("result", String.valueOf(mean));
+        Log.d("result", "This is the mean: " + String.valueOf(mean));
 
-        for (Transactions transaction : transactionsList) {
-            double expense = Double.parseDouble(transaction.getSum().replaceAll("[^\\d.-]", ""));
-            stdDev += Math.pow(expense - mean, 2);
+        for (Transaction transaction : transactionsList) {
+            stdDev += Math.pow(transaction.getAmount() - mean, 2);
         }
         stdDev = Math.sqrt(stdDev / (transactionsList.size() - 1));
-        Log.d("result", String.valueOf(stdDev));
-
+        Log.d("result", "This is the stdDev: " + String.valueOf(stdDev));
 
         // Set the Z-score threshold
-        double zScoreThreshold = 1.0;
+        double zScoreThreshold = 1.4;
+        Log.d("result", "Our zScore Threshold: " + String.valueOf(zScoreThreshold));
 
         // Calculate the Z-score for each expense and mark irregular expenses
-        for (Transactions transaction : transactionsList) {
-            double expense = Double.parseDouble(transaction.getSum().replaceAll("[^\\d.-]", ""));
-            double zScore = (expense - mean) / stdDev;
+        for (Transaction transaction : transactionsList) {
+            double zScore = (transaction.getAmount() - mean) / stdDev;
+            //set ZScore for the expense
             transaction.setZScore(zScore);
-            Log.d("result", String.valueOf(transaction.getZScore()));
+            Log.d("result", "This is the zScore of " + transaction.getAmount() + " expense: " + String.valueOf(transaction.getZScore()));
 
             if (Math.abs(zScore) > zScoreThreshold) {
-                // This expense is irregular
-                     // need to pop notification
-                Log.d("Irregular Expense", transaction.getSum());
+                transaction.setUnusual(true);
+                Log.d("result", "Irregular Expense of: " + String.valueOf(transaction.getAmount()));
             } else {
-                // This expense is not irregular
-                Log.d("Normal Expense", transaction.getSum());
+                transaction.setUnusual(false);
+                Log.d("result", "Normal Expense of: " + String.valueOf(transaction.getAmount()));
             }
         }
-
-        return view;
     }
+
+
+
+    // Z-score algorithm for Irregular Expense (on one expense)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

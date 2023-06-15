@@ -171,9 +171,9 @@ public class Model extends FirebaseMessagingService {
 
     // Unusual Expenses
     public List<Transaction> getParentUnusualExpenses(String parentId) {
-        Transaction transaction1 = new Transaction("12gh", "21.05.2023", 300, "Supermarket", false);
-        Transaction transaction2 = new Transaction("ffff", "20.05.2023", 350, "KSP", false);
-        Transaction transaction3 = new Transaction("mmm", "18.05.2023", 420, "Shopping", false);
+        Transaction transaction1 = new Transaction("12gh", "21.05.2023", 300, "Supermarket", false, 0.5);
+        Transaction transaction2 = new Transaction("ffff", "20.05.2023", 350, "KSP", false, 0.4);
+        Transaction transaction3 = new Transaction("mmm", "18.05.2023", 420, "Shopping", false, 0.6);
         List<Transaction> unusualExpenses = Arrays.asList(transaction1, transaction2, transaction3);
 
         return unusualExpenses;
@@ -192,7 +192,7 @@ public class Model extends FirebaseMessagingService {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 
         // notificationId is a unique int for each notification that you must define
-       // Notify the user with the created notification
+        // Notify the user with the created notification
         notificationManager.notify(123, builder.build());
 
         Log.d("TAG", "From: " + remoteMessage.getFrom());
