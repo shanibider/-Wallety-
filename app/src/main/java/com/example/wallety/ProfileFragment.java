@@ -45,16 +45,20 @@ public class ProfileFragment extends Fragment {
         String emailHeader = Model.instance().getCurrentUser().getEmail();
         binding.emailTv.setText(emailHeader);
 
+        // editProfile button
+        binding.editProfile.setOnClickListener(view1 -> {
+            Navigation.findNavController(view1).navigate(R.id.action_profileFragment_to_editProfileFragment);
+        });
 
+        // myFamily button
         binding.myFamily.setOnClickListener(view1 -> {
             // screen with all the prepaid credit of the children
             Navigation.findNavController(view1).navigate(R.id.action_profileFragment_to_myFamilyFragment);
         });
 
-
-        // editProfile button
-        binding.editProfile.setOnClickListener(view1 -> {
-            Navigation.findNavController(view1).navigate(R.id.action_profileFragment_to_editProfileFragment);
+        binding.knowledge.setOnClickListener(view1 -> {
+            // screen with all the prepaid credit of the children
+            Navigation.findNavController(view1).navigate(R.id.action_profileFragment_to_knowledgeFragment);
         });
 
 
