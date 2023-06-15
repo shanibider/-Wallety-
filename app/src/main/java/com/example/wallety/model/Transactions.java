@@ -1,14 +1,11 @@
 package com.example.wallety.model;
 
 public class Transactions {
-
     int image;
     private String source;
     private String date;
     private String sum;
     private double zScore;
-
-
 
     public Transactions(int image, String source, String date, String sum) {
         this.image = image;

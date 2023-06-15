@@ -88,12 +88,12 @@ public class HomeFragment extends Fragment {
         transactionsList = new ArrayList<>();
 
         transactionsList.add(new Transactions(R.drawable.shopping_cart, "Super market", "08/04/2023", "159"));
-        transactionsList.add(new Transactions(R.drawable.shopping_bag, "KSP", "08/04/2023", "299"));
-        transactionsList.add(new Transactions(R.drawable.shopping_bag, "Shopping", "03/04/2023", "10000"));
-        transactionsList.add(new Transactions(R.drawable.shopping_cart, "KSP", "07/04/2023", "3500"));
-        transactionsList.add(new Transactions(R.drawable.parents_transfer, "Mom transfer", "01/04/2023", "200"));
-        transactionsList.add(new Transactions(R.drawable.shopping_cart, "AM PM", "07/04/2023", "79"));
-        transactionsList.add(new Transactions(R.drawable.shopping_cart, "Super-Pharm", "07/04/2023", "120"));
+//        transactionsList.add(new Transactions(R.drawable.shopping_bag, "KSP", "08/04/2023", "299"));
+//        transactionsList.add(new Transactions(R.drawable.shopping_bag, "Shopping", "03/04/2023", "10000"));
+//        transactionsList.add(new Transactions(R.drawable.shopping_cart, "KSP", "07/04/2023", "3500"));
+//        transactionsList.add(new Transactions(R.drawable.parents_transfer, "Mom transfer", "01/04/2023", "200"));
+//        transactionsList.add(new Transactions(R.drawable.shopping_cart, "AM PM", "07/04/2023", "79"));
+//        transactionsList.add(new Transactions(R.drawable.shopping_cart, "Super-Pharm", "07/04/2023", "120"));
 
 
         homeAdapter = new HomeAdapter(getContext(), transactionsList);
