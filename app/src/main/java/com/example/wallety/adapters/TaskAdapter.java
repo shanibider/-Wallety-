@@ -15,10 +15,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.wallety.R;
 import com.example.wallety.TasksFragment;
 import com.example.wallety.model.Model;
@@ -31,6 +33,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -54,7 +57,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     @NonNull
     @Override
     public TaskAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new TaskAdapter.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.task_row, parent, false ));
+        return new TaskAdapter.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.task_row, parent, false));
     }
 
     @Override
@@ -114,7 +117,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             }
         });
 
-     }
+    }
 
 
     // *edit task Alert dialog*
@@ -125,8 +128,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         //sets the custom layout view as the view for the AlertDialog
         builder.setView(customLayout);
 
-        TextInputEditText name,desc,date,time, amount;
-        AppCompatButton ok,cancel;
+        TextInputEditText name, desc, date, time, amount;
+        AppCompatButton ok, cancel;
 
         name = customLayout.findViewById(R.id.task_edit_name);
         desc = customLayout.findViewById(R.id.task_edit_desc);
@@ -157,9 +160,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             @Override
             public void onPositiveButtonClick(Object selection) {
                 Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-                calendar.setTimeInMillis((long)selection);
+                calendar.setTimeInMillis((long) selection);
                 SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-                String formattedDate  = format.format(calendar.getTime());
+                String formattedDate = format.format(calendar.getTime());
 
                 udate[0] = formattedDate;
                 date.setText(udate[0]);
@@ -185,7 +188,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                 mTimePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        if (selectedHour==0)
+                        if (selectedHour == 0)
                             selectedHour = 24;
                         utime[0] = String.format("%02d:%02d", selectedHour, selectedMinute);
                         time.setText(utime[0]);
@@ -209,13 +212,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                 String dt = date.getText().toString().trim();
                 String am = amount.getText().toString().trim();
 
-                if(name.equals("") || desc.equals("") || time.equals("") || date.equals(""))
-                {
+                if (name.equals("") || desc.equals("") || time.equals("") || date.equals("")) {
                     Toast.makeText(context, "No field can be empty!", Toast.LENGTH_SHORT).show();
                     return;
-                }
-
-                else{
+                } else {
                     taskList.get(position).setName(n);
                     taskList.get(position).setDesc(des);
                     taskList.get(position).setTime(t);
@@ -256,9 +256,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     //// *end of edit Alertdialog*
 
 
-
-
-
     @Override
     public int getItemCount() {
         int size = taskList.size();
@@ -267,10 +264,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     }
 
 
-
-
     // ViewHolder
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         CheckBox taskCheckBox;
         TextView taskDesc, taskDate, taskTime, taskAmount;
         ImageButton taskDelete, taskEdit;

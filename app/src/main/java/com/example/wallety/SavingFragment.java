@@ -37,7 +37,7 @@ public class SavingFragment extends Fragment {
     RecyclerView recyclerView;
     public static List<Saving> savingList;
     public static SavingAdapter savingAdapter;
-    public static TextView goalCount_tv;
+    public static TextView goalCountTv;
 
     private static DocumentReference db;
     static User user;
@@ -53,7 +53,8 @@ public class SavingFragment extends Fragment {
         ActionBar actionBar = null;
         try {
             actionBar = Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar());
-        } catch (NullPointerException e) {}
+        } catch (NullPointerException e) {
+        }
 
         if (actionBar != null) {
             actionBar.hide();
@@ -73,7 +74,7 @@ public class SavingFragment extends Fragment {
         savingList = new ArrayList<>();
 
         // add new goal
-        if(savingList!=null)
+        if (savingList != null)
             savingList.clear();
         db.collection("saving")
                 .get()
@@ -84,11 +85,11 @@ public class SavingFragment extends Fragment {
                             // saving.getResult() returns a list of documents
                             // belonging to the collection = "saving"
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                String id = (String) document .get("id");
-                                String goal = (String) document .get("goal");
-                                String detail = (String) document .get("detail");
-                                String amount = (String) document .get("amount");
-                                String currentAmount = (String) document .get("currentAmount");
+                                String id = (String) document.get("id");
+                                String goal = (String) document.get("goal");
+                                String detail = (String) document.get("detail");
+                                String amount = (String) document.get("amount");
+                                String currentAmount = (String) document.get("currentAmount");
 
 
                                 Saving s = new Saving(id, goal, detail, amount, currentAmount);
@@ -99,16 +100,14 @@ public class SavingFragment extends Fragment {
                     }
                 });
 
+        goalCountTv = binding.goalCountTv;
+        goalCountTv.setText(String.valueOf(savingList.size()));
 
-       //savingList.add(new Saving ("1" ,"Scooter", "electric scotter", "₪1200", "50"));
 
-        goalCount_tv = view.findViewById(R.id.goalCount_tv);
-        goalCount_tv.setText(String.valueOf(savingList.size()));
-
-        savingAdapter= new SavingAdapter(getContext(), savingList);
+        savingAdapter = new SavingAdapter(getContext(), savingList);
         recyclerView.setAdapter(savingAdapter);
         savingAdapter.notifyDataSetChanged();
 
-         return view;
-     }
- }
+        return view;
+    }
+}

@@ -12,16 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wallety.R;
 import com.example.wallety.model.Saving;
-import com.example.wallety.model.Transactions;
-
+import com.example.wallety.model.Transaction;
 import java.util.List;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
-
     Context context;
-    List<Transactions> list;
+    List<Transaction> list;
 
-    public HomeAdapter(Context context, List<Transactions> list) {
+    public HomeAdapter(Context context, List<Transaction> list) {
         this.context = context;
         this.list = list;
     }
@@ -29,15 +27,15 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.transaction_row, parent, false ));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.transaction_row, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.imageView.setImageResource(list.get(position).getImage());
-        holder.source.setText(list.get(position).getSource());
+        holder.imageView.setImageResource(R.drawable.shopping_bag);
+        holder.receiver.setText(list.get(position).getReceiver());
         holder.date.setText(list.get(position).getDate());
-        holder.sum.setText(list.get(position).getSum());
+        holder.amount.setText(Integer.toString(list.get(position).getAmount()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,24 +47,27 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return  list.size();
+        return list.size();
     }
 
 
-
-
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView source, date, sum;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView receiver, date, amount;
         ImageView imageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            receiver = itemView.findViewById(R.id.receiver);
+            date = itemView.findViewById(R.id.date);
+            amount = itemView.findViewById(R.id.amount);
             imageView = itemView.findViewById(R.id.iv);
-            source = itemView.findViewById(R.id.textView11);
-            date = itemView.findViewById(R.id.textView12);
-            sum = itemView.findViewById(R.id.textView13);
 
         }
     }
 }
+//        this.id = id;
+//        this.date = date;
+//        this.amount = amount;
+//        this.receiver = receiver;
+//        this.isUnusual = isUnusual;
