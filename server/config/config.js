@@ -23,7 +23,8 @@ const firebaseConfig = {
 const config = {
     auth: null,
     db: null,
-    admin: null
+    admin: null,
+    mongo: null
 };
 
 const initFirebase = () => {
@@ -38,8 +39,22 @@ const initFirebase = () => {
     config.admin = admin;
 }
 
+const initMongo = () => {
+    const mongoose = require("mongoose");
+
+    mongoose.connect(process.env.MONGO_SERVER, { useUnifiedTopology: true, useNewUrlParser: true });
+
+    const connection = mongoose.connection;
+
+    connection.once("open", function() {
+    console.log("MongoDB database connection established successfully");
+    });
+}
+
+
 module.exports = {
     Collections,
     initFirebase,
-    config
+    config,
+    initMongo
 };

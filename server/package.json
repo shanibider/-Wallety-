@@ -16,6 +16,8 @@
     "firebase": "^9.21.0",
     "firebase-admin": "^11.9.0",
     "http-status-codes": "^2.2.0",
+    "mongodb": "^5.6.0",
+    "mongoose": "^7.3.0",
     "nodemon": "^2.0.20"
   },
   "devDependencies": {
