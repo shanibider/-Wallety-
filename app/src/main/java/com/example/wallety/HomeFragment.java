@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment {
 //        binding.nameHeaderTv.setText(nameHeader);
 
         partialView = view.findViewById(R.id.partial);
-
+      
 //        if (user.getIsParent()) {
 //            binding.unusualExpensesCv.setOnClickListener(view1 -> {
 //                Navigation.findNavController(view1).navigate(R.id.action_homeFragment_to_unusualExpensesFragment);
