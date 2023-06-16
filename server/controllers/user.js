@@ -25,23 +25,6 @@ const getLoggedInUser = async (req, res) => {
         }
     }
 
-    //-------
-    // Part of parent child subscribe (in children choose - sign up)
-    // const registrationTokens = [
-    //     '<token>',
-    // ];
-
-    // admin.messaging().subscribeToTopic(registrationTokens, '<child-uid>')
-    //     .then((response) => {
-    //         Response is a message ID string.
-    // console.log('Successfully sent message:', response);
-    // })
-    // .catch((error) => {
-    //     console.log('Error sending message:', error);
-    // });
-
-    //-------
-
     res.status(StatusCodes.OK).send({loggedInUser});
 };
 
@@ -71,7 +54,7 @@ const loginUser = async (req, res) => {
 
 const signUpUser = async (req, res) => {
     const {auth, db} = config;
-    const {email, password, phone, name, children} = req.body;
+    const {email, password, phone, name, registrationToken, children} = req.body;
 
     fetchSignInMethodsForEmail(auth, email).then(async (result) => {
         if (result.length > 0) {
@@ -88,25 +71,44 @@ const signUpUser = async (req, res) => {
                     user: null
                 });
             } else {
-                createUser(res, auth, db, name, email, password, phone, children);
+                createUser(res, auth, db, name, email, password, phone, registrationToken, children);
             }
         }
     });
 };
 
-const createUser = (res, auth, db, name, email, password, phone, children) => {
+const createUser = (res, auth, db, name, email, password, phone, registrationToken, children) => {
     createUserWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
             const id = userCredential.user.uid;
-            const currentTimestampInSeconds = Math.round(Date.now() / 1000);
             const user = {
                 id,
                 name,
                 phone,
-            ...(children && {children}),
+                registrationToken,
+                ...(children && {children}),
                 lastUpdated: serverTimestamp()
             };
             await setDoc(doc(db, Collections.USERS, id), user);
+
+            // subscribe parent to children unusual expenses
+            const {admin} = config;
+
+            if (children) {
+                const registrationTokens = [registrationToken];
+                children.forEach(childId => {
+                    admin.messaging().subscribeToTopic(registrationTokens, childId)
+                        .then((response) => {
+                            // Response is a message ID string.
+                            console.log('Successfully sent message:', response);
+                        })
+                        .catch((error) => {
+                            console.log('Error sending message:', error);
+                        });
+                });
+            }
+
+            const currentTimestampInSeconds = Math.round(Date.now() / 1000);
 
             // in Android the timestamp is Long type
             user.lastUpdated = currentTimestampInSeconds;
