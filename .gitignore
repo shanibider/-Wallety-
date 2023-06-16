@@ -151,3 +151,7 @@ dist
 .DS_Store
 
 .idea
+
+.env
+env
+service-account.json

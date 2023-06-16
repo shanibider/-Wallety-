@@ -5,6 +5,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class User {
@@ -23,8 +24,8 @@ public class User {
     @SerializedName("password")
     private String password;
 
-    @SerializedName("isParent")
-    private boolean isParent;
+    @SerializedName("children")
+    private List<String> children;
 
     @SerializedName("registrationToken")
     public String registrationToken;
@@ -32,16 +33,15 @@ public class User {
     @SerializedName("lastUpdated")
     public Long lastUpdated;
 
-    public User(String name, String phone, String email, String password, boolean isParent) {
+    public User(String name, String phone, String email, String password) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.password = password;
-        this.isParent = isParent;
     }
 
-    public User(String id, String name, String phone, String email, String password, boolean isParent) {
-        this(name, email, password, phone, isParent);
+    public User(String id, String name, String phone, String email, String password) {
+        this(name, email, password, phone);
         this.id = id;
     }
 
@@ -74,8 +74,8 @@ public class User {
         return password;
     }
 
-    public boolean getIsParent() {
-        return isParent;
+    public List<String> getChildren() {
+        return children;
     }
 
     public String getRegistrationToken() {
@@ -94,12 +94,20 @@ public class User {
         this.phone = phone;
     }
 
+    public void setChildren(List<String> children) {
+        this.children = children;
+    }
+
     public void setRegistrationToken(String registrationToken) {
         this.registrationToken = registrationToken;
     }
 
     public void setLastUpdated(Long lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+    public boolean isParent() {
+        return children != null;
     }
 
 //
@@ -109,8 +117,7 @@ public class User {
         String phone = (String) json.get(PHONE);
         String email = (String) json.get(EMAIL);
         String password = (String) json.get(PASSWORD);
-        boolean isParent = Boolean.parseBoolean((String) json.get(IS_PARENT));
-        User user = new User(id, name, phone, email, password, isParent);
+        User user = new User(id, name, phone, email, password);
         try {
             Timestamp time = (Timestamp) json.get(LAST_UPDATED);
             user.setLastUpdated(time.getSeconds());
@@ -126,7 +133,6 @@ public class User {
         json.put(ID, getId());
         json.put(USER, getName());
         json.put(PHONE, getPhone());
-        json.put(IS_PARENT, getIsParent());
         json.put(LAST_UPDATED, FieldValue.serverTimestamp());
         return json;
     }
