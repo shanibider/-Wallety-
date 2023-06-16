@@ -162,6 +162,26 @@ public class Model extends FirebaseMessagingService {
                 .stream().noneMatch(user -> name.equals(user.getName()));
     }
 
+    public void getChildrenWithoutParent(Listener<List<User>> onSuccess, Listener<Void> onFailure) {
+        UserFetcherCon.getChildrenWithoutParent(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                if (response.isSuccessful()) {
+                    List<User> childrenWithoutParent = response.body();
+                    onSuccess.onComplete(childrenWithoutParent);
+                } else {
+                    onFailure.onComplete(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                Log.d("ERROR", t.getMessage());
+                onFailure.onComplete(null);
+            }
+        });
+    }
+
     public List<Transaction> getParentUnusualExpenses(String parentId) {
         Transaction transaction1 = new Transaction("12gh", "21.05.2023", 300, "Supermarket", false);
         Transaction transaction2 = new Transaction("ffff", "20.05.2023", 350, "KSP", false);
