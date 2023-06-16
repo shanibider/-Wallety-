@@ -1,4 +1,4 @@
-const {formatUser} = require("../utils/format-user");
+const {formatUserTimestamp, formatUser} = require("../utils/format-user");
 const {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
@@ -42,7 +42,6 @@ const getLoggedInUser = async (req, res) => {
 
     //-------
 
-
     res.status(StatusCodes.OK).send({loggedInUser});
 };
 
@@ -72,7 +71,7 @@ const loginUser = async (req, res) => {
 
 const signUpUser = async (req, res) => {
     const {auth, db} = config;
-    const {email, password, phone, name, isParent} = req.body;
+    const {email, password, phone, name, children} = req.body;
 
     fetchSignInMethodsForEmail(auth, email).then(async (result) => {
         if (result.length > 0) {
@@ -89,13 +88,13 @@ const signUpUser = async (req, res) => {
                     user: null
                 });
             } else {
-                createUser(res, auth, db, name, email, password, phone, isParent);
+                createUser(res, auth, db, name, email, password, phone, children);
             }
         }
     });
 };
 
-const createUser = (res, auth, db, name, email, password, phone, isParent) => {
+const createUser = (res, auth, db, name, email, password, phone, children) => {
     createUserWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
             const id = userCredential.user.uid;
@@ -104,7 +103,7 @@ const createUser = (res, auth, db, name, email, password, phone, isParent) => {
                 id,
                 name,
                 phone,
-                isParent,
+            ...(children && {children}),
                 lastUpdated: serverTimestamp()
             };
             await setDoc(doc(db, Collections.USERS, id), user);
@@ -119,6 +118,36 @@ const createUser = (res, auth, db, name, email, password, phone, isParent) => {
             console.log(error)
             res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
         });
+};
+
+const getChildrenWithoutParent = async (req, res) => {
+    const {db, admin} = config;
+    const allChildren = [];
+    const irrelevantUsersIds = new Set();
+    const querySnapshot = await getDocs(collection(db, Collections.USERS));
+    for (const doc1 of querySnapshot.docs) {
+        const user = doc1.data();
+        const children = user.children;
+
+        // if parent (has children)
+        if (children) {
+            children.forEach((userId) => irrelevantUsersIds.add(userId));
+        } else {
+            try {
+                const {email} = await admin.auth().getUser(user.id);
+                formatUser(user, email, '');
+                allChildren.push(user);
+            } catch (e) {
+                console.log(`Error: ${e}`);
+            }
+        }
+    }
+    const childrenWithoutParent = allChildren.filter(({id}) =>
+        !irrelevantUsersIds.has(id)
+    );
+
+    res.status(StatusCodes.OK).send(childrenWithoutParent);
+
 };
 
 const makeTransaction = async (req, res) => {
@@ -159,6 +188,7 @@ module.exports = {
     getLoggedInUser,
     loginUser,
     signUpUser,
+    getChildrenWithoutParent,
     makeTransaction
 };
 
