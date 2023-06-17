@@ -75,7 +75,7 @@ public class LinkCardFragment extends Fragment {
             bundle.putString("cvv", cvv);
 
             CreditCard card = new CreditCard(name, year, month, code, cvv);
-            LinkCardRequest request = new LinkCardRequest(card);
+            LinkCardRequest request = new LinkCardRequest(card, Model.instance().getCurrentUser().getAccessToken());
 
             Model.instance().linkCard(request,
                     (success) -> {

@@ -11,8 +11,6 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface WalletyAPI {
-    @GET("loggedInUser")
-    Call<LoggedInUserResponse> getLoggedInUser();
 
     @POST("loginUser")
     Call<User> loginUser(@Body UserLoginRequest userLoginRequest);
@@ -29,7 +27,7 @@ public interface WalletyAPI {
     @POST("linkCard")
     Call<ResponseBody> linkCard(@Body LinkCardRequest request);
 
-    @GET("creditCards")
-    Call<GetCreditCardResponse> getCreditCard();
+    @POST("creditCards")
+    Call<GetCreditCardResponse> getCreditCard(@Body AccessTokenRequest request);
 
 }

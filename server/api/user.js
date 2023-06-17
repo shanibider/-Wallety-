@@ -1,9 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {getLoggedInUser, loginUser, signUpUser, getChildrenWithoutParent, makeTransaction, linkCard, getCards} = require("../controllers/user");
-
-router.route('/loggedInUser')
-    .get(getLoggedInUser);
+const {loginUser, signUpUser, getChildrenWithoutParent, makeTransaction, linkCard, getCards} = require("../controllers/user");
 
 router.route('/loginUser')
     .post(loginUser);
@@ -21,6 +18,6 @@ router.route('/linkCard')
     .post(linkCard);
 
 router.route('/creditCards')
-    .get(getCards);
+    .post(getCards);
 
 module.exports = router;
