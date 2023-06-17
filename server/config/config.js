@@ -38,6 +38,7 @@ const initFirebase = () => {
     config.admin = admin;
 }
 
+
 module.exports = {
     Collections,
     initFirebase,

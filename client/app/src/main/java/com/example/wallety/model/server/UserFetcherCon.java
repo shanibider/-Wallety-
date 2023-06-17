@@ -44,4 +44,14 @@ public class UserFetcherCon {
         Call<ResponseBody> call = api.makeTransaction(transactionRequest);
         call.enqueue(callback);
     }
+
+    public static void linkCard(LinkCardRequest request, Callback<ResponseBody> callback) {
+        Call<ResponseBody> call = api.linkCard(request);
+        call.enqueue(callback);
+    }
+    public static void getCreditCard(Callback<GetCreditCardResponse> callback) {
+        Call<GetCreditCardResponse> call = api.getCreditCard();
+        call.enqueue(callback);
+    }
+
 }

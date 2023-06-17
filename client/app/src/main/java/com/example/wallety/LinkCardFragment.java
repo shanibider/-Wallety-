@@ -12,9 +12,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.braintreepayments.cardform.view.CardForm;
 import com.example.wallety.databinding.FragmentLinkCardBinding;
+import com.example.wallety.model.CreditCard;
+import com.example.wallety.model.Model;
+import com.example.wallety.model.Transaction;
+import com.example.wallety.model.server.LinkCardRequest;
+import com.example.wallety.model.server.TransactionRequest;
 
 public class LinkCardFragment extends Fragment {
     FragmentLinkCardBinding binding;
@@ -36,44 +42,57 @@ public class LinkCardFragment extends Fragment {
                 .actionLabel("Purchase")
                 .setup(getActivity());
 
-        t1= view.findViewById(R.id.code);
-        t2= view.findViewById(R.id.holder);
-        t3= view.findViewById(R.id.month1);
-        t4= view.findViewById(R.id.year1);
-        //t5= view.findViewById(R.id.cvv);
+        t1 = view.findViewById(R.id.code);
+        t2 = view.findViewById(R.id.holder);
+        t3 = view.findViewById(R.id.month1);
+        t4 = view.findViewById(R.id.year1);
+        // t5 = view.findViewById(R.id.cvv);
 
         binding.linkCardBtn.setOnClickListener(view1 -> {
 
             //display card detail on card template
             String cvv, name, month, year, code;
-            code= cardForm.getCardNumber();
+            code = cardForm.getCardNumber();
             t1.setText(code);
 
-            name= cardForm.getCardholderName();
+            name = cardForm.getCardholderName();
             t2.setText(name);
 
-            month= cardForm.getExpirationMonth();
+            month = cardForm.getExpirationMonth();
             t3.setText(month);
 
-            year= cardForm.getExpirationYear();
+            year = cardForm.getExpirationYear();
             t4.setText(year);
 
-//            cvv = cardForm.getCvv();
+            cvv = cardForm.getCvv();
 //            t5.setText(cvv);
 
             Bundle bundle = new Bundle();
-            bundle.putString("code1", code);
-            bundle.putString("name1", name);
-            bundle.putString("month1", month);
-            bundle.putString("year1", year);
+            bundle.putString("card_num", code);
+            bundle.putString("holder_name", name);
+            bundle.putString("month", month);
+            bundle.putString("year", year);
+            bundle.putString("cvv", cvv);
+
+            CreditCard card = new CreditCard(name, year, month, code, cvv);
+            LinkCardRequest request = new LinkCardRequest(card);
+
+            Model.instance().linkCard(request,
+                    (success) -> {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Navigation.findNavController(view1).popBackStack();
+                            }
+                        }, 4000);
 
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Navigation.findNavController(view1).popBackStack();
-                }
-            }, 4000);
+                    },
+                    (error) -> {
+                        Toast.makeText(getActivity(), "Error occurred",
+                                Toast.LENGTH_SHORT).show();
+                    }
+            );
         });
 
         return view;

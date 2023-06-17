@@ -7,6 +7,8 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.wallety.R;
+import com.example.wallety.model.server.GetCreditCardResponse;
+import com.example.wallety.model.server.LinkCardRequest;
 import com.example.wallety.model.server.LoggedInUserResponse;
 import com.example.wallety.model.server.TransactionRequest;
 import com.example.wallety.model.server.UserFetcherCon;
@@ -37,6 +39,9 @@ public class Model extends FirebaseMessagingService {
 
     private FirebaseModel firebaseModel = new FirebaseModel();
     private User loggedUser = null;
+
+    private CreditCard creditCard = null;
+
     private HashMap<String, User> usersByIds = new HashMap<>();
 
     public Model() {
@@ -73,6 +78,14 @@ public class Model extends FirebaseMessagingService {
 
     public void setCurrentUser(User user) {
         loggedUser = user;
+    }
+
+    public CreditCard getCreditCard() {
+        return creditCard;
+    }
+
+    public void setCreditCard(CreditCard card) {
+        creditCard = card;
     }
 
     public void createUser(User user, Listener<Void> onSuccess, Listener<String> onFailure) {
@@ -263,4 +276,48 @@ public class Model extends FirebaseMessagingService {
             }
         });
     }
+
+
+    public void linkCard(LinkCardRequest request, Listener<Void> onSuccess, Listener<Void> onFailure) {
+        UserFetcherCon.linkCard(request, new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    onSuccess.onComplete(null);
+                } else {
+                    onFailure.onComplete(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("ERROR", t.getMessage());
+                onFailure.onComplete(null);
+            }
+        });
+    }
+
+    public void getUserCreditCard(Listener<Void> onSuccess, Listener<Void> onFailure) {
+        UserFetcherCon.getCreditCard(new Callback<GetCreditCardResponse>() {
+            @Override
+            public void onResponse(Call<GetCreditCardResponse> call, Response<GetCreditCardResponse> response) {
+                if (response.isSuccessful() && response.body().getCreditCard() != null) {
+                    CreditCard data = response.body().getCreditCard();
+                    setCreditCard(data);
+                    onSuccess.onComplete(null);
+                } else {
+                    onFailure.onComplete(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetCreditCardResponse> call, Throwable t) {
+                Log.d("ERROR", t.getMessage());
+                onFailure.onComplete(null);
+            }
+        });
+    }
+
+
+
 }

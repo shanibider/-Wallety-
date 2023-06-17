@@ -25,6 +25,24 @@ const getLoggedInUser = async (req, res) => {
         }
     }
 
+    //-------
+    // Part of parent child subscribe (in children choose - sign up)
+    // const registrationTokens = [
+    //     '<token>',
+    // ];
+
+    // admin.messaging().subscribeToTopic(registrationTokens, '<child-uid>')
+    //     .then((response) => {
+    //         Response is a message ID string.
+    // console.log('Successfully sent message:', response);
+    // })
+    // .catch((error) => {
+    //     console.log('Error sending message:', error);
+    // });
+
+    //-------
+
+
     res.status(StatusCodes.OK).send({loggedInUser});
 };
 
@@ -186,11 +204,60 @@ const makeTransaction = async (req, res) => {
     res.status(StatusCodes.OK).send("Transaction succeeded");
 };
 
+const linkCard = async (req, res) => {
+    const {auth, db} = config;
+    const {creditCard} = req.body;
+
+    if(auth && auth.currentUser){
+        const {uid} = auth.currentUser;
+
+        var data = [{
+            holderName: creditCard.holderName,
+            cardNum: creditCard.cardNum,
+            year: creditCard.year,
+            month: creditCard.month,
+            cvvNum: creditCard.cvvNum
+        }];
+
+        const docRef = doc(db, Collections.USERS, uid);
+        await updateDoc(docRef, {
+            creditCard: data
+        });
+
+        res.status(StatusCodes.OK).send("Link Card succeeded");
+
+    }
+    else{
+        res.status(StatusCodes.BAD_REQUEST).send("Link Card error");
+    }
+};
+
+const getCards = async (req, res) => {
+    const {auth, db} = config;
+
+    if(auth && auth.currentUser){
+        const {uid} = auth.currentUser;
+        const docRef = doc(db, Collections.USERS, uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            var card = docSnap.data().creditCard[0];
+            data = {"creditCard": card};
+            console.log(data);
+        }
+        res.status(StatusCodes.OK).send(data);
+    }
+    else{
+        res.status(StatusCodes.BAD_REQUEST).send("Get Card error");
+    }
+};
+
 module.exports = {
     getLoggedInUser,
     loginUser,
     signUpUser,
+    makeTransaction,
     getChildrenWithoutParent,
-    makeTransaction
+    linkCard,
+    getCards
 };
 
