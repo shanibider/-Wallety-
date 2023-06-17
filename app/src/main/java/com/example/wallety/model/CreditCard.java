@@ -18,15 +18,15 @@ public class CreditCard {
     @SerializedName("cardNum")
     private String cardNum;
 
-    @SerializedName("cvvNum")
-    private String cvvNum;
+    @SerializedName("cvv")
+    private String cvv;
 
-    public CreditCard(String holderName, String year, String month, String cardNum, String cvvNum) {
+    public CreditCard(String holderName, String year, String month, String cardNum, String cvv) {
         this.holderName = holderName;
         this.year = year;
         this.month = month;
         this.cardNum = cardNum;
-        this.cvvNum = cvvNum;
+        this.cvv = cvv;
     }
 
     static final String HOLDER_NAME = "holderName";
@@ -37,7 +37,7 @@ public class CreditCard {
 
     static final String CARD_NUM = "cardNum";
 
-    static final String CVV_NUM = "cvvNum";
+    static final String CVV = "cvv";
 
     public String getHolderName() {
         return holderName;
@@ -55,8 +55,8 @@ public class CreditCard {
         return cardNum;
     }
 
-    public String getCvvNum() {
-        return cvvNum;
+    public String getCvv() {
+        return cvv;
     }
 
 
@@ -65,7 +65,7 @@ public class CreditCard {
         String year = (String) json.get(YEAR);
         String month = (String) json.get(MONTH);
         String cardNum = (String) json.get(CARD_NUM);
-        String cvvNum = (String) json.get(CVV_NUM);
+        String cvvNum = (String) json.get(CVV);
 
         return new CreditCard(holderName, year, month, cardNum, cvvNum);
     }
@@ -76,7 +76,7 @@ public class CreditCard {
         json.put(YEAR, getYear());
         json.put(MONTH, getMonth());
         json.put(CARD_NUM, getCardNum());
-        json.put(CVV_NUM, getCvvNum());
+        json.put(CVV, getCvv());
 
         return json;
     }

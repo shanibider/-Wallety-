@@ -1,6 +1,5 @@
 package com.example.wallety;
 
-import android.animation.AnimatorSet;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,7 +28,7 @@ import java.util.Map;
 public class SignUpFragment extends Fragment {
     FragmentSignUpBinding binding;
     static Map<String, CheckBox> addedCheckboxesByEmail = new HashMap<>();
-    static List<String> addedChildrenIds = new ArrayList<>();
+    static List<User> addedChildren = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,6 +45,7 @@ public class SignUpFragment extends Fragment {
                         .navigate(R.id.action_signUpFragment_to_addChildrenFragment);
             }
         });
+
         binding.signUpBtn.setOnClickListener(view1 -> {
             String name = binding.nameEt.getText().toString().trim();
             String phone = binding.phoneEt.getText().toString().trim();
@@ -58,7 +58,7 @@ public class SignUpFragment extends Fragment {
             boolean isValidPhone = Patterns.PHONE.matcher(phone).matches();
             boolean isValidEmail = Patterns.EMAIL_ADDRESS.matcher(email).matches();
             boolean isParent = binding.parentRb.isChecked();
-            boolean isValidParent = !isParent || addedChildrenIds.size() > 0;
+            boolean isValidParent = !isParent || addedChildren.size() > 0;
 
             if (name.length() > 0 && email.length() > 0 && isValidPhone && isValidEmail &&
                     password.length() > 5 && password.equals(confirmedPassword) && isValidParent
@@ -66,7 +66,7 @@ public class SignUpFragment extends Fragment {
                 User user = new User(name, phone, email, password);
 
                 if (isParent) {
-                    user.setChildren(addedChildrenIds);
+                    user.setChildren(addedChildren);
                 }
                 Model.instance().createUser(user,
                         (onSuccess) -> {

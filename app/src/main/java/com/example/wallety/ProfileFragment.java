@@ -51,10 +51,14 @@ public class ProfileFragment extends Fragment {
         });
 
         // myFamily button
-        binding.myFamily.setOnClickListener(view1 -> {
-            // screen with all the prepaid credit of the children
-            Navigation.findNavController(view1).navigate(R.id.action_profileFragment_to_myFamilyFragment);
-        });
+        if (Model.instance().getCurrentUser().isParent()) {
+            binding.myFamily.setOnClickListener(view1 -> {
+                // screen with all the prepaid credit of the children
+                Navigation.findNavController(view1).navigate(R.id.action_profileFragment_to_myFamilyFragment);
+            });
+        } else {
+            binding.myFamily.setVisibility(View.INVISIBLE);
+        }
 
         binding.knowledge.setOnClickListener(view1 -> {
             // screen with all the prepaid credit of the children

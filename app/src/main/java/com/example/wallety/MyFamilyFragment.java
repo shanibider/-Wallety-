@@ -7,19 +7,39 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 
-import com.braintreepayments.cardform.view.CardForm;
-import com.denzcoskun.imageslider.ImageSlider;
-import com.denzcoskun.imageslider.constants.ScaleTypes;
-import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.wallety.databinding.FragmentMyFamilyBinding;
+import com.example.wallety.model.CreditCard;
+import com.example.wallety.model.Model;
+import com.example.wallety.model.User;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class MyFamilyFragment extends Fragment {
-
     FragmentMyFamilyBinding binding;
+    User selectedChild;
+
+    private void handleChildSelection() {
+        String formattedBalance = String.valueOf(selectedChild.getBalance()) + '₪';
+        binding.balanceTv.setText(formattedBalance);
+        CreditCard creditCard = selectedChild.getCreditCard();
+
+        if (creditCard != null) {
+            binding.creditCardView.setBackgroundResource(com.vinaygaba.creditcardview.R.drawable.cardbackground_world);
+            binding.creditCardView.setCardNumber(creditCard.getCardNum());
+            binding.creditCardView.setCardName(creditCard.getHolderName());
+            String expiryDate = creditCard.getMonth() + '/' + creditCard.getYear();
+            binding.creditCardView.setExpiryDate(expiryDate);
+        } else {
+            binding.creditCardView.setBackgroundResource(com.vinaygaba.creditcardview.R.drawable.cardbackground_canvas);
+            binding.creditCardView.setCardNumber("No Card Yet");
+            binding.creditCardView.setExpiryDate("MM/YY");
+            binding.creditCardView.setCardName("Holder Name");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,15 +48,23 @@ public class MyFamilyFragment extends Fragment {
         binding = FragmentMyFamilyBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        ImageSlider imageSlider = view.findViewById(R.id.imageSlider);
-        ArrayList<SlideModel> slideModels = new ArrayList<>();
+        List<User> children = Model.instance().getCurrentUser().getChildren();
+        selectedChild = children.get(0);
 
-        slideModels.add(new SlideModel(R.drawable.visa_card, ScaleTypes.FIT));
-        slideModels.add(new SlideModel(R.drawable.visa_card, ScaleTypes.FIT));
-        slideModels.add(new SlideModel(R.drawable.visa_card, ScaleTypes.FIT));
+        List<String> childrenNames = children.stream()
+                .map(User::getName)
+                .collect(Collectors.toList());
 
-        imageSlider.setImageList(slideModels, ScaleTypes.FIT);
-
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_spinner_dropdown_item, childrenNames);
+        binding.childDropdown.setAdapter(adapter);
+        binding.childDropdown.setSelection(0);
+        binding.childDropdown.setText(selectedChild.getName(), false);
+        binding.childDropdown.setOnItemClickListener((parent, view1, position, id) -> {
+            selectedChild = children.get(position);
+            handleChildSelection();
+        });
+        handleChildSelection();
 
         return view;
     }

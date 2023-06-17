@@ -24,21 +24,21 @@ public class SearchedChildAdapter extends RecyclerView.Adapter<SearchedChildAdap
     List<User> childrenList;
     LinearLayout addedChildrenListView;
     Map<String, CheckBox> addedCheckboxesByEmail;
-    List<String> addedChildrenIds;
+    List<User> addedChildren;
 
     public SearchedChildAdapter(Context context, List<User> childrenList, LinearLayout addedChildrenListView,
-                                Map<String, CheckBox> addedCheckboxesByEmail, List<String> addedChildrenIds) {
+                                Map<String, CheckBox> addedCheckboxesByEmail, List<User> addedChildrenIds) {
         this.context = context;
         this.childrenList = childrenList;
         this.addedChildrenListView = addedChildrenListView;
         this.addedCheckboxesByEmail = addedCheckboxesByEmail;
-        this.addedChildrenIds = addedChildrenIds;
+        this.addedChildren = addedChildrenIds;
     }
 
     private void createAddedChildCheckboxHandler(CheckBox searchedChildCheckBox, User child) {
         addedChildrenListView.removeView(addedCheckboxesByEmail.get(child.getEmail()));
         addedCheckboxesByEmail.remove(child.getEmail());
-        addedChildrenIds.remove(child.getId());
+        addedChildren.removeIf(user -> user.getEmail().equals(child.getEmail()));
         searchedChildCheckBox.setChecked(false);
     }
 
@@ -72,7 +72,7 @@ public class SearchedChildAdapter extends RecyclerView.Adapter<SearchedChildAdap
                 addedChildCheckBox.setChecked(true);
                 addedChildCheckBox.setButtonTintList(ColorStateList.valueOf(context.getColor(R.color.teal_500)));
                 addedCheckboxesByEmail.put(email, addedChildCheckBox);
-                addedChildrenIds.add(child.getId());
+                addedChildren.add(child);
                 addedChildrenListView.addView(addedChildCheckBox);
 
                 addedChildCheckBox.setOnClickListener(v1 -> {
