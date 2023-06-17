@@ -28,7 +28,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/card1"
             android:layout_width="380dp"
-            android:layout_height="150dp"
+            android:layout_height="140dp"
             android:layout_below="@+id/knowledge"
             android:layout_marginTop="24dp"
             app:cardCornerRadius="10dp"
@@ -75,9 +75,9 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/card2"
             android:layout_width="380dp"
-            android:layout_height="150dp"
+            android:layout_height="140dp"
             android:layout_below="@+id/card1"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="25dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="2dp"
             app:layout_constraintBottom_toTopOf="@+id/card3"
@@ -111,7 +111,7 @@
                     android:layout_marginTop="6dp"
 
                     android:elegantTextHeight="true"
-                    android:text="Teach you kid the value of work and how to become organized and efficient.\n\nPromote simple tasks that keeds need to perfom and keep an organized schedule."
+                    android:text="Teach you kid the value of work and how to become organized and efficient.\nPromote simple tasks that keeds need to perfom and keep an organized schedule."
                     android:textColor="@color/grey"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -125,9 +125,9 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/card3"
             android:layout_width="380dp"
-            android:layout_height="150dp"
+            android:layout_height="140dp"
             android:layout_below="@+id/card2"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="25dp"
             android:layout_marginBottom="130dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="2dp"
@@ -171,6 +171,61 @@
                     app:layout_constraintTop_toBottomOf="@+id/goals" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
+
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card4"
+            android:layout_width="380dp"
+            android:layout_height="140dp"
+            android:layout_below="@+id/card3"
+            android:layout_marginTop="-100dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="2dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/custom_edittext"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+
+                <TextView
+                    android:id="@+id/PrePaidCards"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pre-Paid Cards"
+                    android:textColor="@color/grey"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tasks_info" />
+
+                <TextView
+                    android:id="@+id/PrePaidCards_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:elegantTextHeight="true"
+                    android:text="Because there's no credit check or bank account required, prepaid cards unlock new possibilities for your children."
+                    android:textColor="@color/grey"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/goals" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+
+
 
 
     </RelativeLayout>

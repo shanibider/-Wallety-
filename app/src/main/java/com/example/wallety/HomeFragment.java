@@ -77,14 +77,6 @@ public class HomeFragment extends Fragment {
             yearTv.setText(creditCard.getYear());
         }
 
-//        if (user.getIsParent()) {
-//            binding.unusualExpensesCv.setOnClickListener(view1 -> {
-//                Navigation.findNavController(view1).navigate(R.id.action_homeFragment_to_unusualExpensesFragment);
-//            });
-//        } else {
-//            binding.unusualExpensesCv.setVisibility(View.INVISIBLE);
-//        }
-
         recyclerView = view.findViewById(R.id.transactions_recList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         transactionsList = new ArrayList<>();
@@ -129,8 +121,11 @@ public class HomeFragment extends Fragment {
         bindingChildren.transferMoneyCv.setOnClickListener(view -> {
             Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_transferMoneyFragment2);
         });
-        bindingChildren.unusualExpensesCv.setOnClickListener(view -> {
-            Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_unusualExpensesFragment);
+        bindingChildren.goalsCv.setOnClickListener(view -> {
+            Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_savingMoneyFragment);
+        });
+        bindingChildren.tasksCv.setOnClickListener(view -> {
+            Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_tasksFragment);
         });
     }
 
@@ -183,3 +178,12 @@ public class HomeFragment extends Fragment {
 
 
 }
+
+
+//        if (user.getIsParent()) {
+//            binding.unusualExpensesCv.setOnClickListener(view1 -> {
+//                Navigation.findNavController(view1).navigate(R.id.action_homeFragment_to_unusualExpensesFragment);
+//            });
+//        } else {
+//            binding.unusualExpensesCv.setVisibility(View.INVISIBLE);
+//        }

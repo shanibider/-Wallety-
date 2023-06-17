@@ -2,7 +2,9 @@ const {formatUserChildren, formatUser} = require("../utils/format-user");
 const {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
-    fetchSignInMethodsForEmail
+    fetchSignInMethodsForEmail,
+    getAuth,
+    signInWithCustomToken
 } = require('firebase/auth');
 const {
     doc, getDoc, updateDoc, setDoc, serverTimestamp,
@@ -11,27 +13,9 @@ const {
 const {StatusCodes} = require('http-status-codes');
 const {Collections, config} = require("../config/config");
 
-const getLoggedInUser = async (req, res) => {
-    const {auth, db} = config;
-    let loggedInUser = null;
-    if (auth.currentUser) {
-        const {uid, email} = auth.currentUser;
-        const docRef = doc(db, Collections.USERS, uid);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-            loggedInUser = docSnap.data();
-
-            await formatUserChildren(loggedInUser);
-            formatUser(loggedInUser, email, '');
-            console.log(email + " logged in")
-        }
-    }
-
-    res.status(StatusCodes.OK).send({loggedInUser});
-};
-
 const loginUser = async (req, res) => {
-    const {auth, db} = config;
+    const {db, admin} = config;
+    const auth = getAuth();
     const {email, password, registrationToken} = req.body;
     signInWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
@@ -43,11 +27,15 @@ const loginUser = async (req, res) => {
 
             if (docSnap.exists()) {
                 const user = docSnap.data();
-
-                await formatUserChildren(user);
-                formatUser(user, email, password);
-                console.log(email + " logged in")
-                res.status(StatusCodes.OK).send(user);
+                admin.auth().createCustomToken(user.id).then(async (accessToken) => {
+					await formatUserChildren(user);
+                    formatUser(user, email, password, accessToken);
+                    console.log(email + " logged in");
+                    res.status(StatusCodes.OK).send(user); 
+                }).catch((error) => {
+                    console.log(error)
+                    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
+                });
             }
         })
         .catch((error) => {
@@ -57,7 +45,8 @@ const loginUser = async (req, res) => {
 };
 
 const signUpUser = async (req, res) => {
-    const {auth, db} = config;
+    const {db} = config;
+    const auth = getAuth();
     const {email, password, phone, name, registrationToken, children} = req.body;
 
     fetchSignInMethodsForEmail(auth, email).then(async (result) => {
@@ -126,7 +115,17 @@ const createUser = (res, auth, db, name, email, password, phone, registrationTok
             }
 
             console.log(email + " signed up")
-            res.status(StatusCodes.OK).send({user, existingDetail: ""});
+
+            admin.auth().createCustomToken(user.id).then((accessToken) => {
+                user.accessToken = accessToken;
+                res.status(StatusCodes.OK).send({user, existingDetail: ""});
+
+            }).catch((error) => {
+                console.log(error)
+                res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
+            });
+
+            
         })
         .catch((error) => {
             console.log(error)
@@ -165,44 +164,104 @@ const getChildrenWithoutParent = async (req, res) => {
 };
 
 const makeTransaction = async (req, res) => {
-    const {auth, db, admin} = config;
+    const {db, admin} = config;
     const {transaction} = req.body;
-    const {uid} = auth.currentUser;
-    const docRef = doc(db, Collections.USERS, uid);
-    await updateDoc(docRef, {
-        transactions: arrayUnion(transaction)
-    });
-    console.log('Transaction made successfully');
+    const {accessToken} = req.body;
+    const auth = getAuth();
+    signInWithCustomToken(auth, accessToken)
+        .then(async (userCredential) => {
+            const docRef = doc(db, Collections.USERS, userCredential.user.uid);
+           
+            await updateDoc(docRef, {
+                transactions: arrayUnion(transaction)
+            });
+            console.log('Transaction made successfully');
 
-    // push notification to parent if unusual
-    if (transaction.isUnusual) {
-        // setTimeout IS ONLY FOR CHECK IT PUSHED (DELETE IT!).
-        setTimeout(() => {
-            const message = {
-                notification: {
-                    title: 'Unusual expense detected',
-                    body: 'Your child made unusual expense'
-                },
-                topic: uid
-            };
-            admin.messaging().send(message)
-                .then((response) => {
-                    // Response is a message ID string.
-                    console.log('Successfully pushed notification:', response);
-                })
-                .catch((error) => {
-                    console.log('Error pushing notification:', error);
-                });
-        }, 4000);
-    }
-    res.status(StatusCodes.OK).send("Transaction succeeded");
+            // push notification to parent if unusual
+            if (transaction.isUnusual) {
+                // setTimeout IS ONLY FOR CHECK IT PUSHED (DELETE IT!).
+                setTimeout(() => {
+                    const message = {
+                        notification: {
+                            title: 'Unusual expense detected',
+                            body: 'Your child made unusual expense'
+                        },
+                        topic: userCredential.user.uid
+                    };
+                    admin.messaging().send(message)
+                        .then((response) => {
+                            // Response is a message ID string.
+                            console.log('Successfully pushed notification:', response);
+                        })
+                        .catch((error) => {
+                            console.log('Error pushing notification:', error);
+                        });
+                }, 4000);
+            }
+            res.status(StatusCodes.OK).send("Transaction succeeded");
+
+        })
+        .catch((error) => {
+            console.log(error)
+            res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
+        }); 
+};
+
+const linkCard = async (req, res) => {
+    const {db} = config;
+    const {creditCard} = req.body;
+    const {accessToken} = req.body;
+    const auth = getAuth();
+    signInWithCustomToken(auth, accessToken)
+        .then(async (userCredential) => {
+            const docRef = doc(db, Collections.USERS, userCredential.user.uid);
+           
+            var data = [{
+                holderName: creditCard.holderName,
+                cardNum: creditCard.cardNum,
+                year: creditCard.year,
+                month: creditCard.month,
+                cvvNum: creditCard.cvvNum
+            }];
+
+            await updateDoc(docRef, {
+                creditCard: data
+            });
+    
+            res.status(StatusCodes.OK).send("Link Card succeeded");
+        })
+        .catch((error) => {
+            console.log(error)
+            res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
+        });
+};
+
+const getCards = async (req, res) => {
+    const {db} = config;
+    const {accessToken} = req.body;
+    const auth = getAuth();
+    signInWithCustomToken(auth, accessToken)
+        .then(async (userCredential) => {
+            const docRef = doc(db, Collections.USERS, userCredential.user.uid);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                var card = docSnap.data().creditCard[0];
+                data = {"creditCard": card};
+            }
+            res.status(StatusCodes.OK).send(data);
+        })
+        .catch((error) => {
+            console.log(error)
+            res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
+        });
 };
 
 module.exports = {
-    getLoggedInUser,
     loginUser,
     signUpUser,
+    makeTransaction,
     getChildrenWithoutParent,
-    makeTransaction
+    linkCard,
+    getCards
 };
 

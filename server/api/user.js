@@ -1,15 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {
-    getLoggedInUser,
-    loginUser,
-    signUpUser,
-    getChildrenWithoutParent,
-    makeTransaction
-} = require("../controllers/user");
-
-router.route('/loggedInUser')
-    .get(getLoggedInUser);
+const {loginUser, signUpUser, getChildrenWithoutParent, makeTransaction, linkCard, getCards} = require("../controllers/user");
 
 router.route('/loginUser')
     .post(loginUser);
@@ -22,5 +13,11 @@ router.route('/childrenWithoutParent')
 
 router.route('/makeTransaction')
     .post(makeTransaction);
+
+router.route('/linkCard')
+    .post(linkCard);
+
+router.route('/creditCards')
+    .post(getCards);
 
 module.exports = router;

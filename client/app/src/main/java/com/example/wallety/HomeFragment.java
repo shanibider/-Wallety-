@@ -16,19 +16,25 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.braintreepayments.cardform.view.CardForm;
 import com.example.wallety.adapters.HomeAdapter;
 import com.example.wallety.databinding.FragmentHomeBinding;
 import com.example.wallety.databinding.FragmentLinkCardBinding;
+import com.example.wallety.model.CreditCard;
 import com.example.wallety.model.Model;
 import com.example.wallety.model.Transactions;
 import com.example.wallety.model.User;
+import com.example.wallety.model.server.AccessTokenRequest;
+import com.example.wallety.model.server.LinkCardRequest;
 import com.example.wallety.model.server.UserFetcherCon;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -44,6 +50,8 @@ public class HomeFragment extends Fragment {
     HomeAdapter homeAdapter;
 
     private View partialView;
+    private TextView creditCardCode, creditCardHolder, creditCardMonth, creditCardYear;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,6 +64,10 @@ public class HomeFragment extends Fragment {
         binding.nameHeaderTv.setText(nameHeader);
 
         partialView = view.findViewById(R.id.partial);
+        creditCardCode = view.findViewById(R.id.code);
+        creditCardHolder = view.findViewById(R.id.holder);
+        creditCardMonth = view.findViewById(R.id.month1);
+        creditCardYear = view.findViewById(R.id.year1);
 
         binding.linkCardCv.setOnClickListener(view1 -> {
             Navigation.findNavController(view1).navigate(R.id.action_homeFragment_to_linkCardFragment);
@@ -82,6 +94,22 @@ public class HomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.transactions_recList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         transactionsList = new ArrayList<>();
+
+        AccessTokenRequest request = new AccessTokenRequest(user.getAccessToken());
+        Model.instance().getUserCreditCard(request,
+                (success) -> {
+                    CreditCard card = Model.instance().getCreditCard();
+                    String last4Numbers = card.getCardNum().substring(card.getCardNum().length() - 4);
+                    creditCardCode.setText("XXXX - XXXX - XXXX - " + last4Numbers);
+                    creditCardHolder.setText(card.getHolderName());
+                    creditCardMonth.setText(card.getMonth());
+                    creditCardYear.setText(card.getYear());
+                },
+                (error) -> {
+                    Log.d("error" ,"getting card");
+                }
+        );
+
 
         transactionsList.add(new Transactions(R.drawable.shopping_cart, "Super market", "08/04/2023", "159"));
         transactionsList.add(new Transactions(R.drawable.shopping_bag, "KSP", "08/04/2023", "299"));
