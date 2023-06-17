@@ -106,7 +106,17 @@ const createUser = (res, auth, db, name, email, password, phone, registrationTok
             user.lastUpdated = currentTimestampInSeconds;
 
             console.log(email + " signed up")
-            res.status(StatusCodes.OK).send({user, existingDetail: ""});
+
+            admin.auth().createCustomToken(user.id).then((accessToken) => {
+                user.accessToken = accessToken;
+                res.status(StatusCodes.OK).send({user, existingDetail: ""});
+
+            }).catch((error) => {
+                console.log(error)
+                res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
+            });
+
+            
         })
         .catch((error) => {
             console.log(error)
