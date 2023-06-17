@@ -10,7 +10,6 @@ const {
 } = require("firebase/firestore");
 const {StatusCodes} = require('http-status-codes');
 const {Collections, config} = require("../config/config");
-const creditCards = require("./mongoModels");
 
 const getLoggedInUser = async (req, res) => {
     const {auth, db} = config;
@@ -43,7 +42,7 @@ const getLoggedInUser = async (req, res) => {
 
     //-------
 
-
+    console.log({loggedInUser});
     res.status(StatusCodes.OK).send({loggedInUser});
 };
 
@@ -157,30 +156,50 @@ const makeTransaction = async (req, res) => {
 };
 
 const linkCard = async (req, res) => {
-    const {auth} = config;
+    const {auth, db} = config;
     const {creditCard} = req.body;
-    var data = [{
-        holderName: creditCard.holderName,
-        cardNum: creditCard.cardNum,
-        year: creditCard.year,
-        month: creditCard.month,
-        cvv: creditCard.cvvNum,
-        userEmail: auth.currentUser.email
-    }];
 
-    creditCards.insertMany(data).then(function () {
-        console.log('Link card successfully');
-        res.status(StatusCodes.OK).send("Link card succeeded");
-      }).catch(function (err) {
-        res.send(err);
-      });
+    if(auth && auth.currentUser){
+        const {uid} = auth.currentUser;
+
+        var data = [{
+            holderName: creditCard.holderName,
+            cardNum: creditCard.cardNum,
+            year: creditCard.year,
+            month: creditCard.month,
+            cvvNum: creditCard.cvvNum
+        }];
+
+        const docRef = doc(db, Collections.USERS, uid);
+        await updateDoc(docRef, {
+            creditCard: data
+        });
+
+        res.status(StatusCodes.OK).send("Link Card succeeded");
+
+    }
+    else{
+        res.status(StatusCodes.BAD_REQUEST).send("Link Card error");
+    }
 };
 
 const getCards = async (req, res) => {
-    creditCards.find({}).then(function(data){
-        //res.render('user-table',{userData:data});
-        res.send(data);
-    });
+    const {auth, db} = config;
+
+    if(auth && auth.currentUser){
+        const {uid} = auth.currentUser;
+        const docRef = doc(db, Collections.USERS, uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            var card = docSnap.data().creditCard[0];
+            data = {"creditCard": card};
+            console.log(data);
+        }
+        res.status(StatusCodes.OK).send(data);
+    }
+    else{
+        res.status(StatusCodes.BAD_REQUEST).send("Get Card error");
+    }
 };
 
 module.exports = {

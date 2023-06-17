@@ -23,4 +23,7 @@ public interface WalletyAPI {
 
     @POST("linkCard")
     Call<ResponseBody> linkCard(@Body LinkCardRequest request);
+
+    @GET("creditCards")
+    Call<GetCreditCardResponse> getCreditCard();
 }
