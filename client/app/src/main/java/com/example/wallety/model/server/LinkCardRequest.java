@@ -8,8 +8,10 @@ public class LinkCardRequest {
 
     @SerializedName("creditCard")
     private CreditCard creditCard;
+    private String accessToken;
 
-    public LinkCardRequest(CreditCard creditCard) {
+    public LinkCardRequest(CreditCard creditCard, String accessToken) {
         this.creditCard = creditCard;
+        this.accessToken = accessToken;
     }
 }

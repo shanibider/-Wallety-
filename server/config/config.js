@@ -1,6 +1,5 @@
 require('dotenv/config');
 const {initializeApp} = require("firebase/app");
-const {getAuth} = require("firebase/auth");
 const {getFirestore} = require("firebase/firestore");
 const admin = require("firebase-admin");
 const serviceAccount = require("../service-account.json");
@@ -21,14 +20,12 @@ const firebaseConfig = {
 };
 
 const config = {
-    auth: null,
     db: null,
     admin: null
 };
 
 const initFirebase = () => {
     const firebaseApp = initializeApp(firebaseConfig);
-    config.auth = getAuth(firebaseApp);
     config.db = getFirestore(firebaseApp);
 
     admin.initializeApp({

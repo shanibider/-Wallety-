@@ -33,6 +33,7 @@ import com.example.wallety.model.CreditCard;
 import com.example.wallety.model.Model;
 import com.example.wallety.model.Transactions;
 import com.example.wallety.model.User;
+import com.example.wallety.model.server.AccessTokenRequest;
 import com.example.wallety.model.server.LinkCardRequest;
 import com.example.wallety.model.server.UserFetcherCon;
 import com.google.android.material.bottomappbar.BottomAppBar;
@@ -94,7 +95,8 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         transactionsList = new ArrayList<>();
 
-        Model.instance().getUserCreditCard(
+        AccessTokenRequest request = new AccessTokenRequest(user.getAccessToken());
+        Model.instance().getUserCreditCard(request,
                 (success) -> {
                     CreditCard card = Model.instance().getCreditCard();
                     String last4Numbers = card.getCardNum().substring(card.getCardNum().length() - 4);
