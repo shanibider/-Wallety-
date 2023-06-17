@@ -9,7 +9,7 @@
         android:id="@+id/loginFragment"
         android:name="com.example.wallety.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
@@ -18,5 +18,18 @@
         android:id="@+id/signUpFragment"
         android:name="com.example.wallety.SignUpFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" />
+        tools:layout="@layout/fragment_sign_up">
+        <action
+            android:id="@+id/action_signUpFragment_to_addChildrenFragment"
+            app:destination="@id/addChildrenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addChildrenFragment"
+        android:name="com.example.wallety.AddChildrenFragment"
+        android:label="fragment_add_children"
+        tools:layout="@layout/fragment_add_children">
+        <argument
+            android:name="addedChildrenIds"
+            app:argType="string[]" />
+    </fragment>
 </navigation>

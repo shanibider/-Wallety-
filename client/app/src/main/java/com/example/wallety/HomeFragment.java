@@ -82,7 +82,7 @@ public class HomeFragment extends Fragment {
 
         User user = Model.instance().getCurrentUser();
 
-        if (user.getIsParent()) {
+        if (user.isParent()) {
             binding.unusualExpensesCv.setOnClickListener(view1 -> {
                 Navigation.findNavController(view1).navigate(R.id.action_homeFragment_to_unusualExpensesFragment);
             });

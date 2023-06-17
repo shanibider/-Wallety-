@@ -80,28 +80,41 @@ public class Model extends FirebaseMessagingService {
 
     // Create a new user on the server
     public void createUser(User user, Listener<Void> onSuccess, Listener<String> onFailure) {
-        UserFetcherCon.signUpUser(user, new Callback<UserSignUpResponse>() {
-            @Override
-            public void onResponse(Call<UserSignUpResponse> call, Response<UserSignUpResponse> response) {
-                if (response.isSuccessful()) {
-                    User user = response.body().getUser();
-                    if (user != null) {
-                        setCurrentUser(user);
-                        onSuccess.onComplete(null);
-                    } else {
-                        onFailure.onComplete(response.body().getExistingDetail());
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("TAG", "Fetching FCM registration token failed", task.getException());
+                            onFailure.onComplete("");
+                            return;
+                        }
+//                      Get new FCM registration token
+                        String registrationToken = task.getResult();
+                        user.setRegistrationToken(registrationToken);
+                        UserFetcherCon.signUpUser(user, new Callback<UserSignUpResponse>() {
+                            @Override
+                            public void onResponse(Call<UserSignUpResponse> call, Response<UserSignUpResponse> response) {
+                                if (response.isSuccessful()) {
+                                    User user = response.body().getUser();
+                                    if (user != null) {
+                                        setCurrentUser(user);
+                                        onSuccess.onComplete(null);
+                                    } else {
+                                        onFailure.onComplete(response.body().getExistingDetail());
+                                    }
+                                } else {
+                                    onFailure.onComplete("");
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<UserSignUpResponse> call, Throwable t) {
+                                Log.d("ERROR", t.getMessage());
+                                onFailure.onComplete("");
+                            }
+                        });
                     }
-                } else {
-                    onFailure.onComplete("");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UserSignUpResponse> call, Throwable t) {
-                Log.d("ERROR", t.getMessage());
-                onFailure.onComplete("");
-            }
-        });
+                });
     }
 
     public void updateUser(User user, Listener<Void> listener) {
@@ -114,7 +127,8 @@ public class Model extends FirebaseMessagingService {
     }
 
     // Log in a user with the provided email and password
-    public void loginUser(String email, String password, Listener<Void> onSuccess, Listener<Void> onError) {
+    public void loginUser(String email, String password,
+                          Listener<Void> onSuccess, Listener<Void> onError) {
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
                     @Override
@@ -126,7 +140,6 @@ public class Model extends FirebaseMessagingService {
                         }
                         // Get new FCM registration token
                         String registrationToken = task.getResult();
-                        Log.d("Registration Token", "Registration Token: " + registrationToken);
 
                         UserLoginRequest userLoginRequest = new UserLoginRequest(email, password, registrationToken);
                         UserFetcherCon.loginUser(userLoginRequest, new Callback<User>() {
@@ -179,6 +192,26 @@ public class Model extends FirebaseMessagingService {
         return unusualExpenses;
     }
 
+    public void getChildrenWithoutParent(Listener<List<User>> onSuccess, Listener<Void> onFailure) {
+        UserFetcherCon.getChildrenWithoutParent(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                if (response.isSuccessful()) {
+                    List<User> childrenWithoutParent = response.body();
+                    onSuccess.onComplete(childrenWithoutParent);
+                } else {
+                    onFailure.onComplete(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                Log.d("ERROR", t.getMessage());
+                onFailure.onComplete(null);
+            }
+        });
+    }
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
@@ -218,7 +251,8 @@ public class Model extends FirebaseMessagingService {
 //        sendRegistrationToServer(token);
     }
 
-    public void makeTransaction(TransactionRequest transactionRequest, Listener<Void> onSuccess, Listener<Void> onFailure) {
+    public void makeTransaction(TransactionRequest transactionRequest,
+                                Listener<Void> onSuccess, Listener<Void> onFailure) {
         // Make a transaction request to the server
         UserFetcherCon.makeTransaction(transactionRequest, new Callback<ResponseBody>() {
             @Override

@@ -2,6 +2,8 @@ package com.example.wallety.model.server;
 
 import com.example.wallety.model.User;
 
+import java.util.List;
+
 import io.github.cdimascio.dotenv.Dotenv;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -30,6 +32,11 @@ public class UserFetcherCon {
 
     public static void signUpUser(User user, Callback<UserSignUpResponse> callback) {
         Call<UserSignUpResponse> call = api.signUpUser(user);
+        call.enqueue(callback);
+    }
+
+    public static void getChildrenWithoutParent(Callback<List<User>> callback) {
+        Call<List<User>> call = api.getChildrenWithoutParent();
         call.enqueue(callback);
     }
 

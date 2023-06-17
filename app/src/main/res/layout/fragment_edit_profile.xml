@@ -51,7 +51,8 @@
                 android:drawablePadding="8dp"
                 android:hint="Name"
                 android:padding="8dp"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                />
 
 
 
