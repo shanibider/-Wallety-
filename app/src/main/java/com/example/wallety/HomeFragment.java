@@ -13,15 +13,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.wallety.adapters.HomeAdapter;
 import com.example.wallety.databinding.FragmentChildrenHomeBinding;
 import com.example.wallety.databinding.FragmentHomeBinding;
+import com.example.wallety.model.CreditCard;
 import com.example.wallety.model.Model;
 import com.example.wallety.model.Transaction;
 import com.example.wallety.model.User;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +47,7 @@ public class HomeFragment extends Fragment {
         String nameHeader = "Hello " + Model.instance().getCurrentUser().getName();
 
         // Inflate the appropriate layout based on the user type
-        if (!user.isParent()) {
+        if (user.isParent()) {
             binding = FragmentHomeBinding.inflate(inflater, container, false);
             view = binding.getRoot();
             initializeParentViews();
@@ -59,6 +62,20 @@ public class HomeFragment extends Fragment {
         }
 
         partialView = view.findViewById(R.id.partial);
+        CreditCard creditCard = user.getCreditCard();
+
+        if (creditCard != null) {
+            TextView cardNumTv = partialView.findViewById(R.id.code);
+            TextView holderTv = partialView.findViewById(R.id.holder);
+            TextView monthTv = partialView.findViewById(R.id.month1);
+            TextView yearTv = partialView.findViewById(R.id.year1);
+            String formatterCardNum = creditCard.getCardNum()
+                    .replaceAll(".{4}(?!$)", "$0" + ' ');
+            cardNumTv.setText(formatterCardNum);
+            holderTv.setText(creditCard.getHolderName());
+            monthTv.setText(creditCard.getMonth() + '/');
+            yearTv.setText(creditCard.getYear());
+        }
 
 //        if (user.getIsParent()) {
 //            binding.unusualExpensesCv.setOnClickListener(view1 -> {

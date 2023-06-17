@@ -1,4 +1,4 @@
-const {formatUserTimestamp, formatUser} = require("../utils/format-user");
+const {formatUserChildren, formatUser} = require("../utils/format-user");
 const {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
@@ -20,6 +20,8 @@ const getLoggedInUser = async (req, res) => {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             loggedInUser = docSnap.data();
+
+            await formatUserChildren(loggedInUser);
             formatUser(loggedInUser, email, '');
             console.log(email + " logged in")
         }
@@ -41,6 +43,8 @@ const loginUser = async (req, res) => {
 
             if (docSnap.exists()) {
                 const user = docSnap.data();
+
+                await formatUserChildren(user);
                 formatUser(user, email, password);
                 console.log(email + " logged in")
                 res.status(StatusCodes.OK).send(user);
@@ -81,12 +85,17 @@ const createUser = (res, auth, db, name, email, password, phone, registrationTok
     createUserWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
             const id = userCredential.user.uid;
+            const CHILD_INITIAL_BALANCE = 500;
+            const PARENT_INITIAL_BALANCE = 5000;
+            const balance = children ? PARENT_INITIAL_BALANCE : CHILD_INITIAL_BALANCE;
+            const childrenIds = children ? children.map(({id}) => id) : [];
             const user = {
                 id,
                 name,
                 phone,
+                balance,
                 registrationToken,
-                ...(children && {children}),
+                ...(children && {children: childrenIds}),
                 lastUpdated: serverTimestamp()
             };
             await setDoc(doc(db, Collections.USERS, id), user);
@@ -96,8 +105,8 @@ const createUser = (res, auth, db, name, email, password, phone, registrationTok
 
             if (children) {
                 const registrationTokens = [registrationToken];
-                children.forEach(childId => {
-                    admin.messaging().subscribeToTopic(registrationTokens, childId)
+                childrenIds.forEach(id => {
+                    admin.messaging().subscribeToTopic(registrationTokens, id)
                         .then((response) => {
                             // Response is a message ID string.
                             console.log('Successfully sent message:', response);
@@ -112,6 +121,9 @@ const createUser = (res, auth, db, name, email, password, phone, registrationTok
 
             // in Android the timestamp is Long type
             user.lastUpdated = currentTimestampInSeconds;
+            if (children) {
+                user.children = children;
+            }
 
             console.log(email + " signed up")
             res.status(StatusCodes.OK).send({user, existingDetail: ""});

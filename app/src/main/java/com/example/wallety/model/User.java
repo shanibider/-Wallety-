@@ -24,8 +24,14 @@ public class User {
     @SerializedName("password")
     private String password;
 
+    @SerializedName("balance")
+    private int balance;
+
+    @SerializedName("creditCard")
+    private CreditCard creditCard;
+
     @SerializedName("children")
-    private List<String> children;
+    private List<User> children;
 
     @SerializedName("registrationToken")
     public String registrationToken;
@@ -51,7 +57,6 @@ public class User {
     static final String PHONE = "phone";
     static final String EMAIL = "email";
     static final String PASSWORD = "password";
-    static final String IS_PARENT = "isParent";
     static final String LAST_UPDATED = "lastUpdated";
 
     public String getId() {
@@ -74,7 +79,15 @@ public class User {
         return password;
     }
 
-    public List<String> getChildren() {
+    public int getBalance() {
+        return balance;
+    }
+
+    public CreditCard getCreditCard() {
+        return creditCard;
+    }
+
+    public List<User> getChildren() {
         return children;
     }
 
@@ -94,8 +107,16 @@ public class User {
         this.phone = phone;
     }
 
-    public void setChildren(List<String> children) {
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
+    }
+
+    public void setChildren(List<User> children) {
         this.children = children;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
     }
 
     public void setRegistrationToken(String registrationToken) {

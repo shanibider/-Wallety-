@@ -28,7 +28,7 @@ public class AddChildrenFragment extends Fragment {
     List<User> allChildrenWithoutParent;
     SearchedChildAdapter searchedChildAdapter;
     Map<String, CheckBox> addedCheckboxesByEmail = SignUpFragment.addedCheckboxesByEmail;
-    List<String> addedChildrenIds = SignUpFragment.addedChildrenIds;
+    List<User> addedChildrenIds = SignUpFragment.addedChildren;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
