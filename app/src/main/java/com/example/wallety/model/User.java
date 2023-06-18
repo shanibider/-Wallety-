@@ -39,9 +39,6 @@ public class User {
     @SerializedName("lastUpdated")
     public Long lastUpdated;
 
-    @SerializedName("balance")
-    private int balance;
-
     public User(String name, String phone, String email, String password, int balance) {
         this.name = name;
         this.phone = phone;
@@ -135,15 +132,6 @@ public class User {
 
     public boolean isParent() {
         return children != null;
-    }
-
-
-    public int getBalance() {
-        return balance;
-    }
-
-    public void setBalance(int balance) {
-        this.balance = balance;
     }
 
     //
