@@ -69,29 +69,29 @@ public class HomeFragment extends Fragment {
         }
 
         partialView = view.findViewById(R.id.partial);
-        creditCardCode = view.findViewById(R.id.code);
-        creditCardHolder = view.findViewById(R.id.holder);
-        creditCardMonth = view.findViewById(R.id.month1);
-        creditCardYear = view.findViewById(R.id.year1);
+//        creditCardCode = view.findViewById(R.id.code);
+//        creditCardHolder = view.findViewById(R.id.holder);
+//        creditCardMonth = view.findViewById(R.id.month1);
+//        creditCardYear = view.findViewById(R.id.year1);
 
         recyclerView = view.findViewById(R.id.transactions_recList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         transactionsList = new ArrayList<>();
 
-        AccessTokenRequest request = new AccessTokenRequest(user.getAccessToken());
-        Model.instance().getUserCreditCard(request,
-                (success) -> {
-                    CreditCard card = Model.instance().getCreditCard();
-                    String last4Numbers = card.getCardNum().substring(card.getCardNum().length() - 4);
-                    creditCardCode.setText("XXXX - XXXX - XXXX - " + last4Numbers);
-                    creditCardHolder.setText(card.getHolderName());
-                    creditCardMonth.setText(card.getMonth());
-                    creditCardYear.setText(card.getYear());
-                },
-                (error) -> {
-                    Log.d("error" ,"getting card");
-                }
-        );
+//        AccessTokenRequest request = new AccessTokenRequest(user.getAccessToken());
+//        Model.instance().getUserCreditCard(request,
+//                (success) -> {
+//                    CreditCard card = Model.instance().getCreditCard();
+//                    String last4Numbers = card.getCardNum().substring(card.getCardNum().length() - 4);
+//                    creditCardCode.setText("XXXX - XXXX - XXXX - " + last4Numbers);
+//                    creditCardHolder.setText(card.getHolderName());
+//                    creditCardMonth.setText(card.getMonth());
+//                    creditCardYear.setText(card.getYear());
+//                },
+//                (error) -> {
+//                    Log.d("error" ,"getting card");
+//                }
+//        );
 
         String id = FirebaseFirestore.getInstance().collection(User.COLLECTION).document().getId();
         transactionsList.add(new Transaction(id, "19.05.2023", 199, "Super-Pharm", true, 1));

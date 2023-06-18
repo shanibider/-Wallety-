@@ -27,9 +27,6 @@ public class User {
     @SerializedName("balance")
     private int balance;
 
-    @SerializedName("creditCard")
-    private CreditCard creditCard;
-
     @SerializedName("children")
     private List<User> children;
 
@@ -93,10 +90,6 @@ public class User {
         return balance;
     }
 
-    public CreditCard getCreditCard() {
-        return creditCard;
-    }
-
     public List<User> getChildren() {
         return children;
     }
@@ -123,10 +116,6 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public void setCreditCard(CreditCard creditCard) {
-        this.creditCard = creditCard;
     }
 
     public void setChildren(List<User> children) {
