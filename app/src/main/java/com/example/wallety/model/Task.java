@@ -7,6 +7,7 @@ public class Task {
     private String date;
     private String time;
     private String amount;
+    private boolean isChecked;
     private String targetChild;
 
 
@@ -80,4 +81,11 @@ public class Task {
         this.targetChild = targetChild;
     }
 
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
 }
