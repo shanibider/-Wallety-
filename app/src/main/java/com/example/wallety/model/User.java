@@ -39,6 +39,9 @@ public class User {
     @SerializedName("lastUpdated")
     public Long lastUpdated;
 
+    @SerializedName("accessToken")
+    private String accessToken = "";
+
     public User(String name, String phone, String email, String password, int balance) {
         this.name = name;
         this.phone = phone;
@@ -100,6 +103,14 @@ public class User {
 
     public String getRegistrationToken() {
         return registrationToken;
+    }
+
+    public String getAccessToken() {
+        if(accessToken == null){
+            accessToken = "";
+        }
+
+        return accessToken;
     }
 
     public void setId(String id) {

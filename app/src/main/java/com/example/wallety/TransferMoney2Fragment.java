@@ -66,6 +66,8 @@ public class TransferMoney2Fragment extends Fragment {
             Transaction transaction = new Transaction(id, "16.04.2023", 500, "AM PM", true, 1);
 
             TransactionRequest transactionRequest = new TransactionRequest(transaction);
+            TransactionRequest transactionRequest = new TransactionRequest(transaction, Model.instance().getCurrentUser().getAccessToken());
+
             Model.instance().makeTransaction(transactionRequest,
                     (success) -> {
                         Navigation.findNavController(view1).navigate(R.id.action_transferMoneyFragment2_to_moneySentFragment);

@@ -20,19 +20,10 @@ public class LauncherActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         Intent registrationIntent = new Intent(this, RegistrationActivity.class);
-        Intent mainScreenIntent = new Intent(this, MainActivity.class);
-        Handler handler = new Handler();
 
-        handler.postDelayed(() ->
-                Model.instance().fetchLoggedUser(
-                        onSuccess -> {
-                            startActivity(mainScreenIntent);
-                            finish();
-                        },
-                        ocFailure -> {
-                            startActivity(registrationIntent);
-                            finish();
-                        }
-                ), 2000);
+        new Handler().postDelayed(() -> {
+            startActivity(registrationIntent);
+            finish();
+        }, 2000);
     }
 }

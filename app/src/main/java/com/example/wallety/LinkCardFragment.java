@@ -8,8 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.braintreepayments.cardform.view.CardForm;
 import com.example.wallety.databinding.FragmentLinkCardBinding;
+import com.example.wallety.model.CreditCard;
+import com.example.wallety.model.Model;
+import com.example.wallety.model.server.LinkCardRequest;
 
 public class LinkCardFragment extends Fragment {
     FragmentLinkCardBinding binding;
@@ -60,14 +65,27 @@ public class LinkCardFragment extends Fragment {
             bundle.putString("name1", name);
             bundle.putString("month1", month);
             bundle.putString("year1", year);
+            bundle.putString("cvv", cvv);
+
+            CreditCard card = new CreditCard(name, year, month, code, cvv);
+            LinkCardRequest request = new LinkCardRequest(card, Model.instance().getCurrentUser().getAccessToken());
+
+            Model.instance().linkCard(request,
+                    (success) -> {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Navigation.findNavController(view1).popBackStack();
+                            }
+                        }, 4000);
 
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Navigation.findNavController(view1).popBackStack();
-                }
-            }, 4000);
+                    },
+                    (error) -> {
+                        Toast.makeText(getActivity(), "Error occurred",
+                                Toast.LENGTH_SHORT).show();
+                    }
+            );
         });
 
         return view;

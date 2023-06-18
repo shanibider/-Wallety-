@@ -7,8 +7,11 @@ public class TransactionRequest {
 
     @SerializedName("transaction")
     private Transaction transaction;
+    private String accessToken;
 
-    public TransactionRequest(Transaction transaction) {
+
+    public TransactionRequest(Transaction transaction, String accessToken) {
         this.transaction = transaction;
+        this.accessToken = accessToken;
     }
 }

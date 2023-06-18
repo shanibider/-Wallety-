@@ -20,11 +20,6 @@ public class UserFetcherCon {
             .build();
     private static final WalletyAPI api = retrofit.create(WalletyAPI.class);
 
-    public static void getLoggedInUser(Callback<LoggedInUserResponse> callback) {
-        Call<LoggedInUserResponse> call = api.getLoggedInUser();
-        call.enqueue(callback);
-    }
-
     public static void loginUser(UserLoginRequest userLoginRequest, Callback<User> callback) {
         Call<User> call = api.loginUser(userLoginRequest);
         call.enqueue(callback);
@@ -42,6 +37,15 @@ public class UserFetcherCon {
 
     public static void makeTransaction(TransactionRequest transactionRequest, Callback<ResponseBody> callback) {
         Call<ResponseBody> call = api.makeTransaction(transactionRequest);
+        call.enqueue(callback);
+    }
+
+    public static void linkCard(LinkCardRequest request, Callback<ResponseBody> callback) {
+        Call<ResponseBody> call = api.linkCard(request);
+        call.enqueue(callback);
+    }
+    public static void getCreditCard(AccessTokenRequest request, Callback<GetCreditCardResponse> callback) {
+        Call<GetCreditCardResponse> call = api.getCreditCard(request);
         call.enqueue(callback);
     }
 }
