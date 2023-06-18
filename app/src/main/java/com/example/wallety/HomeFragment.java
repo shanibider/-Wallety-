@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment {
 
             binding.nameHeaderTv.setText(nameHeader);
             binding.balance.setText(balanceText);
-//            binding.holder.setText(nameHolder);
+            binding.holder.setText(nameHolder);
         } else {
             bindingChildren = FragmentChildrenHomeBinding.inflate(inflater, container, false);
             view = bindingChildren.getRoot();
@@ -66,7 +66,7 @@ public class HomeFragment extends Fragment {
 
             bindingChildren.nameHeaderTv.setText(nameHeader);
             bindingChildren.balance.setText(balanceText);
-//            bindingChildren.holder.setText(nameHolder);
+            bindingChildren.holder.setText(nameHolder);
         }
 
         partialView = view.findViewById(R.id.partial);

@@ -86,39 +86,36 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         holder.taskTargetChild.setText(taskList.get(position).getTargetChild());
 
 
-        //whether checkbox check/uncheck
-        taskCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                // When a task is completed-
-
-                Integer balance = Model.instance().getCurrentUser().getBalance();
-
-                Task task = (Task) compoundButton.getTag();
-
-                task.setChecked(isChecked);
-
-                int amount = Integer.parseInt(task.getAmount());
-
-                user = Model.instance().getCurrentUser();
-                db = FirebaseFirestore.getInstance().collection("users").document(user.getId());
-
-                // Update the balance field in the Firebase database
-                db.update("balance", FieldValue.increment(isChecked ? -amount : amount))
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                // Success! The balance field is updated.
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                // Handle the failure to update the balance field.
-                            }
-                        });
-            }
-        });
+//        //whether checkbox check/uncheck
+//        taskCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+//                // When a task is completed-
+//
+//                Integer balance = Model.instance().getCurrentUser().getBalance();
+//
+//                Task task = (Task) compoundButton.getTag();
+//                task.setChecked(isChecked);
+//                int amount = Integer.parseInt(task.getAmount());
+//                user = Model.instance().getCurrentUser();
+//                db = FirebaseFirestore.getInstance().collection("users").document(user.getId());
+//
+//                // Update the balance field in the Firebase database
+//                db.update("balance", FieldValue.increment(isChecked ? -amount : amount))
+//                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                            @Override
+//                            public void onSuccess(Void aVoid) {
+//                                // Success! The balance field is updated.
+//                            }
+//                        })
+//                        .addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception e) {
+//                                // Handle the failure to update the balance field.
+//                            }
+//                        });
+//            }
+//        });
 
 
 //                // retrieve goals from db for spinner dropdown

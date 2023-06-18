@@ -28,9 +28,9 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/card1"
             android:layout_width="380dp"
-            android:layout_height="140dp"
+            android:layout_height="130dp"
             android:layout_below="@+id/knowledge"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="22dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="2dp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -75,7 +75,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/card2"
             android:layout_width="380dp"
-            android:layout_height="140dp"
+            android:layout_height="130dp"
             android:layout_below="@+id/card1"
             android:layout_marginTop="25dp"
             app:cardCornerRadius="10dp"
@@ -125,7 +125,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/card3"
             android:layout_width="380dp"
-            android:layout_height="140dp"
+            android:layout_height="130dp"
             android:layout_below="@+id/card2"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="130dp"
@@ -173,12 +173,10 @@
         </androidx.cardview.widget.CardView>
 
 
-
-
         <androidx.cardview.widget.CardView
             android:id="@+id/card4"
             android:layout_width="380dp"
-            android:layout_height="140dp"
+            android:layout_height="130dp"
             android:layout_below="@+id/card3"
             android:layout_marginTop="-100dp"
             app:cardCornerRadius="10dp"
@@ -224,9 +222,6 @@
         </androidx.cardview.widget.CardView>
 
 
-
-
-
-
     </RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
