@@ -7,18 +7,21 @@ public class Task {
     private String date;
     private String time;
     private String amount;
+    private String targetChild;
 
 
     public Task() {
     }
 
-    public Task(String id, String name, String desc, String date, String time, String amount) {
+    public Task(String id, String name, String desc, String date, String time, String amount, String targetChild) {
         this.id = id;
         this.name = name;
         this.desc = desc;
         this.date = date;
         this.time = time;
         this.amount = amount;
+        this.targetChild = targetChild;
+
     }
 
     public String getDesc() {
@@ -67,5 +70,13 @@ public class Task {
 
     public void setAmount(String amount) {
         this.amount = amount;
+    }
+
+    public String getTargetChild() {
+        return targetChild;
+    }
+
+    public void setTargetChild(String targetChild) {
+        this.targetChild = targetChild;
     }
 }

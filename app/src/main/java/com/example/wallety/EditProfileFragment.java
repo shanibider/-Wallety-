@@ -20,13 +20,16 @@ import com.example.wallety.model.User;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class EditProfileFragment extends Fragment {
     FragmentEditProfileBinding binding;
 
     private static DocumentReference db;
     static User user;
-    EditText editName;
+    EditText editName, editEmail;
     Button saveButton;
 
     @Override
@@ -40,6 +43,8 @@ public class EditProfileFragment extends Fragment {
         db = FirebaseFirestore.getInstance().collection("users").document(user.getId());
 
         editName = view.findViewById(R.id.editName);
+        editEmail = view.findViewById(R.id.editEmail);
+
         saveButton = view.findViewById(R.id.saveButton);
 
         // save Button handler
@@ -66,31 +71,41 @@ public class EditProfileFragment extends Fragment {
         DocumentReference userRef = db.collection("users").document(userId);
 
         //retrieve the values entered by the user in EditText fields (editName) and store them
-        String newName = editName.getText().toString();
-        if (newName.isEmpty()) {
-            return false;             // Returns false indicating that the data wasn't changed
+        String newName = editName.getText().toString().trim();
+        String newEmail = editEmail.getText().toString().trim();
+
+        if (newName.isEmpty() && newEmail.isEmpty()) {
+            return false; // Returns false indicating that the data wasn't changed
         } else {
-            // Update User Name in Firestore
-            userRef.update("name", newName)
+            Map<String, Object> updates = new HashMap<>();
+
+            if (!newName.isEmpty()) {
+                updates.put("name", newName);
+            }
+
+            if (!newEmail.isEmpty()) {
+                updates.put("email", newEmail);
+            }
+
+            userRef.update(updates)
                     .addOnSuccessListener(aVoid -> {
-                        // The user's name has been updated successfully
-                        // Update the user name in the app's data model
-                        Model.instance().getCurrentUser().setName(newName);
-                        // Update the UI element with the new user name
-                        binding.EditProfileTv.setText(newName);
+                        User currentUser = Model.instance().getCurrentUser();
+
+                        if (!newName.isEmpty()) {
+                            currentUser.setName(newName);
+                            binding.EditProfileTv.setText(newName);
+                        }
+
+                        if (!newEmail.isEmpty()) {
+                            currentUser.setEmail(newEmail);
+                            // Perform any necessary UI updates for email
+                        }
                     })
                     .addOnFailureListener(e -> {
-                        // An error occurred while updating the user's name
-                        Toast.makeText(getContext(), "Error Found", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Error updating user information", Toast.LENGTH_SHORT).show();
                     });
 
             return true;
         }
     }
-
 }
-
-
-
-
-

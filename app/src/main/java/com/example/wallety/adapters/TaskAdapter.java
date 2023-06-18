@@ -60,6 +60,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         return new TaskAdapter.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.task_row, parent, false));
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull TaskAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
@@ -74,6 +75,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         holder.taskDate.setText(taskList.get(position).getDate());
         holder.taskTime.setText(taskList.get(position).getTime());
         holder.taskAmount.setText(taskList.get(position).getAmount());
+        holder.taskTargetChild.setText(taskList.get(position).getTargetChild());
 
 
         //whether checkbox check/uncheck
@@ -120,6 +122,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     }
 
 
+
+
     // *edit task Alert dialog*
     private void showAlertDialogForEditText(String id, int position) {
         //creates a new AlertDialog.Builder instance, which is used to create an AlertDialog
@@ -128,7 +132,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         //sets the custom layout view as the view for the AlertDialog
         builder.setView(customLayout);
 
-        TextInputEditText name, desc, date, time, amount;
+        TextInputEditText name, desc, date, time, amount, targetChild;
         AppCompatButton ok, cancel;
 
         name = customLayout.findViewById(R.id.task_edit_name);
@@ -136,6 +140,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         date = customLayout.findViewById(R.id.task_edit_date);
         time = customLayout.findViewById(R.id.task_edit_time);
         amount = customLayout.findViewById(R.id.task_edit_amount);
+        targetChild = customLayout.findViewById(R.id.task_edit_targetChild);
 
         ok = customLayout.findViewById(R.id.task_edit_ok);
         cancel = customLayout.findViewById(R.id.task_edit_cancel);
@@ -145,6 +150,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         date.setText(taskList.get(position).getDate());
         time.setText(taskList.get(position).getTime());
         amount.setText(taskList.get(position).getAmount());
+        targetChild.setText(taskList.get(position).getTargetChild());
+
 
 
         // date click handler
@@ -202,6 +209,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         AlertDialog dialog = builder.create();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+
+
         // ok button handler
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,6 +220,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                 String des = desc.getText().toString().trim();
                 String dt = date.getText().toString().trim();
                 String am = amount.getText().toString().trim();
+                String tc = targetChild.getText().toString().trim();
 
                 if (name.equals("") || desc.equals("") || time.equals("") || date.equals("")) {
                     Toast.makeText(context, "No field can be empty!", Toast.LENGTH_SHORT).show();
@@ -221,6 +231,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                     taskList.get(position).setTime(t);
                     taskList.get(position).setDate(dt);
                     taskList.get(position).setAmount(am);
+                    taskList.get(position).setTargetChild(tc);
 
                     //update DB
                     db = FirebaseFirestore.getInstance().collection("users").document(user.getId());
@@ -231,11 +242,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                     task.put("date", dt);
                     task.put("time", t);
                     task.put("amount", am);
+                    task.put("target child", tc);
+
 
                     db.collection("tasks") // name of the collection
                             .document(id) // task id
                             .update(task);
-
 
                     notifyItemChanged(position);
                     notifyDataSetChanged();
@@ -256,6 +268,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     //// *end of edit Alertdialog*
 
 
+
+
+
+
     @Override
     public int getItemCount() {
         int size = taskList.size();
@@ -267,7 +283,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     // ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
         CheckBox taskCheckBox;
-        TextView taskDesc, taskDate, taskTime, taskAmount;
+        TextView taskDesc, taskDate, taskTime, taskAmount, taskTargetChild;
         ImageButton taskDelete, taskEdit;
 
         public ViewHolder(@NonNull View itemView) {
@@ -281,8 +297,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             taskDelete = itemView.findViewById(R.id.taskDeleteBtn);
             taskEdit = itemView.findViewById(R.id.taskEditBtn);
 
-            taskAmount = itemView.findViewById(R.id.remainingTaskTime_tv);
-
+            taskAmount = itemView.findViewById(R.id.amount_tv);
+            taskTargetChild = itemView.findViewById(R.id.targetChildTv);
         }
     }
 }

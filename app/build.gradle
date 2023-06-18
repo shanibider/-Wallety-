@@ -76,5 +76,4 @@ dependencies {
 
     implementation 'com.vinaygaba:creditcardview:1.0.4'
 
-
 }

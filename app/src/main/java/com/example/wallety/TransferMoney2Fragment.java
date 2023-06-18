@@ -58,11 +58,14 @@ public class TransferMoney2Fragment extends Fragment {
         }
 
 
+
+
+        // transfer Btn
         binding.transferBtn.setOnClickListener(view1 -> {
             String id = FirebaseFirestore.getInstance().collection(User.COLLECTION).document().getId();
             Transaction transaction = new Transaction(id, "16.04.2023", 500, "AM PM", true, 1);
-            TransactionRequest transactionRequest = new TransactionRequest(transaction);
 
+            TransactionRequest transactionRequest = new TransactionRequest(transaction);
             Model.instance().makeTransaction(transactionRequest,
                     (success) -> {
                         Navigation.findNavController(view1).navigate(R.id.action_transferMoneyFragment2_to_moneySentFragment);
@@ -73,6 +76,10 @@ public class TransferMoney2Fragment extends Fragment {
                     }
             );
         });
+
+
+
+
 
 
         // retrieve goals from db for spinner dropdown

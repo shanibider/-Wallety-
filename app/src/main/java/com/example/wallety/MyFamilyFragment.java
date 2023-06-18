@@ -1,22 +1,17 @@
 package com.example.wallety;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-
 import com.example.wallety.databinding.FragmentMyFamilyBinding;
 import com.example.wallety.model.CreditCard;
 import com.example.wallety.model.Model;
 import com.example.wallety.model.User;
-
 import java.util.List;
 import java.util.stream.Collectors;
-
 
 public class MyFamilyFragment extends Fragment {
     FragmentMyFamilyBinding binding;

@@ -126,9 +126,10 @@ public class TasksFragment extends Fragment {
                                 String date = (String) document .get("date");
                                 String time = (String) document .get("time");
                                 String amount = (String) document .get("amount");
+                                String targetChild = (String) document .get("targetChild");
 
 
-                                Task t = new Task(id, name, desc, date, time, amount);
+                                Task t = new Task(id, name, desc, date, time, amount, targetChild);
                                 taskList.add(t);
                                 taskAdapter.notifyDataSetChanged();
                             }

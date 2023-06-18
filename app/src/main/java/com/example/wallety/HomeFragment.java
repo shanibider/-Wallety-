@@ -45,6 +45,10 @@ public class HomeFragment extends Fragment {
         // get Current User
         User user = Model.instance().getCurrentUser();
         String nameHeader = "Hello " + Model.instance().getCurrentUser().getName();
+        int balanceHeader = Model.instance().getCurrentUser().getBalance();
+        String balanceText = balanceHeader + "₪";
+        String nameHolder = Model.instance().getCurrentUser().getName();
+
 
         // Inflate the appropriate layout based on the user type
         if (user.isParent()) {
@@ -53,12 +57,16 @@ public class HomeFragment extends Fragment {
             initializeParentViews();
 
             binding.nameHeaderTv.setText(nameHeader);
+            binding.balance.setText(balanceText);
+//            binding.holder.setText(nameHolder);
         } else {
             bindingChildren = FragmentChildrenHomeBinding.inflate(inflater, container, false);
             view = bindingChildren.getRoot();
             initializeChildViews();
 
             bindingChildren.nameHeaderTv.setText(nameHeader);
+            bindingChildren.balance.setText(balanceText);
+//            bindingChildren.holder.setText(nameHolder);
         }
 
         partialView = view.findViewById(R.id.partial);

@@ -34,7 +34,7 @@
                 android:text="₪"
                 android:textColor="@color/teal_500" />
             <TextView
-                android:id="@+id/remainingTaskTime_tv"
+                android:id="@+id/amount_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -77,7 +77,7 @@
                     android:maxLines="1"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:maxLength="12"
+                    android:maxLength="20"
                     android:paddingStart="10dp"
                     android:textColor="@color/grey"
                     android:textSize="16sp"
@@ -171,11 +171,11 @@
                     android:layout_weight="1"/>
 
                 <TextView
-                    android:id="@+id/taskStatus_tv"
+                    android:id="@+id/targetChildTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-condensed"
-                    android:text="complete"
+                    android:text="Target Child"
                     android:paddingEnd="3dp"
                     android:textAllCaps="true"
                     android:textColor="@color/teal_200"

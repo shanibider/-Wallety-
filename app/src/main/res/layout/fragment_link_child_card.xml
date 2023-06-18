@@ -81,7 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-
+        android:padding="15dp"
         app:layout_constraintBottom_toTopOf="@id/linkCardBtn"
         app:layout_constraintTop_toBottomOf="@id/rl1">
 
@@ -91,8 +91,8 @@
             style="@style/ShapeAppearanceOverlay.Material3.Corner.Top"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp" />
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp" />
     </LinearLayout>
 
 
@@ -102,7 +102,7 @@
         android:layout_width="350dp"
         android:layout_height="55dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="120dp"
+        android:layout_marginBottom="100dp"
         android:text="Link Card"
         android:textAllCaps="false"
         app:cornerRadius="10sp"

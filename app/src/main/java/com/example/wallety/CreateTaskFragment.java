@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
@@ -23,6 +25,7 @@ import com.example.wallety.databinding.FragmentCreateTaskBinding;
 import com.example.wallety.model.Model;
 import com.example.wallety.model.Task;
 import com.example.wallety.model.User;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -37,19 +40,26 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.stream.Collectors;
 
 public class CreateTaskFragment extends BottomSheetDialogFragment {
     FragmentCreateTaskBinding binding;
+    User selectedChild;
+
 
     public static final String TAG = "ActionBottomDialog";
 
-    private TextInputEditText taskName, taskDesc, taskDate, taskTime, taskAmount;
+    private TextInputEditText taskName, taskDesc, taskDate, taskTime, taskAmount, taskTargetChild;
     private AppCompatButton saveBtn;
     DocumentReference db;
     User user;
@@ -84,6 +94,7 @@ public class CreateTaskFragment extends BottomSheetDialogFragment {
         taskDate = view.findViewById(R.id.task_input_date);
         taskTime = view.findViewById(R.id.task_input_time);
         taskAmount = view.findViewById(R.id.task_input_amount);
+        taskTargetChild  = view.findViewById(R.id.task_target_child);
 
         //arrays to store the user-selected time and date
         final String[] utime = new String[1];
@@ -149,30 +160,9 @@ public class CreateTaskFragment extends BottomSheetDialogFragment {
         });
 
 
-//          MY time picker (duration time)
-//        taskTime.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                int durationInMinutes = 0;
-//                if (taskTime.getText().toString().length() > 0) {
-//                    durationInMinutes = Integer.parseInt(taskTime.getText().toString());
-//                }
-//
-//                int hours = durationInMinutes / 60;
-//                int minutes = durationInMinutes % 60;
-//
-//                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
-//                    @Override
-//                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-//                        int durationInMinutes = hourOfDay * 60 + minute;
-//                        utime[0] = String.valueOf(durationInMinutes);
-//                        taskTime.setText(utime[0]);
-//                    }
-//                }, hours, minutes, true);
-//
-//                timePickerDialog.show();
-//            }
-//        });
+
+
+
 
 
 
@@ -186,6 +176,34 @@ public class CreateTaskFragment extends BottomSheetDialogFragment {
                 String time = taskTime.getText().toString().trim();
                 String date = taskDate.getText().toString().trim();
                 String amount = taskAmount.getText().toString().trim();
+                String targetChild = taskTargetChild.getText().toString().trim();
+
+
+
+//                // retrieve  from db for spinner dropdown
+//                List<User> children = Model.instance().getCurrentUser().getChildren();
+//                selectedChild = children.get(0);
+//
+//                List<String> childrenNames = children.stream()
+//                        .map(User::getName)
+//                        .collect(Collectors.toList());
+//
+//                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+//                        android.R.layout.simple_spinner_dropdown_item, childrenNames);
+//                binding.targetChildDropdown.setAdapter(adapter);
+//                binding.targetChildDropdown.setSelection(0);
+//                binding.targetChildDropdown.setText(selectedChild.getName(), false);
+//                binding.targetChildDropdown.setOnItemClickListener((parent, view1, position, id) -> {
+//                    selectedChild = children.get(position);
+//                });
+//
+//
+//                String targetChild = selectedChild.toString().trim();
+
+
+
+
+
 
                 if(name.equals("") || desc.equals("") || time.equals("") || date.equals(""))
                 {
@@ -201,16 +219,16 @@ public class CreateTaskFragment extends BottomSheetDialogFragment {
                 task.put("name", name);
                 task.put("desc", desc);
                 task.put("date", date);
-                task.put("desc", desc);
                 task.put("time", time);
                 task.put("amount", amount);
+                task.put("targetChild", targetChild);
 
 
                 db.collection("tasks") // name of the collection
                         .document(id)
                         .set(task);
 
-                Task t = new Task(id, name, desc, date, time, amount);
+                Task t = new Task(id, name, desc, date, time, amount, targetChild);
                 TasksFragment.taskList.add(t);
                 TasksFragment.taskAdapter.notifyDataSetChanged();
 
@@ -221,3 +239,6 @@ public class CreateTaskFragment extends BottomSheetDialogFragment {
         return view;
     }
 }
+
+
+
