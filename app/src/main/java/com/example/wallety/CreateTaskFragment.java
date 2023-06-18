@@ -149,33 +149,6 @@ public class CreateTaskFragment extends BottomSheetDialogFragment {
         });
 
 
-//          MY time picker (duration time)
-//        taskTime.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                int durationInMinutes = 0;
-//                if (taskTime.getText().toString().length() > 0) {
-//                    durationInMinutes = Integer.parseInt(taskTime.getText().toString());
-//                }
-//
-//                int hours = durationInMinutes / 60;
-//                int minutes = durationInMinutes % 60;
-//
-//                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
-//                    @Override
-//                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-//                        int durationInMinutes = hourOfDay * 60 + minute;
-//                        utime[0] = String.valueOf(durationInMinutes);
-//                        taskTime.setText(utime[0]);
-//                    }
-//                }, hours, minutes, true);
-//
-//                timePickerDialog.show();
-//            }
-//        });
-
-
-
 
         // Save the new task to DataBase
         saveBtn.setOnClickListener(new View.OnClickListener() {

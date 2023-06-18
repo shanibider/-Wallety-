@@ -7,7 +7,7 @@ public class Task {
     private String date;
     private String time;
     private String amount;
-
+    private boolean isChecked;
 
     public Task() {
     }
@@ -68,4 +68,13 @@ public class Task {
     public void setAmount(String amount) {
         this.amount = amount;
     }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
+
 }

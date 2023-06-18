@@ -39,15 +39,19 @@ public class User {
     @SerializedName("lastUpdated")
     public Long lastUpdated;
 
-    public User(String name, String phone, String email, String password) {
+    @SerializedName("balance")
+    private int balance;
+
+    public User(String name, String phone, String email, String password, int balance) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.password = password;
+        this.balance = balance;
     }
 
-    public User(String id, String name, String phone, String email, String password) {
-        this(name, email, password, phone);
+    public User(String id, String name, String phone, String email, String password, int balance) {
+        this(name, email, password, phone, balance);
         this.id = id;
     }
 
@@ -58,6 +62,8 @@ public class User {
     static final String EMAIL = "email";
     static final String PASSWORD = "password";
     static final String LAST_UPDATED = "lastUpdated";
+    static final String BALANCE = "balance";
+
 
     public String getId() {
         return id;
@@ -131,14 +137,25 @@ public class User {
         return children != null;
     }
 
-//
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
+
+    //
     public static User fromJson(Map<String, Object> json) {
         String id = (String) json.get(ID);
         String name = (String) json.get(USER);
         String phone = (String) json.get(PHONE);
         String email = (String) json.get(EMAIL);
         String password = (String) json.get(PASSWORD);
-        User user = new User(id, name, phone, email, password);
+        int balance = Integer.parseInt((String) json.get(BALANCE));
+
+        User user = new User(id, name, phone, email, password, balance);
         try {
             Timestamp time = (Timestamp) json.get(LAST_UPDATED);
             user.setLastUpdated(time.getSeconds());
@@ -155,6 +172,8 @@ public class User {
         json.put(USER, getName());
         json.put(PHONE, getPhone());
         json.put(LAST_UPDATED, FieldValue.serverTimestamp());
+        json.put(BALANCE, getBalance());
+
         return json;
     }
 }
