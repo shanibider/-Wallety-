@@ -22,8 +22,8 @@
         android:id="@+id/chooseCardLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="350dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="8dp"
         android:hint="Choose Child"
         app:boxBackgroundColor="@color/teal_100"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -46,7 +46,7 @@
     <EditText
         android:id="@+id/editName"
         android:layout_width="350dp"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
         android:layout_marginTop="12dp"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
@@ -67,9 +67,9 @@
         android:id="@+id/rl1"
         android:layout_width="match_parent"
         android:layout_height="190dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@+id/editName">
+       app:layout_constraintTop_toBottomOf="@+id/editName">
 
         <include layout="@layout/partial_main_activity" />
 

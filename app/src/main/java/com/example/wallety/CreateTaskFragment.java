@@ -160,13 +160,6 @@ public class CreateTaskFragment extends BottomSheetDialogFragment {
         });
 
 
-
-
-
-
-
-
-
         // Save the new task to DataBase
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override

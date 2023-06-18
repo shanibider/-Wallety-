@@ -54,6 +54,7 @@ public class SignUpFragment extends Fragment {
             String confirmedPassword = binding.confirmPasswordEt.getText().toString().trim();
             binding.passwordTv.setErrorIconDrawable(null);
             binding.passwordTv.setError(password.length() < 6 ? "Must have more than 5 characters" : null);
+            int balance = 100;
 
             boolean isValidPhone = Patterns.PHONE.matcher(phone).matches();
             boolean isValidEmail = Patterns.EMAIL_ADDRESS.matcher(email).matches();
@@ -63,7 +64,7 @@ public class SignUpFragment extends Fragment {
             if (name.length() > 0 && email.length() > 0 && isValidPhone && isValidEmail &&
                     password.length() > 5 && password.equals(confirmedPassword) && isValidParent
             ) {
-                User user = new User(name, phone, email, password);
+                User user = new User(name, phone, email, password, balance);
 
                 if (isParent) {
                     user.setChildren(addedChildren);

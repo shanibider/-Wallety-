@@ -32,7 +32,7 @@
             android:fontFamily="sans-serif"
             android:gravity="center"
             android:padding="14dp"
-            android:text="Lets Create Your Goal!"
+            android:text="Let's Create Your Goal!"
             android:textColor="@color/grey"
             android:textFontWeight="500"
             android:textSize="26sp"></TextView>

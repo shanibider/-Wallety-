@@ -26,15 +26,22 @@ import com.example.wallety.TasksFragment;
 import com.example.wallety.model.Model;
 import com.example.wallety.model.Task;
 import com.example.wallety.model.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -48,6 +55,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     User user;
     DocumentReference db;
     private TasksFragment tasksFragment;
+    private CheckBox checkbox;
 
     public TaskAdapter(Context context, List<Task> taskList) {
         this.context = context;
@@ -82,10 +90,65 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         taskCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                // Here we should add code that determines what happens when a task is completed-
-                // *a message pops up for the parent, when confirmed, the money will automatically transfer to the child / or that the money will transfer directly to the child*
+                // When a task is completed-
+
+                Integer balance = Model.instance().getCurrentUser().getBalance();
+
+                Task task = (Task) compoundButton.getTag();
+
+                task.setChecked(isChecked);
+
+                int amount = Integer.parseInt(task.getAmount());
+
+                user = Model.instance().getCurrentUser();
+                db = FirebaseFirestore.getInstance().collection("users").document(user.getId());
+
+                // Update the balance field in the Firebase database
+                db.update("balance", FieldValue.increment(isChecked ? -amount : amount))
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                // Success! The balance field is updated.
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // Handle the failure to update the balance field.
+                            }
+                        });
             }
         });
+
+
+//                // retrieve goals from db for spinner dropdown
+//                user = Model.instance().getCurrentUser();
+//                db = FirebaseFirestore.getInstance().collection("users").document(user.getId());
+//
+//                List<String> taskList = new ArrayList<>();
+//
+//                    if(taskList!=null)
+//                        taskList.clear();
+//                    db.collection("tasks")
+//                            .get()
+//                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                                @Override
+//                                public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
+//                                    if (task.isSuccessful()) {
+//                                        for (QueryDocumentSnapshot document : task.getResult()) {
+//
+//                                            String amount = (String) document .get("amount");
+//
+//                                            taskList.add(amount);
+//                                        }
+//                                    }
+//                                }
+//                            });
+//
+//
+//
+//            }
+//        });
 
 
         // taskEdit button
