@@ -48,9 +48,6 @@ public class TransferMoney2Fragment extends Fragment {
     final String SECOND_AMOUNT_OPTION = "100";
     final String THIRD_AMOUNT_OPTION = "150";
     FragmentTransferMoney2Binding binding;
-    String firstAmountOption = FIRST_AMOUNT_OPTION;
-    String selectedUser;
-
 
     private static DocumentReference db;
     static User user = Model.instance().getCurrentUser();
@@ -61,7 +58,6 @@ public class TransferMoney2Fragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentTransferMoney2Binding.inflate(inflater, container, false);
         View view = binding.getRoot();
-
         // hide actionBar
         ActionBar actionBar = null;
         try {
@@ -76,55 +72,6 @@ public class TransferMoney2Fragment extends Fragment {
             binding.chooseGoal.setVisibility(View.INVISIBLE);
         }
 
-        // transfer Btn
-        binding.transferBtn.setOnClickListener(view1 -> {
-            String id = FirebaseFirestore.getInstance().collection(User.COLLECTION).document().getId();
-            Transaction transaction = new Transaction(id, "16.04.2023", 500, "AM PM", true, 1);
-
-            TransactionRequest transactionRequest = new TransactionRequest(transaction, Model.instance().getCurrentUser().getAccessToken());
-
-            Model.instance().makeTransaction(transactionRequest,
-                    (success) -> {
-                        Navigation.findNavController(view1).navigate(R.id.action_transferMoneyFragment2_to_moneySentFragment);
-                    },
-                    (error) -> {
-                        Toast.makeText(getActivity(), "Error occurred",
-                                Toast.LENGTH_SHORT).show();
-                    }
-            );
-        });
-
-
-        // retrieve user names from db for spinner dropdown
-        FirebaseFirestore db1 = FirebaseFirestore.getInstance();
-
-        List<String> nameList = new ArrayList<>();
-
-        if (nameList != null)
-            nameList.clear();
-        db1.collection("users")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                String name = (String) document.get("name");
-                                nameList.add(name);
-                            }
-                        }
-                    }
-                });
-        ArrayAdapter<String> nameAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, nameList);
-        binding.nameDropdown.setAdapter(nameAdapter);
-
-        // Save select user in selectedUser variable
-        binding.nameDropdown.setOnItemClickListener((parent, view1, position, id) -> {
-            selectedUser = nameList.get(position);
-
-          
-          
-          
         binding.amount.setFilters(new InputFilter[]{new MinMaxFilter()});
 
 
@@ -160,15 +107,35 @@ public class TransferMoney2Fragment extends Fragment {
 
             }
 
-
         });
+
+
+        // retrieve user names from db for spinner dropdown
+//        FirebaseFirestore db1 = FirebaseFirestore.getInstance();
+//        List<String> nameList = new ArrayList<>();
+//        if (nameList != null)
+//            nameList.clear();
+//        db1.collection("users")
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            for (QueryDocumentSnapshot document : task.getResult()) {
+//                                String name = (String) document.get("name");
+//                                nameList.add(name);
+//                            }
+//                        }
+//                    }
+//                });
+//        ArrayAdapter<String> nameAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, nameList);
+//        binding.nameDropdown.setAdapter(nameAdapter);
 
 
         // retrieve goals from db for spinner dropdown
         db = FirebaseFirestore.getInstance().collection("users").document(user.getId());
 
         List<String> goalsList = new ArrayList<>();
-
         if (goalsList != null)
             goalsList.clear();
         db.collection("saving")
@@ -196,7 +163,6 @@ public class TransferMoney2Fragment extends Fragment {
         return view;
     }
 
-
     private void handleAmountOptionClick(MaterialCardView amountOptionCv, String amount) {
         amountOptionCv.setOnClickListener(unused -> {
             binding.amount.setText(amount);
@@ -219,7 +185,6 @@ public class TransferMoney2Fragment extends Fragment {
             stdDev += Math.pow(transaction.getAmount() - mean, 2);
         }
         stdDev = Math.sqrt(stdDev / (transactionsList.size() - 1));
-
 
         // Set the Z-score threshold
         double zScoreThreshold = 1.4;
@@ -257,4 +222,3 @@ public class TransferMoney2Fragment extends Fragment {
         }
     }
 }
-
