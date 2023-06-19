@@ -27,6 +27,12 @@ public class User {
     @SerializedName("balance")
     private int balance;
 
+    @SerializedName("creditCard")
+    private CreditCard creditCard;
+
+    @SerializedName("transactions")
+    private List<Transaction> transactions;
+
     @SerializedName("children")
     private List<User> children;
 
@@ -94,6 +100,14 @@ public class User {
         return children;
     }
 
+    public CreditCard getCreditCard() {
+        return creditCard;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
     public String getRegistrationToken() {
         return registrationToken;
     }
@@ -116,6 +130,10 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
     }
 
     public void setChildren(List<User> children) {

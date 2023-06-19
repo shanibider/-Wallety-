@@ -1,7 +1,11 @@
 package com.example.wallety.model;
 
+import android.annotation.SuppressLint;
+
 import com.google.gson.annotations.SerializedName;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,13 +29,16 @@ public class Transaction {
     private double zScore;
 
 
-    public Transaction(String id, String date, int amount, String receiver, Boolean isUnusual, double zScore) {
+    public Transaction(String id, int amount, String receiver, Boolean isUnusual) {
         this.id = id;
-        this.date = date;
         this.amount = amount;
         this.receiver = receiver;
         this.isUnusual = isUnusual;
-        this.zScore = 0.0;
+
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yy");
+        String currentDate = formatter.format(new Date());
+        this.date = currentDate;
     }
 
     static final String ID = "id";
@@ -76,12 +83,10 @@ public class Transaction {
 
     public static Transaction fromJson(Map<String, Object> json) {
         String id = (String) json.get(ID);
-        String date = (String) json.get(DATE);
         int amount = Integer.parseInt((String) json.get(AMOUNT));
         String receiver = (String) json.get(RECEIVER);
         boolean isUnusual = Boolean.parseBoolean((String) json.get(IS_UNUSUAL));
-        double zScore = Double.parseDouble((String) json.get(Z_SCORE));
-        Transaction transaction = new Transaction(id, date, amount, receiver, isUnusual, zScore);
+        Transaction transaction = new Transaction(id, amount, receiver, isUnusual);
 
         return transaction;
     }
