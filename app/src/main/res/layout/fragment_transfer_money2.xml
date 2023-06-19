@@ -31,25 +31,47 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/chooseName"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-        android:layout_width="320dp"
+        android:id="@+id/nameLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:hint="Person Name"
+        android:layout_marginTop="8dp"
+        android:hint="Full Name"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/transferToTv">
 
-        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-            android:id="@+id/nameDropdown"
-            style="@style/AppTheme"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
             android:inputType="textPersonName"
-            android:textSize="16dp" />
+            android:padding="10dp"
+            tools:ignore="MissingPrefix" />
     </com.google.android.material.textfield.TextInputLayout>
+
+
+    <!--    <com.google.android.material.textfield.TextInputLayout-->
+    <!--        android:id="@+id/chooseName"-->
+    <!--        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"-->
+    <!--        android:layout_width="320dp"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:layout_marginTop="10dp"-->
+    <!--        android:hint="Person Name"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/transferToTv">-->
+
+    <!--        <com.google.android.material.textfield.MaterialAutoCompleteTextView-->
+    <!--            android:id="@+id/nameDropdown"-->
+    <!--            style="@style/AppTheme"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:backgroundTint="@color/white"-->
+    <!--            android:inputType="textPersonName"-->
+    <!--            android:textSize="16dp" />-->
+    <!--    </com.google.android.material.textfield.TextInputLayout>-->
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -61,7 +83,7 @@
         android:hint="Specific Goal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chooseName">
+        app:layout_constraintTop_toBottomOf="@+id/nameLayout">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/goalDropdown"
