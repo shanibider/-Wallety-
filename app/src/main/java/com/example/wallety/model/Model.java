@@ -274,26 +274,6 @@ public class Model extends FirebaseMessagingService {
     }
 
 
-    public void getUserCreditCard(AccessTokenRequest request, Listener<Void> onSuccess, Listener<Void> onFailure) {
-        UserFetcherCon.getCreditCard(request, new Callback<GetCreditCardResponse>() {
-            @Override
-            public void onResponse(Call<GetCreditCardResponse> call, Response<GetCreditCardResponse> response) {
-                if (response.isSuccessful() && response.body().getCreditCard() != null) {
-                    CreditCard data = response.body().getCreditCard();
-                    setCreditCard(data);
-                    onSuccess.onComplete(null);
-                } else {
-                    onFailure.onComplete(null);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<GetCreditCardResponse> call, Throwable t) {
-                Log.d("ERROR", t.getMessage());
-                onFailure.onComplete(null);
-            }
-        });
-    }
 
 <<<<<<< HEAD
     public void linkCardToChild(LinkCardToChildRequest request, Listener<Void> onSuccess, Listener<Void> onFailure) {
