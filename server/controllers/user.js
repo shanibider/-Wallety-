@@ -236,19 +236,32 @@ const linkCard = async (req, res) => {
         });
 };
 
-const getCards = async (req, res) => {
+const linkCardToChild = async (req, res) => {
     const {db} = config;
+    const {creditCard} = req.body;
     const {accessToken} = req.body;
+    const {amount} = req.body;
+    const {childName} = req.body;
     const auth = getAuth();
     signInWithCustomToken(auth, accessToken)
         .then(async (userCredential) => {
             const docRef = doc(db, Collections.USERS, userCredential.user.uid);
+
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
-                var card = docSnap.data().creditCard[0];
-                data = {"creditCard": card};
+                var children = docSnap.data().children;
+                for(var child of children){
+                    const docRefChild = doc(db, Collections.USERS, child);
+                    const docSnapChild = await getDoc(docRefChild);
+                    if (childName == docSnapChild.data().name){
+                        await updateDoc(docRefChild, {
+                            balance: (docSnapChild.data().balance + amount)
+                        });
+                    }
+                }
             }
-            res.status(StatusCodes.OK).send(data);
+
+            res.status(StatusCodes.OK).send("Add balance succeeded");
         })
         .catch((error) => {
             console.log(error)
@@ -262,6 +275,6 @@ module.exports = {
     makeTransaction,
     getChildrenWithoutParent,
     linkCard,
-    getCards
+    linkCardToChild
 };
 

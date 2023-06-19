@@ -273,9 +273,6 @@ public class Model extends FirebaseMessagingService {
         });
     }
 
-
-
-<<<<<<< HEAD
     public void linkCardToChild(LinkCardToChildRequest request, Listener<Void> onSuccess, Listener<Void> onFailure) {
         UserFetcherCon.linkCardToChild(request, new Callback<ResponseBody>() {
 
@@ -295,7 +292,4 @@ public class Model extends FirebaseMessagingService {
             }
         });
     }
-=======
-
->>>>>>> master
 }
