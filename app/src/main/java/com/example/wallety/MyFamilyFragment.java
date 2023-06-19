@@ -20,9 +20,8 @@ public class MyFamilyFragment extends Fragment {
     private void handleChildSelection() {
         String formattedBalance = String.valueOf(selectedChild.getBalance()) + '₪';
         binding.balanceTv.setText(formattedBalance);
+        CreditCard creditCard = selectedChild.getCreditCard();
 
-
-        CreditCard creditCard = Model.instance().getCreditCard();
         if (creditCard != null) {
             binding.creditCardView.setBackgroundResource(com.vinaygaba.creditcardview.R.drawable.cardbackground_world);
             binding.creditCardView.setCardNumber(creditCard.getCardNum());
@@ -65,7 +64,6 @@ public class MyFamilyFragment extends Fragment {
         return view;
     }
 }
-
 
 
 

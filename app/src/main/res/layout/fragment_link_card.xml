@@ -43,16 +43,16 @@
             style="@style/Animation.Design.BottomSheetDialog"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp" />
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="20dp" />
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/linkCardBtn"
         style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="350dp"
+        android:layout_width="300dp"
         android:layout_height="55dp"
-        android:layout_marginBottom="120dp"
+        android:layout_marginBottom="100dp"
         android:text="Link Card"
         android:textAllCaps="false"
         app:cornerRadius="10sp"

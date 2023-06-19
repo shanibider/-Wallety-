@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/partial"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="10dp"
-    android:id="@+id/partial"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_marginTop="10dp">
 
     <androidx.constraintlayout.widget.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/guideline"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="25dp"/>
-
-    <androidx.constraintlayout.widget.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/guideline2"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="25dp"/>
+        app:layout_constraintGuide_begin="25dp" />
 
-<!--<TextView-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:text="Your balance"-->
-<!--    android:id="@+id/tv"-->
-<!--    app:layout_constraintEnd_toStartOf="@id/guideline2"-->
-<!--    app:layout_constraintStart_toStartOf="@id/guideline"-->
-<!--    app:layout_constraintTop_toTopOf="parent"/>-->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="25dp" />
 
-<View
-    android:id="@+id/view"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_marginTop="5dp"
-    android:background="@drawable/background_rounded"
-    app:layout_constraintDimensionRatio="4:2"
-    app:layout_constraintEnd_toStartOf="@id/guideline2"
-    app:layout_constraintStart_toStartOf="@id/guideline"
-    tools:ignore="MissingConstraints" />
+    <!--<TextView-->
+    <!--    android:layout_width="wrap_content"-->
+    <!--    android:layout_height="wrap_content"-->
+    <!--    android:text="Your balance"-->
+    <!--    android:id="@+id/tv"-->
+    <!--    app:layout_constraintEnd_toStartOf="@id/guideline2"-->
+    <!--    app:layout_constraintStart_toStartOf="@id/guideline"-->
+    <!--    app:layout_constraintTop_toTopOf="parent"/>-->
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/background_rounded"
+        app:layout_constraintDimensionRatio="4:2"
+        app:layout_constraintEnd_toStartOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textView3"
@@ -61,12 +61,27 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="8dp"
+        android:letterSpacing=".3"
         android:text="@string/code"
         android:textColor="@color/white"
         android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/balanceTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:letterSpacing=".2"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="25dp"
+        android:text="0₪"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/code" />
 
 
     <TextView
@@ -80,7 +95,7 @@
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/holder"
         app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toBottomOf="@+id/code"
+        app:layout_constraintTop_toBottomOf="@+id/balanceTv"
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
@@ -121,6 +136,7 @@
         app:layout_constraintStart_toStartOf="@+id/textView7"
         app:layout_constraintTop_toBottomOf="@+id/textView7"
         app:layout_constraintVertical_bias="1.0" />
+
     <TextView
         android:id="@+id/year1"
         android:layout_width="wrap_content"
@@ -146,5 +162,4 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2" />
 
 
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
