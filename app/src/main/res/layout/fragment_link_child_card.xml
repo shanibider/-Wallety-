@@ -22,7 +22,7 @@
         android:id="@+id/chooseCardLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="350dp"
-        android:layout_height="45dp"
+        android:layout_height="55dp"
         android:layout_marginTop="8dp"
         android:hint="Choose Child"
         app:boxBackgroundColor="@color/teal_100"
@@ -42,25 +42,23 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-
     <EditText
-        android:id="@+id/editName"
+        android:id="@+id/editAmount"
         android:layout_width="350dp"
         android:layout_height="45dp"
-        android:layout_marginTop="12dp"
         android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
         android:background="@drawable/custom_edittext"
         android:drawablePadding="8dp"
         android:hint="Amount to load"
+        android:inputType="number"
         android:padding="8dp"
         android:textColor="@color/black"
         android:textSize="15dp"
-        android:inputType="number"
-        app:layout_constraintTop_toBottomOf="@+id/chooseCardLayout"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chooseCardLayout" />
 
 
     <RelativeLayout
@@ -69,7 +67,7 @@
         android:layout_height="190dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
-       app:layout_constraintTop_toBottomOf="@+id/editName">
+        app:layout_constraintTop_toBottomOf="@+id/editAmount">
 
         <include layout="@layout/partial_main_activity" />
 
@@ -87,12 +85,12 @@
 
         <com.braintreepayments.cardform.view.CardForm
             android:id="@+id/card_form"
-            android:gravity="center"
             style="@style/ShapeAppearanceOverlay.Material3.Corner.Top"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp" />
+            android:layout_marginRight="15dp"
+            android:gravity="center" />
     </LinearLayout>
 
 
