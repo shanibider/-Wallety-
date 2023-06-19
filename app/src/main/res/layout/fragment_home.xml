@@ -31,8 +31,8 @@
 
                 <ImageView
                     android:id="@+id/userImage"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:padding="3dp"
@@ -51,6 +51,7 @@
                     android:layout_marginTop="30dp"
                     android:layout_toEndOf="@id/userImage"
                     android:text="Hello"
+                    android:textFontWeight="500"
                     android:textSize="18sp" />
 
                 <TextView
@@ -62,16 +63,122 @@
                     android:layout_toEndOf="@id/userImage"
                     android:maxLines="1"
                     android:text="Welcome back"
-                    android:textSize="13sp" />
+                    android:textSize="15sp" />
             </RelativeLayout>
 
+
+
+            <!--Credit Card view-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="25dp" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.94160587" />
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/background_rounded"
+                    app:layout_constraintDimensionRatio="4:2"
+                    app:layout_constraintEnd_toStartOf="@id/guideline2"
+                    app:layout_constraintStart_toStartOf="@id/guideline"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="Your balance"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintTop_toTopOf="@+id/view" />
+
+                <TextView
+                    android:id="@+id/balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:letterSpacing=".1"
+                    android:text="Balance"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="4dp"
+                    android:text="Name"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toTopOf="@+id/holder"
+                    app:layout_constraintStart_toStartOf="@+id/view"
+                    app:layout_constraintTop_toBottomOf="@+id/balance"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <TextView
+                    android:id="@+id/holder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="Your name"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/view"
+                    app:layout_constraintStart_toStartOf="@+id/guideline" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:src="@drawable/bt_ic_mastercard"
+                    app:layout_constraintBottom_toBottomOf="@+id/view"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline2" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <!--            <include layout="@layout/partial_main_activity_2" />-->
+
             <include layout="@layout/partial_main_activity" />
+
 
             <RelativeLayout
                 android:id="@+id/rl1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="30dp"
+                android:layout_marginEnd="15dp"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
@@ -89,189 +196,176 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textView9"
-                    android:layout_marginStart="8dp"
                     android:layout_marginTop="12dp"
-                    android:layout_marginEnd="8dp"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/transferMoneyCv"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_below="@+id/textView9"
-                        app:cardCornerRadius="6dp"
-                        app:cardElevation="8dp"
-                        app:layout_constraintEnd_toStartOf="@+id/savingMoneyCv"
-                        app:strokeColor="?colorPrimary"
-                        app:strokeWidth="1dp">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:padding="7dp">
+                    <LinearLayout
+                        android:id="@+id/ll1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp">
 
-                            <ImageView
-                                android:id="@+id/transferMoneyImg"
-                                android:layout_width="wrap_content"
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/transferMoneyCv"
+                            android:layout_width="0dp"
+                            android:layout_height="70dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_weight="1"
+                            app:cardCornerRadius="6dp"
+                            app:cardElevation="8dp"
+                            app:strokeColor="?colorPrimary"
+                            app:strokeWidth="1dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="10dp"
-                                app:srcCompat="@drawable/transfer_money" />
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="7dp">
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                                <ImageView
+                                    android:id="@+id/transferMoneyImg"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="6dp"
+                                    app:srcCompat="@drawable/transfer_money" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:lines="2"
+                                    android:text="TRANSFER MONEY"
+                                    android:textFontWeight="600"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/linkPrepaidCardCv"
+                            android:layout_width="0dp"
+                            android:layout_height="70dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_weight="1"
+                            app:cardCornerRadius="6dp"
+                            app:cardElevation="8dp"
+                            app:strokeColor="?colorPrimary"
+                            app:strokeWidth="1dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="TRANSFER"
-                                android:textFontWeight="600"
-                                android:textSize="11sp" />
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="7dp">
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                                <ImageView
+                                    android:id="@+id/savingMoneyImg"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="6dp"
+                                    app:srcCompat="@drawable/ic_outline_add_card_24" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:lines="2"
+                                    android:text="LINK PRE-PAID CARD"
+                                    android:textFontWeight="600"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ll1"
+                        android:layout_marginTop="12dp">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/linkCardCv"
+                            android:layout_width="0dp"
+                            android:layout_height="70dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_weight="1"
+                            app:cardCornerRadius="6dp"
+                            app:cardElevation="8dp"
+                            app:strokeColor="?colorPrimary"
+                            app:strokeWidth="1dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="-5dp"
-                                android:text="Money"
-                                android:textAppearance="?attr/textAppearanceBody2"
-                                android:textColor="?android:attr/textColorSecondary"
-                                android:textSize="11sp" />
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="7dp">
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/linkPrepaidCardCv"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_below="@+id/textView9"
-                        android:layout_marginStart="12dp"
-                        android:layout_toRightOf="@+id/transferMoneyCv"
-                        app:cardCornerRadius="6dp"
-                        app:cardElevation="8dp"
-                        app:strokeColor="?colorPrimary"
-                        app:strokeWidth="1dp">
+                                <ImageView
+                                    android:id="@+id/linkCardImg"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="6dp"
+                                    app:srcCompat="@drawable/ic_outline_add_card_24" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:padding="7dp">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:lines="2"
+                                    android:text="LINK YOUR CARD"
+                                    android:textFontWeight="600"
+                                    android:textSize="12sp" />
 
-                            <ImageView
-                                android:id="@+id/savingMoneyImg"
-                                android:layout_width="wrap_content"
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/unusualExpensesCv"
+                            android:layout_width="0dp"
+                            android:layout_height="70dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_weight="1"
+                            app:cardCornerRadius="6dp"
+                            app:cardElevation="8dp"
+                            app:strokeColor="?colorPrimary"
+                            app:strokeWidth="1dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="10dp"
-                                app:srcCompat="@drawable/ic_outline_add_card_24" />
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="7dp">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="LINK"
-                                android:textFontWeight="600"
-                                android:textSize="11sp" />
+                                <ImageView
+                                    android:id="@+id/unusualExpensesImg"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="6dp"
+                                    app:srcCompat="@drawable/unusual_expenses" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="-5dp"
-                                android:text="Prepaid card"
-                                android:textAppearance="?attr/textAppearanceBody2"
-                                android:textColor="?android:attr/textColorSecondary"
-                                android:textSize="11sp" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:lines="2"
+                                    android:text="UNUSUAL EXPENSES"
+                                    android:textFontWeight="600"
+                                    android:textSize="12sp" />
 
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/linkCardCv"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_below="@+id/textView9"
-                        android:layout_marginStart="12dp"
-                        android:layout_toRightOf="@+id/savingMoneyCv"
-                        app:cardCornerRadius="6dp"
-                        app:cardElevation="8dp"
-                        app:strokeColor="?colorPrimary"
-                        app:strokeWidth="1dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:padding="7dp">
-
-                            <ImageView
-                                android:id="@+id/linkCardImg"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="10dp"
-                                app:srcCompat="@drawable/ic_outline_add_card_24" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="LINK"
-                                android:textFontWeight="600"
-                                android:textSize="11sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="-4dp"
-                                android:text="Card"
-                                android:textAppearance="?attr/textAppearanceBody2"
-                                android:textColor="?android:attr/textColorSecondary"
-                                android:textSize="11sp" />
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/unusualExpensesCv"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_below="@+id/textView9"
-                        android:layout_marginStart="12dp"
-                        android:layout_toRightOf="@+id/linkCardCv"
-                        app:cardCornerRadius="6dp"
-                        app:cardElevation="8dp"
-                        app:strokeColor="?colorPrimary"
-                        app:strokeWidth="1dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:padding="7dp">
-
-                            <ImageView
-                                android:id="@+id/unusualExpensesImg"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="10dp"
-                                app:srcCompat="@drawable/unusual_expenses" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="UNUSUAL"
-                                android:textFontWeight="600"
-                                android:textSize="11sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="-4dp"
-                                android:text="Expenses"
-                                android:textAppearance="?attr/textAppearanceBody2"
-                                android:textColor="?android:attr/textColorSecondary"
-                                android:textSize="11sp" />
-
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
                 </LinearLayout>
             </RelativeLayout>
 
@@ -281,6 +375,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
+
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView

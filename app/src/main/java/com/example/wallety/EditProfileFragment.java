@@ -65,8 +65,9 @@ public class EditProfileFragment extends Fragment {
     // check if user data changed
     private boolean isDataChanged() {
 
-        String userId = Model.instance().getCurrentUser().getId();
 
+        // update user info
+        String userId = Model.instance().getCurrentUser().getId();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference userRef = db.collection("users").document(userId);
 
@@ -78,7 +79,6 @@ public class EditProfileFragment extends Fragment {
             return false; // Returns false indicating that the data wasn't changed
         } else {
             Map<String, Object> updates = new HashMap<>();
-
             if (!newName.isEmpty()) {
                 updates.put("name", newName);
             }
@@ -90,12 +90,10 @@ public class EditProfileFragment extends Fragment {
             userRef.update(updates)
                     .addOnSuccessListener(aVoid -> {
                         User currentUser = Model.instance().getCurrentUser();
-
                         if (!newName.isEmpty()) {
                             currentUser.setName(newName);
                             binding.EditProfileTv.setText(newName);
                         }
-
                         if (!newEmail.isEmpty()) {
                             currentUser.setEmail(newEmail);
                             // Perform any necessary UI updates for email

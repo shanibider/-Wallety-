@@ -18,6 +18,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -86,6 +87,7 @@ public class Model extends FirebaseMessagingService {
                                     onFailure.onComplete("");
                                 }
                             }
+
                             @Override
                             public void onFailure(Call<UserSignUpResponse> call, Throwable t) {
                                 Log.d("ERROR", t.getMessage());
@@ -269,4 +271,28 @@ public class Model extends FirebaseMessagingService {
             }
         });
     }
+
+
+    public void getUserCreditCard(AccessTokenRequest request, Listener<Void> onSuccess, Listener<Void> onFailure) {
+        UserFetcherCon.getCreditCard(request, new Callback<GetCreditCardResponse>() {
+            @Override
+            public void onResponse(Call<GetCreditCardResponse> call, Response<GetCreditCardResponse> response) {
+                if (response.isSuccessful() && response.body().getCreditCard() != null) {
+                    CreditCard data = response.body().getCreditCard();
+                    setCreditCard(data);
+                    onSuccess.onComplete(null);
+                } else {
+                    onFailure.onComplete(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetCreditCardResponse> call, Throwable t) {
+                Log.d("ERROR", t.getMessage());
+                onFailure.onComplete(null);
+            }
+        });
+    }
+
+
 }
