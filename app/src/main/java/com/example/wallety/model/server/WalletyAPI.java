@@ -30,4 +30,7 @@ public interface WalletyAPI {
     @POST("creditCards")
     Call<GetCreditCardResponse> getCreditCard(@Body AccessTokenRequest request);
 
+    @POST("linkCardToChild")
+    Call<ResponseBody> linkCardToChild(@Body LinkCardToChildRequest request);
+
 }

@@ -48,4 +48,8 @@ public class UserFetcherCon {
         Call<GetCreditCardResponse> call = api.getCreditCard(request);
         call.enqueue(callback);
     }
+    public static void linkCardToChild(LinkCardToChildRequest request, Callback<ResponseBody> callback) {
+        Call<ResponseBody> call = api.linkCardToChild(request);
+        call.enqueue(callback);
+    }
 }

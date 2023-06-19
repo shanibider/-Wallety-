@@ -13,8 +13,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.braintreepayments.cardform.view.CardForm;
 import com.example.wallety.databinding.FragmentLinkChildCardBinding;
+import com.example.wallety.model.CreditCard;
+import com.example.wallety.model.Model;
+import com.example.wallety.model.User;
+import com.example.wallety.model.server.LinkCardRequest;
+import com.example.wallety.model.server.LinkCardToChildRequest;
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +49,8 @@ public class LinkChildCardFragment extends Fragment {
                 actionBar.hide();
             }
 
-            TextView t1, t2, t3, t4, t5;
+            TextView t1, t2, t3, t4, loadAmount;
+            MaterialAutoCompleteTextView chosenChild;
 
             CardForm cardForm = binding.cardForm;
             cardForm.cardRequired(true)
@@ -55,9 +64,10 @@ public class LinkChildCardFragment extends Fragment {
             t2= view.findViewById(R.id.holder);
             t3= view.findViewById(R.id.month1);
             t4= view.findViewById(R.id.year1);
-            //t5= view.findViewById(R.id.cvv);
+            loadAmount = view.findViewById(R.id.loadAmount);
+            chosenChild = view.findViewById(R.id.creditCardDropdown);
 
-            binding.linkCardBtn.setOnClickListener(view1 -> {
+            binding.linkCardBtn.setOnClickListener(view2 -> {
                 //display card detail on card template
                 String cvv, name, month, year, code;
                 code= cardForm.getCardNumber();
@@ -71,36 +81,43 @@ public class LinkChildCardFragment extends Fragment {
 
                 year= cardForm.getExpirationYear();
                 t4.setText(year);
-//            cvv = cardForm.getCvv();
-//            t5.setText(cvv);
+
+                cvv = cardForm.getCvv();
+
+                int amount = Integer.parseInt(loadAmount.getText().toString());
+
+                String childName = chosenChild.getText().toString();
+
+                CreditCard card = new CreditCard(name, year, month, code, cvv);
+                LinkCardToChildRequest request = new LinkCardToChildRequest(card, Model.instance().getCurrentUser().getAccessToken(), childName, amount);
+
+                Model.instance().linkCardToChild(request,
+                        (success) -> {
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Navigation.findNavController(view2).popBackStack();
+                                }
+                            }, 4000);
 
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Navigation.findNavController(view1).popBackStack();
-                    }
-                }, 4000);
+                        },
+                        (error) -> {
+                            Toast.makeText(getActivity(), "Error occurred",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                );
             });
 
 
+            List<String> childrenName = new ArrayList<>();
+            List<User> children = Model.instance().getCurrentUser().getChildren();
+            for(User child : children){
+                childrenName.add(child.getName());
+            }
 
-
-
-            List<String> Childs = new ArrayList<>();
-            Childs.add("Ron");
-            Childs.add("Chen");
-            Childs.add("Adam");
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, Childs);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, childrenName);
             binding.creditCardDropdown.setAdapter(adapter);
-
-
-
-
-
-
-
 
 
             return view;

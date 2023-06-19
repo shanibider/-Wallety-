@@ -221,7 +221,8 @@ const linkCard = async (req, res) => {
                 cardNum: creditCard.cardNum,
                 year: creditCard.year,
                 month: creditCard.month,
-                cvvNum: creditCard.cvvNum
+                cvvNum: creditCard.cvvNum,
+                loadedAmount : creditCard.loadedAmount
             }];
 
             await updateDoc(docRef, {
@@ -229,6 +230,45 @@ const linkCard = async (req, res) => {
             });
     
             res.status(StatusCodes.OK).send("Link Card succeeded");
+        })
+        .catch((error) => {
+            console.log(error)
+            res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
+        });
+};
+
+const linkCardToChild = async (req, res) => {
+    const {db} = config;
+    const {creditCard} = req.body;
+    const {accessToken} = req.body;
+    const {amount} = req.body;
+    const {childName} = req.body;
+    const auth = getAuth();
+    signInWithCustomToken(auth, accessToken)
+        .then(async (userCredential) => {
+            const docRef = doc(db, Collections.USERS, userCredential.user.uid);
+           
+            console.log(childName);
+
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                var children = docSnap.data().children;
+                for(var child of children){
+                    console.log(child);
+                    const docRefChild = doc(db, Collections.USERS, child);
+                    const docSnapChild = await getDoc(docRefChild);
+                    console.log(docSnapChild.data());
+                    if (childName == docSnapChild.data().name){
+                        console.log(docSnapChild.data().balance); 
+                        console.log(amount);
+                        await updateDoc(docRefChild, {
+                            balance: (docSnapChild.data().balance + amount)
+                        });
+                    }
+                }
+            }
+
+            res.status(StatusCodes.OK).send("Add balance succeeded");
         })
         .catch((error) => {
             console.log(error)
@@ -262,6 +302,7 @@ module.exports = {
     makeTransaction,
     getChildrenWithoutParent,
     linkCard,
-    getCards
+    getCards,
+    linkCardToChild
 };
 
