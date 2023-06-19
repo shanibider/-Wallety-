@@ -12,121 +12,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="Send Money"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/fromTv"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="20dp"-->
-    <!--        android:text="FROM"-->
-    <!--        android:textSize="13sp"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/sendMoneyTv" />-->
-
-    <!--    <LinearLayout-->
-    <!--        android:id="@+id/ll"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="110dp"-->
-    <!--        android:layout_marginTop="8dp"-->
-    <!--        android:gravity="center"-->
-    <!--        android:orientation="horizontal"-->
-    <!--        android:paddingHorizontal="50dp"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/fromTv">-->
-
-    <!--        <com.google.android.material.card.MaterialCardView-->
-    <!--            android:id="@+id/cv1"-->
-    <!--            android:layout_width="100dp"-->
-    <!--            android:layout_height="100dp"-->
-    <!--            android:layout_marginStart="15dp"-->
-    <!--            android:layout_marginEnd="20dp"-->
-    <!--            app:cardBackgroundColor="@color/teal_70"-->
-    <!--            app:cardCornerRadius="6dp"-->
-    <!--            app:cardElevation="8dp"-->
-    <!--            app:layout_constraintEnd_toStartOf="@id/cv2"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            app:layout_constraintTop_toBottomOf="@+id/fromTv"-->
-    <!--            app:strokeColor="@color/teal_70"-->
-    <!--            app:strokeWidth="1dp">-->
-
-    <!--            <FrameLayout-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="match_parent">-->
-
-    <!--                <TextView-->
-    <!--                    android:layout_width="wrap_content"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    android:layout_gravity="bottom"-->
-    <!--                    android:layout_marginStart="8dp"-->
-    <!--                    android:layout_marginTop="8dp"-->
-    <!--                    android:layout_marginBottom="12dp"-->
-    <!--                    android:text="Credit"-->
-    <!--                    android:textSize="14sp" />-->
-
-    <!--                <ImageView-->
-    <!--                    android:id="@+id/img1"-->
-    <!--                    android:layout_width="40dp"-->
-    <!--                    android:layout_height="40dp"-->
-    <!--                    android:layout_marginStart="8dp"-->
-    <!--                    android:layout_marginTop="8dp"-->
-    <!--                    app:srcCompat="@drawable/money_exchange" />-->
-
-    <!--            </FrameLayout>-->
-    <!--        </com.google.android.material.card.MaterialCardView>-->
-
-    <!--        <com.google.android.material.card.MaterialCardView-->
-    <!--            android:id="@+id/cv2"-->
-    <!--            android:layout_width="100dp"-->
-    <!--            android:layout_height="100dp"-->
-    <!--            android:layout_marginStart="15dp"-->
-    <!--            app:cardBackgroundColor="@color/teal_70"-->
-    <!--            app:cardCornerRadius="6dp"-->
-    <!--            app:cardElevation="8dp"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintStart_toEndOf="@id/cv1"-->
-    <!--            app:layout_constraintTop_toBottomOf="@+id/fromTv"-->
-    <!--            app:strokeColor="@color/teal_70"-->
-    <!--            app:strokeWidth="1dp">-->
-
-    <!--            <FrameLayout-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="match_parent">-->
-
-    <!--                <TextView-->
-    <!--                    android:layout_width="wrap_content"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    android:layout_gravity="bottom"-->
-    <!--                    android:layout_marginStart="8dp"-->
-    <!--                    android:layout_marginTop="8dp"-->
-    <!--                    android:layout_marginBottom="12dp"-->
-    <!--                    android:text="Saving"-->
-    <!--                    android:textSize="14sp" />-->
-
-    <!--                <ImageView-->
-    <!--                    android:id="@+id/img2"-->
-    <!--                    android:layout_width="40dp"-->
-    <!--                    android:layout_height="40dp"-->
-    <!--                    android:layout_marginStart="8dp"-->
-    <!--                    android:layout_marginTop="8dp"-->
-    <!--                    app:srcCompat="@drawable/money_exchange" />-->
-
-    <!--            </FrameLayout>-->
-    <!--        </com.google.android.material.card.MaterialCardView>-->
-    <!--    </LinearLayout>-->
-
-    <!--    <View-->
-    <!--        android:layout_width="350dp"-->
-    <!--        android:layout_height="1dp"-->
-    <!--        android:layout_marginTop="20dp"-->
-    <!--        android:alpha="2"-->
-    <!--        android:background="@color/lightGrey"-->
-    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
-    <!--        app:layout_constraintRight_toRightOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/ll" />-->
 
     <TextView
         android:id="@+id/transferToTv"
@@ -140,36 +30,38 @@
         app:layout_constraintTop_toBottomOf="@+id/sendMoneyTv" />
 
 
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="350dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/chooseName"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="320dp"
         android:layout_height="50dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="12dp"
-        android:background="@drawable/custom_edittext"
-        android:drawablePadding="8dp"
-        android:hint="Full Name"
-        android:inputType="textPersonName"
-        android:padding="10dp"
-        android:textColor="@color/black"
-        android:textSize="15dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/transferToTv"
-        tools:ignore="MissingPrefix" />
+        android:layout_marginTop="10dp"
+        android:hint="Person Name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/transferToTv">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/nameDropdown"
+            style="@style/AppTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:inputType="textPersonName"
+            android:textSize="16dp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/chooseGoal"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-        android:layout_width="350dp"
+        android:layout_width="320dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:hint="Specific Goal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name">
+        app:layout_constraintTop_toBottomOf="@+id/chooseName">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/goalDropdown"
@@ -182,22 +74,22 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-    <View
-        android:layout_width="350dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="30dp"
-        android:alpha="2"
-        android:background="@color/lightGrey"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chooseGoal" />
+    <!--    <View-->
+    <!--        android:layout_width="320dp"-->
+    <!--        android:layout_height="1dp"-->
+    <!--        android:layout_marginTop="40dp"-->
+    <!--        android:alpha="2"-->
+    <!--        android:background="@color/lightGrey"-->
+    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--        app:layout_constraintRight_toRightOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/chooseGoal" />-->
 
 
     <TextView
         android:id="@+id/amountTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:text="AMOUNT"
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -206,10 +98,10 @@
 
     <EditText
         android:id="@+id/amount"
-        android:layout_width="350dp"
+        android:layout_width="320dp"
         android:layout_height="50dp"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="12dp"
         android:background="@drawable/custom_edittext"
         android:drawablePadding="8dp"
@@ -226,7 +118,7 @@
 
     <LinearLayout
         android:id="@+id/ll2"
-        android:layout_width="375dp"
+        android:layout_width="350dp"
         android:layout_height="60dp"
         android:layout_marginTop="12dp"
         android:gravity="center"
@@ -300,10 +192,10 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/transferBtn"
         style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="350dp"
+        android:layout_width="320dp"
         android:layout_height="50dp"
-        android:layout_marginTop="90dp"
-        android:text="Transfer"
+        android:layout_marginTop="20dp"
+        android:text="TRANSFER"
         android:textAllCaps="false"
         app:cornerRadius="6sp"
         app:layout_constraintBottom_toBottomOf="parent"

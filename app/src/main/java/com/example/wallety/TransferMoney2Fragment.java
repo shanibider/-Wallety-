@@ -7,6 +7,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +16,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.wallety.databinding.FragmentTransferMoney2Binding;
+import com.example.wallety.model.FirebaseModel;
 import com.example.wallety.model.Model;
 import com.example.wallety.model.Saving;
 import com.example.wallety.model.Transaction;
 import com.example.wallety.model.User;
 import com.example.wallety.model.server.TransactionRequest;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,8 +31,10 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class TransferMoney2Fragment extends Fragment {
     final String FIRST_AMOUNT_OPTION = "50";
@@ -37,6 +42,7 @@ public class TransferMoney2Fragment extends Fragment {
     final String THIRD_AMOUNT_OPTION = "150";
     FragmentTransferMoney2Binding binding;
     String firstAmountOption = FIRST_AMOUNT_OPTION;
+    String selectedUser;
 
     private static DocumentReference db;
     static User user;
@@ -52,12 +58,11 @@ public class TransferMoney2Fragment extends Fragment {
         ActionBar actionBar = null;
         try {
             actionBar = Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar());
-        } catch (NullPointerException e) {}
+        } catch (NullPointerException e) {
+        }
         if (actionBar != null) {
             actionBar.hide();
         }
-
-
 
 
         // transfer Btn
@@ -79,8 +84,34 @@ public class TransferMoney2Fragment extends Fragment {
         });
 
 
+        // retrieve user names from db for spinner dropdown
+        FirebaseFirestore db1 = FirebaseFirestore.getInstance();
 
+        List<String> nameList = new ArrayList<>();
 
+        if (nameList != null)
+            nameList.clear();
+        db1.collection("users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String name = (String) document.get("name");
+                                nameList.add(name);
+                            }
+                        }
+                    }
+                });
+        ArrayAdapter<String> nameAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, nameList);
+        binding.nameDropdown.setAdapter(nameAdapter);
+
+        // Save select user in selectedUser variable
+        binding.nameDropdown.setOnItemClickListener((parent, view1, position, id) -> {
+            selectedUser = nameList.get(position);
+
+        });
 
 
         // retrieve goals from db for spinner dropdown
@@ -108,22 +139,24 @@ public class TransferMoney2Fragment extends Fragment {
         binding.goalDropdown.setAdapter(adapter);
 
 
-
-
         handleAmountOptionClick(binding.firstAmountOptionCv, FIRST_AMOUNT_OPTION);
         handleAmountOptionClick(binding.secondAmountOptionCv, SECOND_AMOUNT_OPTION);
         handleAmountOptionClick(binding.thirdAmountOptionCv, THIRD_AMOUNT_OPTION);
 
 
-
         return view;
     }
-
-
-
+//
+//    public void setSelectedUser(String selectedUser) {
+//        MoneySentFragment moneySentFragment = new MoneySentFragment();
+//        Bundle args = new Bundle();
+//        args.putString("selectedUser", selectedUser);
+//        moneySentFragment.setArguments(args);
+//    }
 
 
     private void handleAmountOptionClick(MaterialCardView amountOptionCv, String amount) {
         amountOptionCv.setOnClickListener(unused -> binding.amount.setText(amount));
     }
 }
+

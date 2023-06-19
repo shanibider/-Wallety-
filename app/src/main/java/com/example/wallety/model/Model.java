@@ -20,6 +20,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -97,6 +98,7 @@ public class Model extends FirebaseMessagingService {
                                     onFailure.onComplete("");
                                 }
                             }
+
                             @Override
                             public void onFailure(Call<UserSignUpResponse> call, Throwable t) {
                                 Log.d("ERROR", t.getMessage());
@@ -301,4 +303,5 @@ public class Model extends FirebaseMessagingService {
             }
         });
     }
+
 }

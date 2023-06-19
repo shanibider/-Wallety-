@@ -14,7 +14,10 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 public class FirebaseModel {
     private FirebaseAuth auth;
@@ -66,4 +69,31 @@ public class FirebaseModel {
                     }
                 });
     }
+
+    public void getUsersNames(Model.Listener<List<String>> callback) {
+        db.collection(User.COLLECTION)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        List<String> usersNames = new ArrayList<>();
+                        if (task.isSuccessful()) {
+                            QuerySnapshot querySnapshot = task.getResult();
+                            for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                                User user = documentSnapshot.toObject(User.class);
+                                String name = user.getName();
+                                usersNames.add(name);
+                            }
+                            callback.onComplete(usersNames);
+                        } else {
+                            // Handle the error if the task fails
+                            callback.onComplete(Collections.emptyList());
+                        }
+                    }
+                });
+    }
+
+
+
+
 }
