@@ -216,13 +216,13 @@ const linkCard = async (req, res) => {
         .then(async (userCredential) => {
             const docRef = doc(db, Collections.USERS, userCredential.user.uid);
            
-            var data = [{
+            const data = {
                 holderName: creditCard.holderName,
                 cardNum: creditCard.cardNum,
                 year: creditCard.year,
                 month: creditCard.month,
-                cvvNum: creditCard.cvvNum
-            }];
+                cvv: creditCard.cvv
+            };
 
             await updateDoc(docRef, {
                 creditCard: data
@@ -236,32 +236,11 @@ const linkCard = async (req, res) => {
         });
 };
 
-const getCards = async (req, res) => {
-    const {db} = config;
-    const {accessToken} = req.body;
-    const auth = getAuth();
-    signInWithCustomToken(auth, accessToken)
-        .then(async (userCredential) => {
-            const docRef = doc(db, Collections.USERS, userCredential.user.uid);
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                var card = docSnap.data().creditCard[0];
-                data = {"creditCard": card};
-            }
-            res.status(StatusCodes.OK).send(data);
-        })
-        .catch((error) => {
-            console.log(error)
-            res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
-        });
-};
-
 module.exports = {
     loginUser,
     signUpUser,
     makeTransaction,
     getChildrenWithoutParent,
-    linkCard,
-    getCards
+    linkCard
 };
 

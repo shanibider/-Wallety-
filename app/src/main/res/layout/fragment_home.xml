@@ -67,6 +67,7 @@
             </RelativeLayout>
 
 
+
             <!--Credit Card view-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -167,6 +168,9 @@
 
 
             <!--            <include layout="@layout/partial_main_activity_2" />-->
+
+            <include layout="@layout/partial_main_activity" />
+
 
             <RelativeLayout
                 android:id="@+id/rl1"

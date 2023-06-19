@@ -18,7 +18,7 @@ public class CreditCard {
     @SerializedName("cardNum")
     private String cardNum;
 
-    @SerializedName("cvvNum")
+    @SerializedName("cvv")
     private String cvv;
 
     public CreditCard(String holderName, String year, String month, String cardNum, String cvv) {

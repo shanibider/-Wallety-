@@ -7,8 +7,6 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.wallety.R;
-import com.example.wallety.model.server.AccessTokenRequest;
-import com.example.wallety.model.server.GetCreditCardResponse;
 import com.example.wallety.model.server.LinkCardRequest;
 import com.example.wallety.model.server.TransactionRequest;
 import com.example.wallety.model.server.UserFetcherCon;
@@ -41,7 +39,6 @@ public class Model extends FirebaseMessagingService {
     private FirebaseModel firebaseModel = new FirebaseModel();
     private User loggedUser = null;
 
-    private CreditCard creditCard = null;
     private HashMap<String, User> usersByIds = new HashMap<>();
 
     public Model() {
@@ -59,14 +56,6 @@ public class Model extends FirebaseMessagingService {
     // Set the currently logged-in user
     public void setCurrentUser(User user) {
         loggedUser = user;
-    }
-
-    public CreditCard getCreditCard() {
-        return creditCard;
-    }
-
-    public void setCreditCard(CreditCard card) {
-        creditCard = card;
     }
 
     // Create a new user on the server
@@ -176,9 +165,9 @@ public class Model extends FirebaseMessagingService {
 
     // Unusual Expenses
     public List<Transaction> getParentUnusualExpenses(String parentId) {
-        Transaction transaction1 = new Transaction("12gh", "21.05.2023", 300, "Supermarket", false, 0.5);
-        Transaction transaction2 = new Transaction("ffff", "20.05.2023", 350, "KSP", false, 0.4);
-        Transaction transaction3 = new Transaction("mmm", "18.05.2023", 420, "Shopping", false, 0.6);
+        Transaction transaction1 = new Transaction("12gh",  300, "Supermarket", false);
+        Transaction transaction2 = new Transaction("ffff", 350, "KSP", false);
+        Transaction transaction3 = new Transaction("mmm", 420, "Shopping", false);
         List<Transaction> unusualExpenses = Arrays.asList(transaction1, transaction2, transaction3);
 
         return unusualExpenses;
@@ -283,6 +272,7 @@ public class Model extends FirebaseMessagingService {
         });
     }
 
+
     public void getUserCreditCard(AccessTokenRequest request, Listener<Void> onSuccess, Listener<Void> onFailure) {
         UserFetcherCon.getCreditCard(request, new Callback<GetCreditCardResponse>() {
             @Override
@@ -303,5 +293,6 @@ public class Model extends FirebaseMessagingService {
             }
         });
     }
+
 
 }
