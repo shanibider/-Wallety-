@@ -86,6 +86,19 @@ public class HomeFragment extends Fragment {
             String formattedBalance = String.valueOf(user.getBalance()) + '₪';
             balanceTv.setText(formattedBalance);
         }
+        else{
+            TextView cardNumTv = partialView.findViewById(R.id.code);
+            TextView holderTv = partialView.findViewById(R.id.holder);
+            TextView monthTv = partialView.findViewById(R.id.month1);
+            TextView yearTv = partialView.findViewById(R.id.year1);
+            TextView balanceTv = partialView.findViewById(R.id.balanceTv);
+            cardNumTv.setText("Child Balance");
+            holderTv.setText("");
+            monthTv.setText("");
+            yearTv.setText("");
+            String formattedBalance = String.valueOf(user.getBalance()) + '₪';
+            balanceTv.setText(formattedBalance);
+        }
 
         recyclerView = view.findViewById(R.id.transactions_recList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

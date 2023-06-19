@@ -221,7 +221,7 @@ const linkCard = async (req, res) => {
                 cardNum: creditCard.cardNum,
                 year: creditCard.year,
                 month: creditCard.month,
-                cvvNum: creditCard.cvvNum
+                cvv: creditCard.cvv
             };
 
             await updateDoc(docRef, {

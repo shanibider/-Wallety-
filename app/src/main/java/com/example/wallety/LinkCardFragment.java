@@ -60,25 +60,25 @@ public class LinkCardFragment extends Fragment {
            cvv = cardForm.getCvv();
 //            t5.setText(cvv);
 
-//           CreditCard card = new CreditCard(name, year, month, code, cvv);
-//            LinkCardRequest request = new LinkCardRequest(card, Model.instance().getCurrentUser().getAccessToken());
-//
-//            Model.instance().linkCard(request,
-//                    (success) -> {
-//                        new Handler().postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                Navigation.findNavController(view1).popBackStack();
-//                            }
-//                        }, 4000);
-//
-//
-//                    },
-//                    (error) -> {
-//                        Toast.makeText(getActivity(), "Error occurred",
-//                                Toast.LENGTH_SHORT).show();
-//                    }
-//            );
+           CreditCard card = new CreditCard(name, year, month, code, cvv);
+            LinkCardRequest request = new LinkCardRequest(card, Model.instance().getCurrentUser().getAccessToken());
+
+            Model.instance().linkCard(request,
+                    (success) -> {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Navigation.findNavController(view1).popBackStack();
+                            }
+                        }, 4000);
+
+
+                    },
+                    (error) -> {
+                        Toast.makeText(getActivity(), "Error occurred",
+                                Toast.LENGTH_SHORT).show();
+                    }
+            );
         });
 
         return view;
