@@ -10,6 +10,8 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 
+// API endpoints for making different HTTP requests
+// @POST/@GET to specify the HTTP method, @Body to indicate the request body
 public interface WalletyAPI {
 
     @POST("loginUser")

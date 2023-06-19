@@ -49,7 +49,7 @@
                     android:backgroundTint="@color/white"
                     android:hint="Goal Name"
                     android:inputType="textPersonName"
-                    android:maxLength="12"
+                    android:maxLength="20"
                     android:textColor="@color/black"
                     android:textColorHint="@android:color/darker_gray"
                     android:textSize="18sp" />
