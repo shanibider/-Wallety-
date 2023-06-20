@@ -88,8 +88,8 @@ public class SavingFragment extends Fragment {
                                 String id = (String) document.get("id");
                                 String goal = (String) document.get("goal");
                                 String detail = (String) document.get("detail");
-                                String amount = (String) document.get("amount");
-                                String currentAmount = (String) document.get("currentAmount");
+                                int amount = Integer.parseInt((String) document.get("amount"));
+                                int currentAmount = Integer.parseInt((String) document.get("currentAmount"));
 
 
                                 Saving s = new Saving(id, goal, detail, amount, currentAmount);

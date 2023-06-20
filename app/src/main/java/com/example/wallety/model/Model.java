@@ -18,11 +18,11 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -145,6 +145,20 @@ public class Model extends FirebaseMessagingService {
                 });
     }
 
+    public List<String> getChildrenNames() {
+        return loggedUser.getChildren().stream()
+                .map(User::getName)
+                .collect(Collectors.toList());
+    }
+
+    public List<Saving> getChildSavingsById(String childId) {
+        return loggedUser.getChildren().stream()
+                .filter(user -> user.getId().equals(childId))
+                .findFirst()
+                .get()
+                .getSavings();
+    }
+
     public void setUsersByIds(HashMap<String, User> hashMap) {
         usersByIds = hashMap;
     }
@@ -165,9 +179,9 @@ public class Model extends FirebaseMessagingService {
 
     // Unusual Expenses
     public List<Transaction> getParentUnusualExpenses(String parentId) {
-        Transaction transaction1 = new Transaction("12gh",  300, "Supermarket", false);
-        Transaction transaction2 = new Transaction("ffff", 350, "KSP", false);
-        Transaction transaction3 = new Transaction("mmm", 420, "Shopping", false);
+        Transaction transaction1 = new Transaction(300, "Supermarket", false);
+        Transaction transaction2 = new Transaction( 350, "KSP", false);
+        Transaction transaction3 = new Transaction( 420, "Shopping", false);
         List<Transaction> unusualExpenses = Arrays.asList(transaction1, transaction2, transaction3);
 
         return unusualExpenses;
@@ -239,6 +253,7 @@ public class Model extends FirebaseMessagingService {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
+                    loggedUser.makeTransaction(transactionRequest.getTransaction());
                     onSuccess.onComplete(null);
                 } else {
                     onFailure.onComplete(null);
@@ -271,8 +286,6 @@ public class Model extends FirebaseMessagingService {
             }
         });
     }
-
-
 
 
 }

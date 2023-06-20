@@ -1,23 +1,31 @@
 package com.example.wallety.model;
 
-import android.widget.ProgressBar;
+import com.google.gson.annotations.SerializedName;
 
 public class Saving {
 
+    @SerializedName("id")
     private String id;
-    private String goal;
-    private String detail;
-    private String amount;
-    private String currentAmount;
 
-    public Saving(String id, String goal, String detail, String amount, String currentAmount) {
+    @SerializedName("goal")
+    private String goal;
+
+    @SerializedName("details")
+    private String details;
+
+    @SerializedName("amount")
+    private int amount;
+
+    @SerializedName("currentAmount")
+    private int currentAmount;
+
+    public Saving(String id, String goal, String detail, int amount, int currentAmount) {
         this.id = id;
         this.goal = goal;
-        this.detail = detail;
+        this.details = detail;
         this.amount = amount;
         this.currentAmount = currentAmount;
     }
-
 
     public String getId() {
         return id;
@@ -27,7 +35,6 @@ public class Saving {
         this.id = id;
     }
 
-
     public String getGoal() {
         return goal;
     }
@@ -36,27 +43,31 @@ public class Saving {
         this.goal = goal;
     }
 
-    public String getDetail() {
-        return detail;
+    public String getDetails() {
+        return details;
     }
 
-    public void setDetail(String detail) {
-        this.detail = detail;
+    public void setDetails(String details) {
+        this.details = details;
     }
 
-    public String getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 
-    public String getCurrentAmount() {
+    public int getCurrentAmount() {
         return currentAmount;
     }
 
-    public void setCurrentAmount(String progressBar) {
+    public void setCurrentAmount(int currentAmount) {
         this.currentAmount = currentAmount;
+    }
+
+    public void increaseCurrentAmount(int amount) {
+        currentAmount += amount;
     }
 }

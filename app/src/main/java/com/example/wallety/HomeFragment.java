@@ -92,10 +92,10 @@ public class HomeFragment extends Fragment {
         transactionsList = new ArrayList<>();
 
         String id = FirebaseFirestore.getInstance().collection(User.COLLECTION).document().getId();
-        transactionsList.add(new Transaction(id, 199, "Super-Pharm", true));
-        transactionsList.add(new Transaction(id, 129, "AM PM", true));
-        transactionsList.add(new Transaction(id, 550, "KSP", true));
-        transactionsList.add(new Transaction(id,  1999, "KSP", true));
+        transactionsList.add(new Transaction( 199, "Super-Pharm", true));
+        transactionsList.add(new Transaction( 129, "AM PM", true));
+        transactionsList.add(new Transaction( 550, "KSP", true));
+        transactionsList.add(new Transaction(  1999, "KSP", true));
 
 
         homeAdapter = new HomeAdapter(getContext(), transactionsList);

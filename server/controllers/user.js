@@ -8,7 +8,7 @@ const {
 } = require('firebase/auth');
 const {
     doc, getDoc, updateDoc, setDoc, serverTimestamp,
-    collection, query, where, getDocs, arrayUnion
+    collection, query, where, getDocs, arrayUnion, increment
 } = require("firebase/firestore");
 const {StatusCodes} = require('http-status-codes');
 const {Collections, config} = require("../config/config");
@@ -28,10 +28,10 @@ const loginUser = async (req, res) => {
             if (docSnap.exists()) {
                 const user = docSnap.data();
                 admin.auth().createCustomToken(user.id).then(async (accessToken) => {
-					await formatUserChildren(user);
+                    await formatUserChildren(user);
                     formatUser(user, email, password, accessToken);
                     console.log(email + " logged in");
-                    res.status(StatusCodes.OK).send(user); 
+                    res.status(StatusCodes.OK).send(user);
                 }).catch((error) => {
                     console.log(error)
                     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
@@ -125,7 +125,7 @@ const createUser = (res, auth, db, name, email, password, phone, registrationTok
                 res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
             });
 
-            
+
         })
         .catch((error) => {
             console.log(error)
@@ -170,15 +170,56 @@ const makeTransaction = async (req, res) => {
     const auth = getAuth();
     signInWithCustomToken(auth, accessToken)
         .then(async (userCredential) => {
+
+            // generate unique id
+            transaction.id = doc(collection(db, Collections.USERS)).id;
             const docRef = doc(db, Collections.USERS, userCredential.user.uid);
-           
+            const docSnap = await getDoc(docRef);
+            const {savings} = docSnap.data();
+            const {saving: savingTransaction, childReceiver} = transaction;
+
+            const handleSavingTransaction = (savings) => {
+                if (savingTransaction) {
+                    savings.forEach(saving => {
+                        if (saving.id === savingTransaction.id) {
+                            saving.currentAmount += transaction.amount;
+                        }
+                    })
+                    transaction.savingId = savingTransaction.id;
+                    delete transaction.saving;
+                }
+            };
+
+            // if parent transfer to child (or to his saving)
+            if (childReceiver) {
+                const docRef = doc(db, Collections.USERS, childReceiver.id);
+                const docSnap = await getDoc(docRef);
+                const {savings} = docSnap.data();
+
+                handleSavingTransaction(savings);
+
+                transaction.childReceiverId = childReceiver.id;
+                delete transaction.childReceiver;
+                delete transaction.isUnusual;
+
+                await updateDoc(docRef, {
+                    ...(savingTransaction
+                        ? {savings}
+                        : {balance: increment(transaction.amount)}),
+                });
+            } else {
+                handleSavingTransaction(savings)
+            }
+
             await updateDoc(docRef, {
-                transactions: arrayUnion(transaction)
+                balance: increment(-transaction.amount),
+                transactions: arrayUnion(transaction),
+                ...((!childReceiver && savingTransaction) && {savings}),
             });
             console.log('Transaction made successfully');
 
-            // push notification to parent if unusual
-            if (transaction.isUnusual) {
+            // push notification to parent if child made unusual expense
+            if (!childReceiver && transaction.isUnusual) {
                 // setTimeout IS ONLY FOR CHECK IT PUSHED (DELETE IT!).
                 setTimeout(() => {
                     const message = {
@@ -204,7 +245,7 @@ const makeTransaction = async (req, res) => {
         .catch((error) => {
             console.log(error)
             res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
-        }); 
+        });
 };
 
 const linkCard = async (req, res) => {
@@ -215,7 +256,7 @@ const linkCard = async (req, res) => {
     signInWithCustomToken(auth, accessToken)
         .then(async (userCredential) => {
             const docRef = doc(db, Collections.USERS, userCredential.user.uid);
-           
+
             const data = {
                 holderName: creditCard.holderName,
                 cardNum: creditCard.cardNum,
@@ -227,7 +268,7 @@ const linkCard = async (req, res) => {
             await updateDoc(docRef, {
                 creditCard: data
             });
-    
+
             res.status(StatusCodes.OK).send("Link Card succeeded");
         })
         .catch((error) => {

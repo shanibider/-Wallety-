@@ -68,20 +68,20 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
         ImageButton savingEdit = holder.savingEdit;
 
         holder.goal.setText(savingList.get(position).getGoal());
-        holder.detail.setText(savingList.get(position).getDetail());
-        holder.amount.setText(savingList.get(position).getAmount());
+        holder.detail.setText(savingList.get(position).getDetails());
+        holder.amount.setText(String.valueOf(savingList.get(position).getAmount()));
         // *NEED TO CHANGE ACCORDING TO USER CREDIT*
         holder.currentAmount.setText("0");
 
         //progressBar max
-        holder.progressBar.setMax(Integer.parseInt(savingList.get(position).getAmount()));
+        holder.progressBar.setMax(savingList.get(position).getAmount());
 
         //*progressBar progress - not working*
-        int current = Integer.parseInt(savingList.get(position).getCurrentAmount());
+        int current = savingList.get(position).getCurrentAmount();
         holder.progressBar.setProgress(current);
 
         //progressBar text
-        holder.progressText2.setText(savingList.get(position).getAmount());
+        holder.progressText2.setText(String.valueOf(savingList.get(position).getAmount()));
 
 
         // taskEdit button
@@ -138,7 +138,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
 
         // set the text of the EditTexts to the corresponding values of the savingList object at the given position
         name.setText(savingList.get(position).getGoal());
-        det.setText(savingList.get(position).getDetail());
+        det.setText(savingList.get(position).getDetails());
         amount.setText(savingList.get(position).getAmount());
 
         // creates AlertDialog object
@@ -160,8 +160,8 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
                 // values are used to update the corresponding object in savingList
                 else {
                     savingList.get(position).setGoal(n);
-                    savingList.get(position).setDetail(d);
-                    savingList.get(position).setAmount(am);
+                    savingList.get(position).setDetails(d);
+                    savingList.get(position).setAmount(Integer.parseInt(am));
 
                     //update DB with the new values
                     db = FirebaseFirestore.getInstance().collection("users").document(user.getId());
