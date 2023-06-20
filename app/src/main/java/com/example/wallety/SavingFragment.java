@@ -71,37 +71,37 @@ public class SavingFragment extends Fragment {
         // RecyclerView initialization
         recyclerView = view.findViewById(R.id.saving_recList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        savingList = new ArrayList<>();
+        savingList = user.getSavings() != null ? user.getSavings() : new ArrayList<>();
 
         // add new goal
-        if (savingList != null)
-            savingList.clear();
-        db.collection("saving")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            // saving.getResult() returns a list of documents
-                            // belonging to the collection = "saving"
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                String id = (String) document.get("id");
-                                String goal = (String) document.get("goal");
-                                String detail = (String) document.get("detail");
-                                String amount = (String) document.get("amount");
-                                String currentAmount = (String) document.get("currentAmount");
-
-
-                                Saving s = new Saving(id, goal, detail, amount, currentAmount);
-                                savingList.add(s);
-                                savingAdapter.notifyDataSetChanged();
-                            }
-                        }
-                    }
-                });
+//        if (savingList != null)
+//            savingList.clear();
+//        db.collection("saving")
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            // saving.getResult() returns a list of documents
+//                            // belonging to the collection = "saving"
+//                            for (QueryDocumentSnapshot document : task.getResult()) {
+//                                String id = (String) document.get("id");
+//                                String goal = (String) document.get("goal");
+//                                String detail = (String) document.get("detail");
+//                                int amount = Integer.parseInt((String) document.get("amount"));
+//                                int currentAmount = Integer.parseInt((String) document.get("currentAmount"));
+//
+//
+//                                Saving s = new Saving(id, goal, detail, amount, currentAmount);
+//                                savingList.add(s);
+//                                savingAdapter.notifyDataSetChanged();
+//                            }
+//                        }
+//                    }
+//                });
 
         goalCountTv = binding.goalCountTv;
-        goalCountTv.setText(String.valueOf(savingList.size()));
+        goalCountTv.setText(savingList != null ? String.valueOf(savingList.size()) : "0");
 
 
         savingAdapter = new SavingAdapter(getContext(), savingList);

@@ -60,14 +60,15 @@ public class AddGoalFragment extends BottomSheetDialogFragment {
             public void onClick(View view) {
                 String goal = savingGoal.getText().toString().trim();
                 String detail = savingDetail.getText().toString().trim();
-                String amount = savingAmount.getText().toString().trim();
                 String currentAmount = "0";
 
-                if(goal.equals("") || detail.equals("") || amount.equals(""))
+                if(goal.equals("") || detail.equals("") || savingAmount.getText().toString().trim().equals(""))
                 {
                     Toast.makeText(getContext(), "No field can be empty!", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                int amount = Integer.parseInt(savingAmount.getText().toString().trim());
+
                 //add To DB
                 db = FirebaseFirestore.getInstance().collection("users").document(user.getId());
                 String id = db.collection("saving").document().getId();
@@ -77,15 +78,20 @@ public class AddGoalFragment extends BottomSheetDialogFragment {
                 saving.put("goal", goal);
                 saving.put("detail", detail);
                 saving.put("amount", amount);
-                saving.put("currentAmount", currentAmount);
+                saving.put("currentAmount", 0);
 
                 db.collection("saving") // name of the collection
                         .document(id)
                         .set(saving);
 
-                Saving s = new Saving(id, goal, detail, amount, currentAmount);
-                SavingFragment.savingList.add(s);
-                SavingFragment.savingAdapter.notifyDataSetChanged();
+//                (Just for show, need to be completely with server)
+                Saving s = new Saving(id, goal, detail, amount);
+                user.addSaving(s);
+//
+
+
+//                SavingFragment.savingList.add(s);
+//                SavingFragment.savingAdapter.notifyDataSetChanged();
 
 
                 Navigation.findNavController(view).navigate(R.id.action_addGoalFragment_to_savingMoneyFragment);

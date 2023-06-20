@@ -14,4 +14,8 @@ public class TransactionRequest {
         this.transaction = transaction;
         this.accessToken = accessToken;
     }
+
+    public Transaction getTransaction() {
+        return transaction;
+    }
 }

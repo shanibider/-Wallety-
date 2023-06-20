@@ -94,7 +94,7 @@ public class CreateTaskFragment extends BottomSheetDialogFragment {
         taskDate = view.findViewById(R.id.task_input_date);
         taskTime = view.findViewById(R.id.task_input_time);
         taskAmount = view.findViewById(R.id.task_input_amount);
-        taskTargetChild  = view.findViewById(R.id.task_target_child);
+        taskTargetChild = view.findViewById(R.id.task_target_child);
 
         //arrays to store the user-selected time and date
         final String[] utime = new String[1];
@@ -123,10 +123,10 @@ public class CreateTaskFragment extends BottomSheetDialogFragment {
             @Override
             public void onPositiveButtonClick(Object selection) {
                 Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-                calendar.setTimeInMillis((long)selection);
+                calendar.setTimeInMillis((long) selection);
                 //the selected date is formatted into a string in the format "dd.MM.yyyy" using a SimpleDateFormat
                 SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-                String formattedDate  = format.format(calendar.getTime());
+                String formattedDate = format.format(calendar.getTime());
 
                 // The formatted date stored in the udate array and displayed in the taskDate using setText()
                 udate[0] = formattedDate;
@@ -148,7 +148,7 @@ public class CreateTaskFragment extends BottomSheetDialogFragment {
                 mTimePicker = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        if (selectedHour==0)
+                        if (selectedHour == 0)
                             selectedHour = 24;
                         utime[0] = String.format("%02d:%02d", selectedHour, selectedMinute);
                         taskTime.setText(utime[0]);
@@ -172,7 +172,6 @@ public class CreateTaskFragment extends BottomSheetDialogFragment {
                 String targetChild = taskTargetChild.getText().toString().trim();
 
 
-
 //                // retrieve  from db for spinner dropdown
 //                List<User> children = Model.instance().getCurrentUser().getChildren();
 //                selectedChild = children.get(0);
@@ -194,12 +193,7 @@ public class CreateTaskFragment extends BottomSheetDialogFragment {
 //                String targetChild = selectedChild.toString().trim();
 
 
-
-
-
-
-                if(name.equals("") || desc.equals("") || time.equals("") || date.equals(""))
-                {
+                if (name.equals("") || desc.equals("") || time.equals("") || date.equals("")) {
                     Toast.makeText(getContext(), "No field can be empty!", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -221,7 +215,10 @@ public class CreateTaskFragment extends BottomSheetDialogFragment {
                         .document(id)
                         .set(task);
 
+                //                (Just for show, need to be completely with server)
                 Task t = new Task(id, name, desc, date, time, amount, targetChild);
+                user.addTask(t);
+
                 TasksFragment.taskList.add(t);
                 TasksFragment.taskAdapter.notifyDataSetChanged();
 

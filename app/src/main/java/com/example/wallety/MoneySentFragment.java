@@ -23,13 +23,13 @@ public class MoneySentFragment extends Fragment {
         binding = FragmentMoneySentBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-//        // Retrieve the selectedUser from arguments
-//        String selectedUser = getArguments().getString("selectedUser");
-//        binding.to.setText(selectedUser);
+        String receiver = MoneySentFragmentArgs.fromBundle(getArguments()).getReceiver();
+        String nameHeader = "To " + receiver;
+        int transactionAmount = MoneySentFragmentArgs.fromBundle(getArguments()).getTransactionAmount();
+        String formatterTransactionAmount = String.valueOf(transactionAmount) + '₪';
 
-        // *need to change according to receiving person
-        String nameHeader = "To " + Model.instance().getCurrentUser().getName();
         binding.to.setText(nameHeader);
+        binding.amountTv.setText(formatterTransactionAmount);
 
         binding.returnHomeBtn.setOnClickListener(view1 -> {
             Navigation.findNavController(view1).navigate(R.id.homeFragment);

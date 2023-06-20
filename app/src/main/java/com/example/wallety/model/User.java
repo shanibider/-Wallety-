@@ -4,6 +4,7 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FieldValue;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,12 @@ public class User {
 
     @SerializedName("transactions")
     private List<Transaction> transactions;
+
+    @SerializedName("savings")
+    private List<Saving> savings;
+
+    @SerializedName("tasks")
+    private List<Task> tasks;
 
     @SerializedName("children")
     private List<User> children;
@@ -108,12 +115,20 @@ public class User {
         return transactions;
     }
 
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public List<Saving> getSavings() {
+        return savings;
+    }
+
     public String getRegistrationToken() {
         return registrationToken;
     }
 
     public String getAccessToken() {
-        if(accessToken == null){
+        if (accessToken == null) {
             accessToken = "";
         }
 
@@ -154,6 +169,43 @@ public class User {
 
     public boolean isParent() {
         return children != null;
+    }
+
+    public void addSaving(Saving saving) {
+        if (savings == null) {
+            savings = new ArrayList<>();
+        }
+        savings.add(saving);
+    }
+
+    public void addTask(Task task) {
+        if (tasks == null) {
+            tasks = new ArrayList<>();
+        }
+        tasks.add(task);
+    }
+
+    public void increaseBalance(int amount) {
+        balance += amount;
+    }
+
+    public void makeTransaction(Transaction transaction) {
+        int transactionAmount = transaction.getAmount();
+        balance -= transactionAmount;
+        if (transactions == null) {
+            transactions = new ArrayList<>();
+        }
+        transactions.add(transaction);
+
+        Saving transactionSaving = transaction.getSaving();
+        if (transactionSaving != null) {
+            transactionSaving.increaseCurrentAmount(transactionAmount);
+        }
+
+        User childReceiver = transaction.getChildReceiver();
+        if (childReceiver != null) {
+            childReceiver.increaseBalance(transactionAmount);
+        }
     }
 
     //

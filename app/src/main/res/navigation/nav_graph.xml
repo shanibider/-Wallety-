@@ -97,7 +97,14 @@
         android:id="@+id/moneySentFragment"
         android:name="com.example.wallety.MoneySentFragment"
         android:label="fragment_money_sent"
-        tools:layout="@layout/fragment_money_sent" />
+        tools:layout="@layout/fragment_money_sent" >
+        <argument
+            android:name="receiver"
+            app:argType="string" />
+        <argument
+            android:name="transactionAmount"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.wallety.ProfileFragment"

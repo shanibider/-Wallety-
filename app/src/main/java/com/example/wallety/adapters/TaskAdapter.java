@@ -334,6 +334,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
+        if (taskList == null) {
+            return 0;
+        }
         int size = taskList.size();
         TasksFragment.taskCount_tv.setText((String.valueOf(size)));
         return size;

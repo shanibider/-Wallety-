@@ -91,12 +91,12 @@ public class TasksFragment extends Fragment {
         // RecyclerView initialization
         recyclerView = view.findViewById(R.id.task_recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        taskList = new ArrayList<>();
+        taskList = user.getTasks() != null ? user.getTasks() : new ArrayList<>();
 
-        taskList = addTasks();
+//        taskList = addTasks();
 
         taskCount_tv = view.findViewById(R.id.taskCount_tv);
-        taskCount_tv.setText(String.valueOf(taskList.size()));
+        taskCount_tv.setText(taskList != null ? String.valueOf(taskList.size()) : "0");
 
         taskAdapter = new TaskAdapter(getContext(), taskList);
         recyclerView.setAdapter(taskAdapter);

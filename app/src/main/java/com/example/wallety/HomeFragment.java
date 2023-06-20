@@ -2,6 +2,7 @@ package com.example.wallety;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -48,28 +49,27 @@ public class HomeFragment extends Fragment {
         int balanceHeader = Model.instance().getCurrentUser().getBalance();
         String balanceText = balanceHeader + "₪";
         String nameHolder = Model.instance().getCurrentUser().getName();
+        CreditCard creditCard = user.getCreditCard();
 
 
         // Inflate the appropriate layout based on the user type
         if (user.isParent()) {
             binding = FragmentHomeBinding.inflate(inflater, container, false);
             view = binding.getRoot();
-            initializeParentViews();
+            initializeParentViews(creditCard);
 
             binding.nameHeaderTv.setText(nameHeader);
 //            binding.holder.setText(nameHolder);
         } else {
             bindingChildren = FragmentChildrenHomeBinding.inflate(inflater, container, false);
             view = bindingChildren.getRoot();
-            initializeChildViews();
+            initializeChildViews(creditCard);
 
             bindingChildren.nameHeaderTv.setText(nameHeader);
 //            bindingChildren.holder.setText(nameHolder);
         }
 
         partialView = view.findViewById(R.id.partial);
-
-        CreditCard creditCard = user.getCreditCard();
 
         if (creditCard != null) {
             TextView cardNumTv = partialView.findViewById(R.id.code);
@@ -105,10 +105,10 @@ public class HomeFragment extends Fragment {
         transactionsList = new ArrayList<>();
 
         String id = FirebaseFirestore.getInstance().collection(User.COLLECTION).document().getId();
-        transactionsList.add(new Transaction(id, 199, "Super-Pharm", true));
-        transactionsList.add(new Transaction(id, 129, "AM PM", true));
-        transactionsList.add(new Transaction(id, 550, "KSP", true));
-        transactionsList.add(new Transaction(id,  1999, "KSP", true));
+        transactionsList.add(new Transaction( 199, "Super-Pharm", true));
+        transactionsList.add(new Transaction( 129, "AM PM", true));
+        transactionsList.add(new Transaction( 550, "KSP", true));
+        transactionsList.add(new Transaction(  1999, "KSP", true));
 
 
         homeAdapter = new HomeAdapter(getContext(), transactionsList);
@@ -120,7 +120,7 @@ public class HomeFragment extends Fragment {
 
 
     // Parent layout
-    private void initializeParentViews() {
+    private void initializeParentViews(CreditCard creditCard) {
         binding.linkPrepaidCardCv.setOnClickListener(view1 -> {
             Navigation.findNavController(view1).navigate(R.id.action_homeFragment_to_linkChildCardFragment);
         });
@@ -129,7 +129,15 @@ public class HomeFragment extends Fragment {
         });
 
         binding.transferMoneyCv.setOnClickListener(view -> {
-            Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_transferMoneyFragment2);
+            if (creditCard != null) {
+                Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_transferMoneyFragment2);
+            } else {
+                AlertDialog.Builder alert = new AlertDialog.Builder(getContext())
+                        .setTitle("Oops :)")
+                        .setMessage("You have to create credit card first")
+                        .setPositiveButton("OK",null);
+                alert.show();
+            }
         });
 
         binding.unusualExpensesCv.setOnClickListener(view -> {
@@ -139,9 +147,17 @@ public class HomeFragment extends Fragment {
     }
 
     // Child layout
-    private void initializeChildViews() {
+    private void initializeChildViews(CreditCard creditCard) {
         bindingChildren.transferMoneyCv.setOnClickListener(view -> {
-            Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_transferMoneyFragment2);
+            if (creditCard != null) {
+                Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_transferMoneyFragment2);
+            } else {
+                AlertDialog.Builder alert = new AlertDialog.Builder(getContext())
+                        .setTitle("Oops :)")
+                        .setMessage("You have to create credit card first")
+                        .setPositiveButton("OK",null);
+                alert.show();
+            }
         });
         bindingChildren.goalsCv.setOnClickListener(view -> {
             Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_savingMoneyFragment);

@@ -46,10 +46,7 @@ public class MyFamilyFragment extends Fragment {
         List<User> children = Model.instance().getCurrentUser().getChildren();
         selectedChild = children.get(0);
 
-        List<String> childrenNames = children.stream()
-                .map(User::getName)
-                .collect(Collectors.toList());
-
+        List<String> childrenNames = Model.instance().getChildrenNames();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_spinner_dropdown_item, childrenNames);
         binding.childDropdown.setAdapter(adapter);
