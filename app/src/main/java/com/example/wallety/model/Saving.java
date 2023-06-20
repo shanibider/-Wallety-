@@ -19,12 +19,12 @@ public class Saving {
     @SerializedName("currentAmount")
     private int currentAmount;
 
-    public Saving(String id, String goal, String detail, int amount, int currentAmount) {
+    public Saving(String id, String goal, String details, int amount) {
         this.id = id;
         this.goal = goal;
-        this.details = detail;
+        this.details = details;
         this.amount = amount;
-        this.currentAmount = currentAmount;
+        this.currentAmount = 0;
     }
 
     public String getId() {

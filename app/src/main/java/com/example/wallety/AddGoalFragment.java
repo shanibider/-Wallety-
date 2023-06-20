@@ -84,9 +84,14 @@ public class AddGoalFragment extends BottomSheetDialogFragment {
                         .document(id)
                         .set(saving);
 
-                Saving s = new Saving(id, goal, detail, amount, 0);
-                SavingFragment.savingList.add(s);
-                SavingFragment.savingAdapter.notifyDataSetChanged();
+//                (Just for show, need to be completely with server)
+                Saving s = new Saving(id, goal, detail, amount);
+                user.addSaving(s);
+//
+
+
+//                SavingFragment.savingList.add(s);
+//                SavingFragment.savingAdapter.notifyDataSetChanged();
 
 
                 Navigation.findNavController(view).navigate(R.id.action_addGoalFragment_to_savingMoneyFragment);
