@@ -28,4 +28,8 @@ public interface WalletyAPI {
 
     @POST("linkCard")
     Call<ResponseBody> linkCard(@Body LinkCardRequest request);
+
+    @POST("linkCardToChild")
+    Call<ResponseBody> linkCardToChild(@Body LinkCardToChildRequest request);
+
 }

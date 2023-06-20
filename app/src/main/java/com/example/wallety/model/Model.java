@@ -8,6 +8,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.example.wallety.R;
 import com.example.wallety.model.server.LinkCardRequest;
+import com.example.wallety.model.server.LinkCardToChildRequest;
 import com.example.wallety.model.server.TransactionRequest;
 import com.example.wallety.model.server.UserFetcherCon;
 import com.example.wallety.model.server.UserLoginRequest;
@@ -287,5 +288,22 @@ public class Model extends FirebaseMessagingService {
         });
     }
 
+    public void linkCardToChild(LinkCardToChildRequest request, Listener<Void> onSuccess, Listener<Void> onFailure) {
+        UserFetcherCon.linkCardToChild(request, new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    onSuccess.onComplete(null);
+                } else {
+                    onFailure.onComplete(null);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("ERROR", t.getMessage());
+                onFailure.onComplete(null);
+            }
+        });
+    }
 }
