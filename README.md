@@ -5,8 +5,7 @@
 <h2>Family Financial Wallet</h2>
 
 
-
-<h3 align="left">Languages and Tools used in this project:</h3>
+## Languages and Tools used in this project:
 
 [![My Skills](https://skillicons.dev/icons?i=java,javascript,androidstudio,visualstudio,firebase)](https://skillicons.dev)
 
