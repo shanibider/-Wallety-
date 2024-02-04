@@ -7,15 +7,15 @@
 Introducing Wallety – your family's new financial buddy! This awesome Android app, built with Java and JavaScript magic, turns managing money into a family affair. Whether you're keeping tabs on spending, effortlessly sending money to each other, or saving up for goals, Wallety's got the family covered. It even adds a fun twist with a rewards system for completing tasks. Powered by JavaScript and Node.js, it's not just user-friendly; it's like a financial superhero for your family. Wallety teaches kids money skills, makes transferring money among family members a breeze, gives parents a heads up on spending, and encourages everyone to save.  
 Get ready for financial fun that everyone in the family can enjoy!
 
-## Technical Highlights:
+## 💻Technical Highlights:
 [![My Skills](https://skillicons.dev/icons?i=java,javascript,androidstudio,visualstudio,firebase)](https://skillicons.dev)
 - [x]  Java for Android development.
 - [x]  JavaScript for the Backend. 
 - [x]  Firebase DataBase for Secure and real-time data management. 
 
+<br>
 
-
-## Key Features:
+## 🏆Key Features:
 - [x] **Android Magic with Java:** Crafting a smooth and user-friendly experience, adapting seamlessly to different screen sizes for responsive design.
 
 - [x] **Effortless Money Transfers:** Wallety streamlines intra-family transactions for seamless money transfers, making financial transactions within the family a breeze.
@@ -34,9 +34,41 @@ Get ready for financial fun that everyone in the family can enjoy!
 
 - [x] **Relaxing Color Scheme:** Enhancing the user experience with a soothing and calming color palette, making financial management a visually pleasing and stress-free experience for the whole family.
 
+
 <br>
 
-## 👉 App purpose:
+
+## 🔑Key principles in Android development:
+
+- [x] **Activity Lifecycle:** Manage the different states of activities for a smooth user experience.
+
+- [x] **Layouts and Views:** Using XML files to structure layouts with ViewGroup elements and place views correctly.
+
+- [x] **Intents:** Facilitate communication between components by starting activities, services, or broadcasting messages.
+
+- [x] **Fragments:** Represent portions of the UI for flexible and responsive design.
+
+- [x] **Content Providers:** Enable data sharing between applications, often used for database access.
+
+- [x] **AndroidManifest.xml:** Contains essential information about the application, such as components, permissions, and requirements.
+
+- [x] **Material Design Guidelines:** Follow design principles for visually appealing and consistent user interfaces.
+
+<br>
+
+
+
+## 🎯**Model-View-Controller (MVC) and Model-View-ViewModel (MVVM):** Architectural patterns used to structure and organize code:
+
+- [x] **MVC:** Separates an application into three components - Model (data and business logic), View (user interface), and Controller (handles user input and updates the model and view).
+
+- [x] **MVVM:** Similar to MVC but introduces ViewModel, which is responsible for managing the UI-related data and state. This separation makes it easier to test and maintain code.
+
+<br>
+
+
+
+## 👉App purpose:
 ![wallety screens](https://github.com/shanibider/-Wallety-/assets/72359805/ce49eb94-cc64-4d3a-a5bf-1b31303d45b9)
 ![wallety screens (3)](https://github.com/shanibider/-Wallety-/assets/72359805/72e5ad1e-691d-4542-aed9-eb431e645c16)
 
