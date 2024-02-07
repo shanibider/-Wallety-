@@ -66,11 +66,16 @@ Get ready for financial fun that everyone in the family can enjoy!
 
 <br>
 
+Click here to view Wallety Final Project Book 👉 [Wallety Final Project Book.pdf](https://github.com/shanibider/Wallety-Android-App/files/14193251/Wallety.Final.Project.Book.pdf)
 
 
 ## 👉App purpose:
 ![wallety screens](https://github.com/shanibider/-Wallety-/assets/72359805/ce49eb94-cc64-4d3a-a5bf-1b31303d45b9)
 ![wallety screens (3)](https://github.com/shanibider/-Wallety-/assets/72359805/72e5ad1e-691d-4542-aed9-eb431e645c16)
+![3](https://github.com/shanibider/Wallety-Android-App/assets/72359805/10979cca-5749-4d21-a59d-00870c339797)
+![4](https://github.com/shanibider/Wallety-Android-App/assets/72359805/a325d657-6771-42b8-98fd-18cc680d57d8)
+![5](https://github.com/shanibider/Wallety-Android-App/assets/72359805/cb7877c8-062c-4984-80bd-1d4ddbb389dd)
+![6](https://github.com/shanibider/Wallety-Android-App/assets/72359805/9de91f44-aff3-4c73-bdb8-1693341d7ad8)
 
 
 <br>
